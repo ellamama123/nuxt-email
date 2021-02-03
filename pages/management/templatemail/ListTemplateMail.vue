@@ -72,7 +72,6 @@
     </CCardBody>
     <CButton
       color="success"
-      
       class="m-2"
     >
       GỬi

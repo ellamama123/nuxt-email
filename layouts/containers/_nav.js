@@ -39,20 +39,20 @@ export default [{
         {
             _name: 'CSidebarNavItem',
             name: 'Quản lý Template mail',
-            route: '/management/TemplateMail',
-            to: '/management/TemplateMail'
+            route: '/management/templatemail/ListTemplateMail',
+            to: '/management/templatemail/ListTemplateMail'
         },
         {
             _name: 'CSidebarNavItem',
             name: 'Quản lý lịch sử gửi mail',
-            route: '/management/HistoryMail',
-            to: '/management/HistoryMail'
+            route: '/management/history/ListHistoryMail',
+            to: '/management/history/ListHistoryMail'
         },
         {
             _name: 'CSidebarNavItem',
             name: 'Quản lý ứng viên',
-            route: '/management/Candidate',
-            to: '/management/Candidate'
+            route: '/management/candidate/ListCandidate',
+            to: '/management/candidate/ListCandidate'
         },
         {
             _name: 'CSidebarNavTitle',
