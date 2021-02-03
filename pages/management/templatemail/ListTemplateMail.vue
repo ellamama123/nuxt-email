@@ -108,7 +108,7 @@ const items = [
 ]
 
 const fields = [
-  { key: 'username', _style: 'min-width:200px' },
+  { key: 'username', _style: '' },
   'registered',
   { key: 'role', _style: 'min-width:100px;' },
   { key: 'status', _style: 'min-width:100px;' },
