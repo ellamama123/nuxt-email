@@ -1,5 +1,11 @@
 <template lang="">
   <div>
+  <CButton
+      color="success"
+      class="m-2"
+    >
+      <nuxt-link to="/management/templatemail/AddTemplateMail">Thêm mới</nuxt-link>
+    </CButton>
     <CCardBody>
       <CDataTable
         :items="items"
@@ -13,11 +19,6 @@
         pagination
       >
         <template #status="{item}">
-          <td>
-            <div>
-              <CInputCheckbox />
-            </div>
-          </td>
           <td>
             <CBadge >
               {{ item.status }}
@@ -35,6 +36,16 @@
       {{ Boolean(item._toggled) ? 'Hide' : 'Show' }}
     </CButton>
   </td>
+  <td>
+    <div>
+      <CInputCheckbox />
+    </div>
+  </td>
+</template>
+<template #checkbox="{item}">
+  <div>
+    <CInputCheckbox />
+  </div>
 </template>
         <template #details="{item}">
   <CCollapse
@@ -70,12 +81,6 @@
 </template>
       </CDataTable>
     </CCardBody>
-    <CButton
-      color="success"
-      class="m-2"
-    >
-      GỬi
-    </CButton>
   </div>
 </template>
 <script>
@@ -108,7 +113,7 @@ const items = [
 ]
 
 const fields = [
-  { key: 'username', _style: '' },
+  { key: 'username', _style: 'min-width:200px' },
   'registered',
   { key: 'role', _style: 'min-width:100px;' },
   { key: 'status', _style: 'min-width:100px;' },
@@ -118,7 +123,7 @@ const fields = [
     _style: 'width:1%',
     sorter: false,
     filter: false
-  }
+  },
 ]
 
 export default {

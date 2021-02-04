@@ -29,7 +29,7 @@ export default {
         scss: [
             '~/assets/scss/_variables.scss',
             '~/assets/scss/_mixins.scss'
-        ]
+        ],
     },
     /*
      ** Plugins to load before mounting the App
