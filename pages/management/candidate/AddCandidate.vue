@@ -3,7 +3,7 @@
     <CRow>
       <CCol sm="12">
         <CInput
-          label="Name"
+          label="Tên ứng viên"
           placeholder="Enter your name"
         />
       </CCol>
@@ -11,30 +11,38 @@
     <CRow>
       <CCol sm="12">
         <CInput
-          label="Credit Card Number"
-          placeholder="0000 0000 0000 0000"
+         label="Điện thoại"
+         placeholder="Nhập số điện thoại"
+        >
+        </CInput>
+      </CCol>
+    </CRow>
+    <CRow>
+      <CCol sm="12">
+        <CInput
+         label="Email"
+         placeholder="Nhập email"
+         type="email"
+        >
+        </CInput>
+      </CCol>
+    </CRow>
+     <CRow>
+      <CCol sm="4">
+        <CSelect
+          label="Loại mail"
+          :options="LIST_POSITION"
         />
       </CCol>
     </CRow>
     <CRow>
       <CCol sm="4">
         <CSelect
-          label="Month"
-          :options="[1,2,3,4,5,6,7,8,9,10,11,12]"
+          label="Trạng thái"
+          :options="LIST_STATUS"
         />
       </CCol>
-      <CCol sm="4">
-        <CSelect
-          label="Year"
-          :options="[2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025]"
-        />
-      </CCol>
-      <CCol sm="4">
-        <CInput
-          label="CVV/CVC"
-          placeholder="123"
-        />
-      </CCol>
+
     </CRow>
     <CButton color="success" class="btn-click">
       Gửi
@@ -45,10 +53,22 @@
   </div>
 </template>
 <script>
+import {LIST_POSITION} from '@/store/const/const'
+import {LIST_STATUS} from '@/store/const/const'
 export default {
-  
+  data() {
+    return {
+      LIST_POSITION,
+      LIST_STATUS,
+    }
+  },
+  mounted() {
+    console.log(LIST_POSITION)
+  },
+  methods:{
+    // clear: function(i){
+    //   this.data[i].value = '';
+    // }
+  }
 }
 </script>
-<style lang="">
-  
-</style>
