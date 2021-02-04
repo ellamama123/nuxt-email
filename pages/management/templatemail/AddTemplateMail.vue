@@ -36,7 +36,7 @@
   </div>
 </template>
 <script>
-import {LIST_CATEGORY} from '@/store/const/const'
+import {LIST_CATEGORY} from '@/const/constdata'
 export default {
   data() {
     return {

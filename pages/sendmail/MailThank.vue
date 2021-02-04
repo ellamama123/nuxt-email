@@ -71,8 +71,7 @@
       </CDataTable>
     </CCardBody>
     <CButton
-      color="success"
-      
+      color="success" 
       class="m-2"
     >
       GỬi

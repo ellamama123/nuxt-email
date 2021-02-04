@@ -53,8 +53,8 @@
   </div>
 </template>
 <script>
-import {LIST_POSITION} from '@/store/const/const'
-import {LIST_STATUS} from '@/store/const/const'
+import {LIST_POSITION} from '@/const/constdata'
+import {LIST_STATUS} from '@/const/constdata'
 export default {
   data() {
     return {
