@@ -2,149 +2,127 @@
   <div>
     <CCardBody>
       <CDataTable
-        :items="items"
+        :items="dataCandidate"
         :fields="fields"
-        column-filter
-        table-filter
-        items-per-page-select
+        :tableFilter="{ label: 'Tìm kiếm', placeholder: 'Nhập tên' , key : 'name' }"
         :items-per-page="5"
-        hover
-        sorter
         pagination
       >
-        <template #status="{item}">
-          <td>
-            <div>
-              <CInputCheckbox />
-            </div>
-          </td>
-          <td>
-            <CBadge >
-              {{ item.status }}
-            </CBadge>
-          </td>
-        </template>
-        <template #show_details="{item, index}">
-  <td class="py-2">
-    <CButton
-      color="primary"
-      variant="outline"
-      square
-      @click="toggleDetails(item, index)"
-    >
-      {{ Boolean(item._toggled) ? 'Hide' : 'Show' }}
-    </CButton>
-  </td>
-</template>
-        <template #details="{item}">
-  <CCollapse
-    :show="Boolean(item._toggled)"
-    :duration="collapseDuration"
-  >
-    <CCardBody>
-      <CMedia :aside-image-props="{ height: 102 }">
-        <h4>
-          {{ item.username }}
-        </h4>
-        <p class="text-muted">
-          User since: {{ item.registered }}
-        </p>
-
-        <CButton
-         
-          color="info"
-          class=""
-        >
-          User Settings
-        </CButton>
-        <CButton
-         
-          color="danger"
-          class="ml-1"
-        >
-          Delete
-        </CButton>
-      </CMedia>
-    </CCardBody>
-  </CCollapse>
-</template>
+        <template #send="{item}">
+        <td class="py-2">
+          <CInputCheckbox @change="check(item)" />
+        </td>
+      </template>
+      <template #show_details="{item, index}">
+        <td class="py-2">
+          <CButton
+            color="primary"
+            variant="outline"
+            square
+            size="sm"
+            @click="toggleDetails(item, index)"
+          >
+            {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
+          </CButton>
+        </td>
+      </template>
+      <template #details="{item}">
+        <CCollapse :show="Boolean(item._toggled)" >
+          <CCardBody>
+           {{changeText(dataMailThank.content, item.name)}}
+          </CCardBody>
+        </CCollapse>
+      </template>
       </CDataTable>
     </CCardBody>
     <CButton
       color="success" 
       class="m-2"
+      @click="sendMail()"
     >
       GỬi
     </CButton>
   </div>
 </template>
 <script>
-const items = [
-  { username: 'Samppa Nori', registered: '2012/01/01', role: 'Member', status: 'Active' },
-  { username: 'Estavan Lykos', registered: '2012/02/01', role: 'Staff', status: 'Banned' },
-  { username: 'Chetan Mohamed', registered: '2012/02/01', role: 'Admin', status: 'Inactive' },
-  { username: 'Derick Maximinus', registered: '2012/03/01', role: 'Member', status: 'Pending' },
-  { username: 'Friderik Dávid', registered: '2012/01/21', role: 'Staff', status: 'Active' },
-  { username: 'Yiorgos Avraamu', registered: '2012/01/01', role: 'Member', status: 'Active' },
-  { username: 'Avram Tarasios', registered: '2012/02/01', role: 'Staff', status: 'Banned', _classes: 'table-success' },
-  { username: 'Quintin Ed', registered: '2012/02/01', role: 'Admin', status: 'Inactive' },
-  { username: 'Enéas Kwadwo', registered: '2012/03/01', role: 'Member', status: 'Pending' },
-  { username: 'Agapetus Tadeáš', registered: '2012/01/21', role: 'Staff', status: 'Active' },
-  { username: 'Carwyn Fachtna', registered: '2012/01/01', role: 'Member', status: 'Active', _classes: 'table-info' },
-  { username: 'Nehemiah Tatius', registered: '2012/02/01', role: 'Staff', status: 'Banned' },
-  { username: 'Ebbe Gemariah', registered: '2012/02/01', role: 'Admin', status: 'Inactive' },
-  { username: 'Eustorgios Amulius', registered: '2012/03/01', role: 'Member', status: 'Pending' },
-  { username: 'Leopold Gáspár', registered: '2012/01/21', role: 'Staff', status: 'Active' },
-  { username: 'Pompeius René', registered: '2012/01/01', role: 'Member', status: 'Active' },
-  { username: 'Paĉjo Jadon', registered: '2012/02/01', role: 'Staff', status: 'Banned' },
-  { username: 'Micheal Mercurius', registered: '2012/02/01', role: 'Admin', status: 'Inactive' },
-  { username: 'Ganesha Dubhghall', registered: '2012/03/01', role: 'Member', status: 'Pending' },
-  { username: 'Hiroto Šimun', registered: '2012/01/21', role: 'Staff', status: 'Active' },
-  { username: 'Vishnu Serghei', registered: '2012/01/01', role: 'Member', status: 'Active' },
-  { username: 'Zbyněk Phoibos', registered: '2012/02/01', role: 'Staff', status: 'Banned' },
-  { username: 'Einar Randall', registered: '2012/02/01', role: 'Admin', status: 'Inactive', _classes: 'table-danger' },
-  { username: 'Félix Troels', registered: '2012/03/21', role: 'Staff', status: 'Active' },
-  { username: 'Aulus Agmundr', registered: '2012/01/01', role: 'Member', status: 'Pending' }
-]
-
+import axios from "axios"
 const fields = [
-  { key: 'username', _style: 'min-width:200px' },
-  'registered',
-  { key: 'role', _style: 'min-width:100px;' },
-  { key: 'status', _style: 'min-width:100px;' },
+  {key : 'name',label :'Tên'},
+  {key : 'phone',label :'Số điện thoại'},
+  {key : 'email',label :'Email'},
+  {key : 'position',label :'Vị trí ứng tuyển'},
+  {key : 'status',label :'Trạng thái'},
+  {key : 'created_at',label :'Ngày tiếp nhận'},
   {
-    key: 'show_details',
-    label: '',
-    _style: 'width:1%',
-    sorter: false,
+    key : 'send',
+  },
+   { 
+    key: 'show_details', 
+    label: '', 
+    _style: 'width:1%', 
+    sorter: false, 
     filter: false
   }
-]
+];
+
 
 export default {
   name: 'AdvancedTables',
-  data() {
+   data() {
     return {
-      items: items.map((item, id) => { return { ...item, id } }),
-      fields,
-      details: [],
-      collapseDuration: 0
+      dataCandidate : [],
+      fields:fields,
+      dataMailThank : '',
+      dataSend : [],
     }
   },
+  created () {
+    this.getMailThank()
+    this.listData()
+  },
   methods: {
-    getBadge(status) {
-      switch (status) {
-        case 'Active': return 'success'
-        case 'Inactive': return 'secondary'
-        case 'Pending': return 'warning'
-        case 'Banned': return 'danger'
-        default: 'primary'
+    listData: function () {
+      const url = 'http://127.0.0.1:8000/api/candidate?status=0'
+      axios.get(url).then((response) => {
+        this.dataCandidate = response.data
+      })
+    },
+    getMailThank : function(){
+      const url1 = 'http://127.0.0.1:8000/api/getMailThank'
+      axios.get(url1).then((response) => {
+        this.dataMailThank = response.data
+      })
+    },
+    sendMail : function()
+    {
+      for(const [key,value] of Object.entries(this.dataSend))
+      {
+        value['content'] = this.dataMailThank['content']
+        value['template_id'] = this.dataMailThank['category']
+        axios.post('http://127.0.0.1:8000/api/send-mail',value).then((response) => {
+          axios.put('http://127.0.0.1:8000/api/candidate/'+value.id+'?status=1').then((response) => {
+            axios.post('http://127.0.0.1:8000/api/history?candidate_id='+value.id,value).then((response) => {
+               this.$router.go(this.$router.currentRoute)
+                alert('Gửi mail thành công')
+            })
+          })
+        })
       }
     },
-    toggleDetails(item) {
-      this.$set(this.items[item.id], '_toggled', !item._toggled)
+    check : function(item){
+      this.dataSend.push(item)
+    },
+
+    changeText: function(content,name){
+      content = content.replace('[Name]', name)
+      return content
+    },
+
+    toggleDetails (item,index) {
+     
+      this.$set(this.dataCandidate[index], '_toggled', !item._toggled)
       this.collapseDuration = 300
-      this.$nextTick(() => { this.collapseDuration = 0 })
+      this.$nextTick(() => { this.collapseDuration = 0})
     }
   }
 }

@@ -1,0 +1,159 @@
+<template lang="">
+  <div>
+    <CCardBody>
+      <CDataTable
+        :items="dataCandidate"
+        :fields="fields"
+        :tableFilter="{ label: 'Tìm kiếm', placeholder: 'Nhập tên' , key : 'name' }"
+        :items-per-page="5"
+        pagination
+      >
+        <template #send="{item}">
+        <td class="py-2">
+          <CInputCheckbox @change="check(item)" />
+        </td>
+      </template>
+      <template #date="{item}">
+        <td>
+          <CInput type="date" name="date" v-model="item.date" />
+        </td>
+      </template>
+      <template #salary="{item}">
+        <td>
+          <CInput  v-model="item.salary" />
+        </td>
+      </template>
+      <template #show_details="{item, index}">
+        <td class="py-2">
+          <CButton
+            color="primary"
+            variant="outline"
+            square
+            size="sm"
+            @click="toggleDetails(item, index)"
+          >
+            {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
+          </CButton>
+        </td>
+      </template>
+      <template #details="{item}">
+        <CCollapse :show="Boolean(item._toggled)" >
+          <CCardBody>
+            {{changeText(dataMailOffer.content, item.name, item.date,getBadge(item.position), item.salary)}}
+          </CCardBody>
+        </CCollapse>
+      </template>
+      </CDataTable>
+    </CCardBody>
+    <CButton
+      color="success" 
+      class="m-2"
+      @click="sendMail()"
+    >
+      GỬi
+    </CButton>
+  </div>
+</template>
+<script>
+import axios from "axios"
+const fields = [
+  {key : 'name',label :'Tên'},
+  {key : 'phone',label :'Số điện thoại'},
+  {key : 'email',label :'Email'},
+  {key : 'position',label :'Vị trí ứng tuyển'},
+  {key : 'status',label :'Trạng thái'},
+  {key : 'created_at',label :'Ngày tiếp nhận'},
+  {
+    key: 'date',
+    label: 'Lịch phỏng vấn'
+  },
+  {
+    key: 'salary',
+    label: 'Lương',
+  },
+  {
+    key : 'send',
+  },
+  { 
+    key: 'show_details', 
+    label: '', 
+    _style: 'width:1%', 
+    sorter: false, 
+    filter: false
+  }
+  
+];
+
+
+export default {
+  name: 'AdvancedTables',
+   data() {
+    return {
+      dataCandidate : [],
+      fields:fields,
+      dataSend : [],
+      date: null,
+      dataMailOffer: '',
+      salary: '',
+    }
+  },
+  mounted () {
+    this.getMailOffer()
+     this.listData()
+  },
+  methods: {
+    listData: function () {
+      const url = 'http://127.0.0.1:8000/api/candidate?status=0'
+      axios.get(url).then((response) => {
+        this.dataCandidate = response.data
+      })
+    },
+
+    getMailOffer:function(){
+      const url = 'http://127.0.0.1:8000/api/getMailOffer'
+      axios.get(url).then((response) => {
+        this.dataMailOffer = response.data
+      })
+    },
+
+    sendMail : function()
+    {
+      for(const [key,value] of Object.entries(this.dataSend))
+      {
+        value['template_id'] = this.dataMailOffer['category']
+        value['content'] = this.dataMailOffer['content']
+        value['date_work'] = value.date,
+        value['salary'] = value.salary
+
+        axios.post('http://127.0.0.1:8000/api/send-mailOffer', value).then((response) => {
+          axios.put('http://127.0.0.1:8000/api/candidate/' + value.id + '?status=1')
+          axios.post('http://127.0.0.1:8000/api/history?candidate_id=' + value.id,value)
+          this.$router.go(this.$router.currentRoute)
+           alert('Gửi mail thành công')
+      })
+      }
+    },
+    check : function(item){
+      this.dataSend.push(item)
+    },
+
+    toggleDetails (item,index) {
+      this.$set(this.dataCandidate[index], '_toggled', !item._toggled)
+      this.collapseDuration = 300
+      this.$nextTick(() => { this.collapseDuration = 0})
+    },
+    
+    changeText: function(content,name,date,position,salary){
+      content = content.replace('[Name]', name).replace('[date]',date).replace('[Position]', position).replace('[salary]', salary)
+      return content
+    },
+
+    getBadge(status) {
+      if(status == 0) return 'C#'
+      else if(status == 1) return 'PHP'
+      else return 'Tester'
+    },
+    
+  }
+}
+</script>
