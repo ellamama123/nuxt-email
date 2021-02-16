@@ -33,6 +33,11 @@
           </CCardBody>
         </CCollapse>
       </template>
+        <template #status="{item}">
+          <td>
+            {{getStatus(item.status)}}
+          </td>
+        </template>
       </CDataTable>
     </CCardBody>
     <CButton
@@ -50,7 +55,6 @@ const fields = [
   {key : 'name',label :'Tên'},
   {key : 'phone',label :'Số điện thoại'},
   {key : 'email',label :'Email'},
-  {key : 'position',label :'Vị trí ứng tuyển'},
   {key : 'status',label :'Trạng thái'},
   {key : 'created_at',label :'Ngày tiếp nhận'},
   {
@@ -97,7 +101,7 @@ export default {
     {
       for(const [key,value] of Object.entries(this.dataSend))
       {
-        value['content'] = this.dataMailThank['content']
+        value['content'] =  this.changeText(this.dataMailThank['content'],value['name'])
         value['template_id'] = this.dataMailThank['category']
         axios.post('http://127.0.0.1:8000/api/send-mail',value).then((response) => {
           axios.put('http://127.0.0.1:8000/api/candidate/'+value.id+'?status=1').then((response) => {
@@ -123,6 +127,11 @@ export default {
       this.$set(this.dataCandidate[index], '_toggled', !item._toggled)
       this.collapseDuration = 300
       this.$nextTick(() => { this.collapseDuration = 0})
+    },
+
+    getStatus(status){
+      if(status == 0) return 'Chưa gửi'
+      else return 'Đã gửi'
     }
   }
 }

@@ -43,6 +43,16 @@
           </CCardBody>
         </CCollapse>
       </template>
+        <template #position="{item}">
+          <td>
+            <CBadge>{{getBadge(item.position)}}</CBadge>
+          </td>
+        </template>
+        <template #status="{item}">
+          <td>
+            {{getStatus(item.status)}}
+          </td>
+        </template>
       </CDataTable>
     </CCardBody>
     <CButton
@@ -52,6 +62,14 @@
     >
       GỬi
     </CButton>
+    <div v-if="errors && errors.length ">
+      <div
+        v-for="error in errors"
+        :key="error"
+      >
+        <p class="alert alert-warning">{{ error }}</p>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -95,6 +113,7 @@ export default {
       date: null,
       dataMailOffer: '',
       salary: '',
+      errors: [],
     }
   },
   mounted () {
@@ -118,19 +137,24 @@ export default {
 
     sendMail : function()
     {
+      this.errors = []
       for(const [key,value] of Object.entries(this.dataSend))
       {
+        if(!value.date || !value.salary){
+          this.errors.push('Phải nhập đầy đủ dữ liệu')
+        }
+        console.log(this.errors)
         value['template_id'] = this.dataMailOffer['category']
-        value['content'] = this.dataMailOffer['content']
+        value['content'] = this.changeText(this.dataMailOffer['content'],value['content'])
         value['date_work'] = value.date,
         value['salary'] = value.salary
 
-        axios.post('http://127.0.0.1:8000/api/send-mailOffer', value).then((response) => {
-          axios.put('http://127.0.0.1:8000/api/candidate/' + value.id + '?status=1')
-          axios.post('http://127.0.0.1:8000/api/history?candidate_id=' + value.id,value)
-          this.$router.go(this.$router.currentRoute)
-           alert('Gửi mail thành công')
-      })
+      //   axios.post('http://127.0.0.1:8000/api/send-mailOffer', value).then((response) => {
+      //     axios.put('http://127.0.0.1:8000/api/candidate/' + value.id + '?status=1')
+      //     axios.post('http://127.0.0.1:8000/api/history?candidate_id=' + value.id,value)
+      //     this.$router.go(this.$router.currentRoute)
+      //      alert('Gửi mail thành công')
+      // })
       }
     },
     check : function(item){
@@ -149,10 +173,15 @@ export default {
     },
 
     getBadge(status) {
-      if(status == 0) return 'C#'
-      else if(status == 1) return 'PHP'
+      if(status == 1) return 'C#'
+      else if(status == 2) return 'PHP'
       else return 'Tester'
     },
+
+    getStatus(status){
+      if(status == 0) return 'Chưa gửi'
+      else return 'Đã gửi'
+    }
     
   }
 }

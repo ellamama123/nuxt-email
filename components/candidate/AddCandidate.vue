@@ -39,22 +39,20 @@
         />
       </CCol>
     </CRow>
-    <CRow>
-      <CCol sm="4" >
-        <CSelect
-          label="Trạng thái"
-          :options="LIST_STATUS"
-          v-model="form.status"
-          disabled
-        />
-      </CCol>
-    </CRow>
     
+    <div v-if="errors && errors.length ">
+      <div
+        v-for="error in errors"
+        :key="error"
+      >
+        <p class="alert alert-warning">{{ error }}</p>
+      </div>
+    </div>
     <CButton color="success" class="btn-click" @click="add">
       Gửi
     </CButton>
-    <CButton color="primary" >
-      Clear
+    <CButton color="primary" @click="$router.go(-1)" >
+      Quay lại
     </CButton>
   </div>
 </template>
@@ -72,8 +70,8 @@ export default {
                 'phone' : '',
                 'email' : '',
                 'position' : 0,
-                'status' : 0,
             },
+      errors : []
     }
   },
   mounted() {
@@ -82,7 +80,14 @@ export default {
   },
   methods:{
     add(){
-      console.log(this.form.position)
+      this.errors = []
+      Object.entries(this.form).forEach(([key, value]) => {
+        if (!value && value != 0) {
+          this.errors.push('Dữ liệu ' + key + ' rỗng')
+        }
+      });
+      console.log(this.form)
+      if (!this.errors.length) {
       if(this.$route.name === 'management-candidate-add')
       {
          axios.post('http://127.0.0.1:8000/api/candidate/', this.form).then(function(response){}.bind(this)).then(
@@ -99,7 +104,7 @@ export default {
           }
         )
       }
-      
+      }
     },
     list(){
             axios.get('http://127.0.0.1:8000/api/candidate/' + this.$route.params.id) .then((response) => {

@@ -58,96 +58,7 @@ export default [{
             _name: 'CSidebarNavTitle',
             _children: ['Components']
         },
-        {
-            _name: 'CSidebarNavDropdown',
-            name: 'Buttons',
-            route: '/buttons',
-            icon: 'cil-cursor',
-            items: [{
-                    name: 'Buttons',
-                    to: '/buttons/standard-buttons',
-                    icon: 'cil-cursor'
-                },
-                {
-                    name: 'Button Dropdowns',
-                    to: '/buttons/dropdowns',
-                    icon: 'cil-cursor'
-                },
-                {
-                    name: 'Button Groups',
-                    to: '/buttons/button-groups',
-                    icon: 'cil-cursor'
-                },
-                {
-                    name: 'Brand Buttons',
-                    to: '/buttons/brand-buttons',
-                    icon: 'cil-cursor'
-                }
-            ]
-        },
-        {
-            _name: 'CSidebarNavDropdown',
-            name: 'Icons',
-            route: '/icons',
-            icon: 'cil-star',
-            items: [{
-                    name: 'CoreUI Icons',
-                    to: '/icons/coreui-icons',
-                    icon: 'cil-star',
-                    badge: {
-                        color: 'info',
-                        text: 'NEW'
-                    }
-                },
-                {
-                    name: 'Brands',
-                    to: '/icons/brands',
-                    icon: 'cil-star'
-                },
-                {
-                    name: 'Flags',
-                    to: '/icons/flags',
-                    icon: 'cil-star'
-                }
-            ]
-        },
-        {
-            _name: 'CSidebarNavDropdown',
-            name: 'Notifications',
-            route: '/notifications',
-            icon: 'cil-bell',
-            items: [{
-                    name: 'Alerts',
-                    to: '/notifications/alerts',
-                    icon: 'cil-bell'
-                },
-                {
-                    name: 'Badges',
-                    to: '/notifications/badges',
-                    icon: 'cil-bell'
-                },
-                {
-                    name: 'Modals',
-                    to: '/notifications/modals',
-                    icon: 'cil-bell'
-                }
-            ]
-        },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'Widgets',
-            to: '/widgets',
-            icon: 'cil-calculator',
-            badge: {
-                color: 'primary',
-                text: 'NEW',
-                shape: 'pill'
-            }
-        },
-        {
-            _name: 'CSidebarNavDivider',
-            _class: 'm-2'
-        },
+
         {
             _name: 'CSidebarNavTitle',
             _children: ['Extras']
@@ -178,22 +89,6 @@ export default [{
                     icon: 'cil-star'
                 }
             ]
-        },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'Download CoreUI',
-            href: 'http://coreui.io/vue/',
-            icon: { name: 'cil-cloud-download', class: 'text-white' },
-            _class: 'bg-success text-white',
-            target: '_blank'
-        },
-        {
-            _name: 'CSidebarNavItem',
-            name: 'Try CoreUI PRO',
-            href: 'http://coreui.io/pro/vue/',
-            icon: { name: 'cil-layers', class: 'text-white' },
-            _class: 'bg-danger text-white',
-            target: '_blank'
         }
     ]
 }]

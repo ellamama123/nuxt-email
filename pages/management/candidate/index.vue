@@ -33,6 +33,11 @@
           </CButton>
         </td>
       </template>
+        <template #status="{item}">
+          <td>
+            {{getStatus(item.status)}}
+          </td>
+        </template>
       </CDataTable>
     </CCardBody>
     <CButton color="success" class="m-2">
@@ -91,10 +96,16 @@ export default {
     },
 
     getPosition(position){
-      if(position == 0) return "#C"
-      else if(position == 1) return "PHP"
+      if(position == 1) return "C#"
+      else if(position == 2) return "PHP"
       else return "Tester"
+    },
+
+    getStatus(status){
+      if(status == 0) return 'Chưa gửi'
+      else return 'Đã gửi'
     }
+
   },
 };
 </script>

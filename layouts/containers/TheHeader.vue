@@ -23,16 +23,7 @@
           Dashboard
         </CHeaderNavLink>
       </CHeaderNavItem>
-      <CHeaderNavItem class="px-3">
-        <CHeaderNavLink to="/users" exact>
-          Users
-        </CHeaderNavLink>
-      </CHeaderNavItem>
-      <CHeaderNavItem class="px-3">
-        <CHeaderNavLink>
-          Settings
-        </CHeaderNavLink>
-      </CHeaderNavItem>
+      
     </CHeaderNav>
     <CHeaderNav class="mr-4">
       <CHeaderNavItem class="d-md-down-none mx-2">
@@ -52,9 +43,7 @@
       </CHeaderNavItem>
       <TheHeaderDropdownAccnt />
     </CHeaderNav>
-    <CSubheader class="px-3">
-      <CBreadcrumbRouter class="border-0" />
-    </CSubheader>
+    
   </CHeader>
 </template>
 

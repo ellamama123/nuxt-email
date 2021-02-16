@@ -43,6 +43,11 @@
           </CCardBody>
         </CCollapse>
       </template>
+      <template #status="{item}">
+          <td>
+            {{getStatus(item.status)}}
+          </td>
+        </template>
       </CDataTable>
     </CCardBody>
     <CButton
@@ -117,7 +122,7 @@ export default {
       for(const [key,value] of Object.entries(this.dataSend))
       {
         value['template_id'] = this.dataMailIntern['category']
-        value['content'] = this.dataMailIntern['content']
+        value['content'] = this.changeText(this.dataMailIntern['content'], value['content'])
         value['position'] = this.getBadge(value['position'])
         value['datetime_interview'] = value.dateTime,
 
@@ -135,8 +140,8 @@ export default {
     },
 
     getBadge(status) {
-      if(status == 0) return 'C#'
-      else if(status == 1) return 'PHP'
+      if(status == 1) return 'C#'
+      else if(status == 2) return 'PHP'
       else return 'Tester'
     },
 
@@ -150,6 +155,11 @@ export default {
       content = content.replace('[Name]', name).replace('[dateTime]',dateTime).replace('[Position]', position)
       return content
     },
+
+    getStatus(status){
+      if(status == 0) return 'Chưa gửi'
+      else return 'Đã gửi'
+    }
 
   }
 }

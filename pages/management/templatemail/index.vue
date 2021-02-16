@@ -84,8 +84,8 @@ export default {
     },
 
     getBadge(status) {
-      if(status ==0) return 'Mail Cảm Ơn'
-      else if(status == 1) return 'Mail Phỏng Vấn'
+      if(status ==1) return 'Mail Cảm Ơn'
+      else if(status == 2) return 'Mail Phỏng Vấn'
       else return 'Mail Off'
     },
 

@@ -29,11 +29,19 @@
       </CCol>
 
     </CRow>
+     <div v-if="errors && errors.length ">
+      <div
+        v-for="error in errors"
+        :key="error"
+      >
+        <p class="alert alert-warning">{{ error }}</p>
+      </div>
+    </div>
     <CButton color="success" class="btn-click" @click="add()">
       Gửi
     </CButton>
-    <CButton color="primary" >
-      Clear
+    <CButton color="primary" @click="$router.go(-1)" >
+      Quay lại
     </CButton>
   </div>
 </template>
@@ -48,7 +56,8 @@ export default {
         'name': '',
         'content': '',
         'category': 0,
-      }
+      },
+      errors : []
     }
   },
   mounted() {
@@ -58,6 +67,14 @@ export default {
   },
   methods:{
     add(){
+      this.errors = []
+      Object.entries(this.form).forEach(([key, value]) => {
+        if (!value ) {
+          this.errors.push('Dữ liệu ' + key + ' rỗng')
+        }
+      });
+      console.log(this.errors)
+      if (!this.errors.length) {
       if(this.$route.name === 'management-templatemail-add')
       {
         axios.post('http://127.0.0.1:8000/api/template/', this.form).then(function(response) {}.bind(this)).then(
@@ -75,6 +92,7 @@ export default {
             this.$router.push({path: '/management/templatemail/'})
           }
         )
+      }
       }
       
     },

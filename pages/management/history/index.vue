@@ -5,16 +5,41 @@
         :items="dataHistory"
         :fields="fields"
       >
-        <template #category="{item}">
-          <td>
-            <CBadge>{{getBadge(item.category)}}</CBadge>
-          </td>
-        </template>
         <template #candidate_id="{item}"> 
           <td> 
-            {{getCandidate(item.candidate_id)}}
+            <CBadge>{{getCandidate(item.candidate_id)}}</CBadge>
           </td>
         </template>
+        <template #category="{item}">
+          <td>
+            <CBadge> {{getBadge(item.category)}}</CBadge>
+          </td>
+        </template>
+        <template #position="{item}">
+          <td>
+             {{getPosition(item.position)}}
+          </td>
+        </template>
+        <template #show_details="{item, index}">
+        <td class="py-2">
+          <CButton
+            color="primary"
+            variant="outline"
+            square
+            size="sm"
+            @click="toggleDetails(item, index)"
+          >
+            {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
+          </CButton>
+        </td>
+      </template>
+      <template #details="{item}">
+        <CCollapse :show="Boolean(item._toggled)" >
+          <CCardBody>
+            {{item.content}}
+          </CCardBody>
+        </CCollapse>
+      </template>
       </CDataTable>
     </CCardBody>
   </div>
@@ -27,7 +52,15 @@ const fields = [
   {
     key: 'position',
     label: 'Vị trí ứng tuyển'
+  },
+  { 
+    key: 'show_details', 
+    label: '', 
+    _style: 'width:1%', 
+    sorter: false, 
+    filter: false
   }
+
 ]
 
 export default {
@@ -58,18 +91,33 @@ export default {
       else return 'Mail offer'
     },
 
-    toggleDetails(item) {
-      console.log(item)
-      this.$set(this.dataHistory[item.id], '_toggled', !item._toggled)
+    toggleDetails (item,index) {
+      this.$set(this.dataHistory[index], '_toggled', !item._toggled)
       this.collapseDuration = 300
-      this.$nextTick(() => { this.collapseDuration = 0 })
+      this.$nextTick(() => { this.collapseDuration = 0})
     },
    getCandidate(item)
     {
        const url1 = 'http://127.0.0.1:8000/api/candidate/' + item
-      const response =  axios.get(url1)
-      return response.data
-    }
+       var name1 = ''
+        axios.get(url1).then((response) => {
+          name1 = response.data.name
+          console.log(name1)
+           
+      }).then(
+        ()=>{
+          return name1
+        }
+      )
+    },
+
+    getPosition(position){
+      if(position == 0) return 'C#'
+      else if(position == 1) return 'PHP'
+      else return 'Tester'
+    },
+
+   
     
   }
 }
