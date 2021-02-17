@@ -29,7 +29,7 @@
       <template #details="{item}">
         <CCollapse :show="Boolean(item._toggled)" >
           <CCardBody>
-           {{changeText(dataMailThank.content, item.name)}}
+           {{changeText(dataMailThank.content,item.name)}}
           </CCardBody>
         </CCollapse>
       </template>
@@ -95,13 +95,14 @@ export default {
       const url1 = 'http://127.0.0.1:8000/api/getMailThank'
       axios.get(url1).then((response) => {
         this.dataMailThank = response.data
+        console.log(this.dataMailThank)
       })
     },
     sendMail : function()
     {
       for(const [key,value] of Object.entries(this.dataSend))
       {
-        value['content'] =  this.changeText(this.dataMailThank['content'],value['name'])
+        value['content'] =  changeText(this.dataMailThank['content'],value['content'])
         value['template_id'] = this.dataMailThank['category']
         axios.post('http://127.0.0.1:8000/api/send-mail',value).then((response) => {
           axios.put('http://127.0.0.1:8000/api/candidate/'+value.id+'?status=1').then((response) => {

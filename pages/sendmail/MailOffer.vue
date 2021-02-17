@@ -143,18 +143,17 @@ export default {
         if(!value.date || !value.salary){
           this.errors.push('Phải nhập đầy đủ dữ liệu')
         }
-        console.log(this.errors)
         value['template_id'] = this.dataMailOffer['category']
         value['content'] = this.changeText(this.dataMailOffer['content'],value['content'])
         value['date_work'] = value.date,
         value['salary'] = value.salary
 
-      //   axios.post('http://127.0.0.1:8000/api/send-mailOffer', value).then((response) => {
-      //     axios.put('http://127.0.0.1:8000/api/candidate/' + value.id + '?status=1')
-      //     axios.post('http://127.0.0.1:8000/api/history?candidate_id=' + value.id,value)
-      //     this.$router.go(this.$router.currentRoute)
-      //      alert('Gửi mail thành công')
-      // })
+      axios.post('http://127.0.0.1:8000/api/send-mailOffer', value).then((response) => {
+        axios.put('http://127.0.0.1:8000/api/candidate/' + value.id + '?status=1')
+        axios.post('http://127.0.0.1:8000/api/history?candidate_id=' + value.id,value)
+        this.$router.go(this.$router.currentRoute)
+        alert('Gửi mail thành công')
+      })
       }
     },
     check : function(item){
