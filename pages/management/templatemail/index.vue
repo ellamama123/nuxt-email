@@ -62,7 +62,6 @@ const fields = [
 ]
 
 export default {
-
   name: 'AdvancedTables',
   data() {
     return {
@@ -71,6 +70,7 @@ export default {
       selected: [],
     }
   },
+
   mounted() {
     this.listData()
   },

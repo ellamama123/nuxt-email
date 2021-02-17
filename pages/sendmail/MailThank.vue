@@ -69,7 +69,6 @@ const fields = [
   }
 ];
 
-
 export default {
   name: 'AdvancedTables',
    data() {
@@ -80,10 +79,12 @@ export default {
       dataSend : [],
     }
   },
+
   created () {
     this.getMailThank()
     this.listData()
   },
+
   methods: {
     listData: function () {
       const url = 'http://127.0.0.1:8000/api/candidate?status=0'
@@ -91,6 +92,7 @@ export default {
         this.dataCandidate = response.data
       })
     },
+
     getMailThank : function(){
       const url1 = 'http://127.0.0.1:8000/api/getMailThank'
       axios.get(url1).then((response) => {
@@ -98,6 +100,7 @@ export default {
         console.log(this.dataMailThank)
       })
     },
+
     sendMail : function()
     {
       for(const [key,value] of Object.entries(this.dataSend))
@@ -114,6 +117,7 @@ export default {
         })
       }
     },
+    
     check : function(item){
       this.dataSend.push(item)
     },

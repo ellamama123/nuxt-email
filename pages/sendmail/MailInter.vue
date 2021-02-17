@@ -59,8 +59,12 @@
     </CButton>
   </div>
 </template>
+
 <script>
+
 import axios from "axios"
+import moment from 'moment'
+
 const fields = [
   {key : 'name',label :'Tên'},
   {key : 'phone',label :'Số điện thoại'},
@@ -113,7 +117,6 @@ export default {
       const url = 'http://127.0.0.1:8000/api/getMailIntern'
       axios.get(url).then((response) => {
         this.dataMailIntern = response.data
-        console.log(this.dataMailIntern)
       })
     },
 
@@ -122,12 +125,12 @@ export default {
       for(const [key,value] of Object.entries(this.dataSend))
       {
         value['template_id'] = this.dataMailIntern['category']
-        value['content'] = this.changeText(this.dataMailIntern['content'], value['content'])
+        value['content'] = this.changeText(this.dataMailIntern['content'], value['name'],value['dateTime'], this.getBadge(value['position']))
         value['position'] = this.getBadge(value['position'])
         value['datetime_interview'] = value.dateTime,
 
         axios.post('http://127.0.0.1:8000/api/send-mailIntern', value).then((response) => {
-          axios.put('http://127.0.0.1:8000/api/candidate/' + value.id + '?status=1')   
+          axios.put('http://127.0.0.1:8000/api/candidate/' + value.id + '?status=1')
           axios.post('http://127.0.0.1:8000/api/history?candidate_id=' + value.id,value)
           this.$router.go(this.$router.currentRoute)
            alert('Gửi mail thành công')
@@ -152,6 +155,7 @@ export default {
     },
     
     changeText: function(content,name,dateTime,position){
+      dateTime = moment(String(dateTime)).format('DD/MM/YYYY hh:mm')
       content = content.replace('[Name]', name).replace('[dateTime]',dateTime).replace('[Position]', position)
       return content
     },
@@ -159,8 +163,7 @@ export default {
     getStatus(status){
       if(status == 0) return 'Chưa gửi'
       else return 'Đã gửi'
-    }
-
+    },
   }
 }
 </script>

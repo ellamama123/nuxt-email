@@ -72,8 +72,12 @@
     </div>
   </div>
 </template>
+
 <script>
+
 import axios from "axios"
+import moment from 'moment'
+
 const fields = [
   {key : 'name',label :'Tên'},
   {key : 'phone',label :'Số điện thoại'},
@@ -99,7 +103,6 @@ const fields = [
     sorter: false, 
     filter: false
   }
-  
 ];
 
 
@@ -116,10 +119,12 @@ export default {
       errors: [],
     }
   },
+
   mounted () {
     this.getMailOffer()
      this.listData()
   },
+
   methods: {
     listData: function () {
       const url = 'http://127.0.0.1:8000/api/candidate?status=0'
@@ -144,7 +149,7 @@ export default {
           this.errors.push('Phải nhập đầy đủ dữ liệu')
         }
         value['template_id'] = this.dataMailOffer['category']
-        value['content'] = this.changeText(this.dataMailOffer['content'],value['content'])
+        value['content'] = this.changeText(this.dataMailOffer['content'],value['name'], value['date'], this.getBadge(value['position'], value['salary']))
         value['date_work'] = value.date,
         value['salary'] = value.salary
 
@@ -156,6 +161,7 @@ export default {
       })
       }
     },
+
     check : function(item){
       this.dataSend.push(item)
     },
@@ -167,6 +173,7 @@ export default {
     },
     
     changeText: function(content,name,date,position,salary){
+      date = moment(String(date)).format('DD/MM/YYYY')
       content = content.replace('[Name]', name).replace('[date]',date).replace('[Position]', position).replace('[salary]', salary)
       return content
     },

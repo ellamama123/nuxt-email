@@ -72,9 +72,11 @@ export default {
       fields:fields,
     };
   },
+  
   mounted() {
     this.listData()
   },
+
   methods: {
     listData: function () {
       const url = 'http://127.0.0.1:8000/api/candidate'
@@ -82,6 +84,7 @@ export default {
         this.dataCandidate = response.data
       })
     },
+
     deleteCandidate: function(item) {
       if(confirm("Bạn có chắc chắn muốn xóa không ?")){
 

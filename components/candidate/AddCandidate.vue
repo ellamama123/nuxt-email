@@ -74,10 +74,12 @@ export default {
       errors : []
     }
   },
+
   mounted() {
     if(this.$route.name !== 'management-candidate-add')
       this.list()
   },
+  
   methods:{
     add(){
       this.errors = []
@@ -86,7 +88,6 @@ export default {
           this.errors.push('Dữ liệu ' + key + ' rỗng')
         }
       });
-      console.log(this.form)
       if (!this.errors.length) {
       if(this.$route.name === 'management-candidate-add')
       {
@@ -106,6 +107,7 @@ export default {
       }
       }
     },
+
     list(){
             axios.get('http://127.0.0.1:8000/api/candidate/' + this.$route.params.id) .then((response) => {
                 this.form = response.data

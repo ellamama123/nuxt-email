@@ -60,7 +60,6 @@ const fields = [
     sorter: false, 
     filter: false
   }
-
 ]
 
 export default {
@@ -73,6 +72,7 @@ export default {
       name : null,
     }
   },
+
   mounted() {
     this.listData()
   },
@@ -96,6 +96,7 @@ export default {
       this.collapseDuration = 300
       this.$nextTick(() => { this.collapseDuration = 0})
     },
+
    getCandidate(item)
     {
        const url1 = 'http://127.0.0.1:8000/api/candidate/' + item
@@ -116,9 +117,6 @@ export default {
       else if(position == 1) return 'PHP'
       else return 'Tester'
     },
-
-   
-    
   }
 }
 </script>
