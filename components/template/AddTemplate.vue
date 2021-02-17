@@ -70,7 +70,7 @@ export default {
   },
 
   mounted() {
-    if(this.$route.name !== 'management-templatemail-add'){
+    if(this.$route.name !== 'templatemail-add'){
       this.list()
     }
   },
@@ -85,11 +85,11 @@ export default {
       });
       console.log(this.errors)
       if (!this.errors.length) {
-      if(this.$route.name === 'management-templatemail-add')
+      if(this.$route.name === 'templatemail-add')
       {
         axios.post('http://127.0.0.1:8000/api/template/', this.form).then(function(response) {}.bind(this)).then(
           () => {
-            this.$router.push({path: '/management/templatemail/'})
+            this.$router.push({path: '/templatemail/'})
           }
         )
       }
@@ -99,7 +99,7 @@ export default {
 
         }.bind(this)).then(
           () => {
-            this.$router.push({path: '/management/templatemail/'})
+            this.$router.push({path: '/templatemail/'})
           }
         )
       }

@@ -14,7 +14,7 @@
                   class="m-2"
                   size="sm"
                 >
-                  <nuxt-link to="/management/candidate/add"> + Thêm mới</nuxt-link>
+                  <nuxt-link to="/candidate/add"> + Thêm mới</nuxt-link>
                 </CButton>
               </CCol>
             </CRow>

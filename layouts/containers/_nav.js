@@ -16,43 +16,43 @@ export default [{
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Gửi mail cảm ơn',
+            name: 'Send Thank Mail',
             route: '/sendmail/mailthank',
             to: '/sendmail/mailthank'
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Gửi mail phỏng vấn',
+            name: 'Send Mail Intern',
             route: '/sendmail/MailInter',
             to: '/sendmail/MailInter'
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Gửi mail nhận việc',
+            name: 'Send Mail Offer',
             route: '/sendmail/MailOffer',
             to: '/sendmail/MailOffer'
         },
         {
             _name: 'CSidebarNavTitle',
-            _children: ['Quản lý']
+            _children: ['Manage']
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Quản lý Template mail',
-            route: '/management/templatemail/',
-            to: '/management/templatemail/'
+            name: 'Manage Mail Template',
+            route: '/templatemail/',
+            to: '/templatemail/'
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Quản lý lịch sử gửi mail',
-            route: '/management/history/',
-            to: '/management/history/'
+            name: 'Manage Mail History',
+            route: '/history/',
+            to: '/history/'
         },
         {
             _name: 'CSidebarNavItem',
-            name: 'Quản lý ứng viên',
-            route: '/management/candidate/',
-            to: '/management/candidate/'
+            name: 'Manage Candidate',
+            route: '/candidate/',
+            to: '/candidate/'
         },
         {
             _name: 'CSidebarNavTitle',

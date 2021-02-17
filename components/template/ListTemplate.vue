@@ -4,14 +4,14 @@
       <CCardHeader>
       <CRow>
         <CCol lg="10 center">
-          Danh sách email
+          List Email
         </CCol>
         <CCol lg="2 right" >
           <CButton
             color="success"
             class="m-2"
           >
-            <nuxt-link to="/management/templatemail/add">Thêm mới</nuxt-link>
+            <nuxt-link to="/templatemail/add">Thêm mới</nuxt-link>
           </CButton>
         </CCol>
       </CRow>
@@ -101,7 +101,7 @@ export default {
           this.dataTemplate.splice(item.id,1)
           this.$emit('refresh')
         }).then(() => {
-            this.$router.push({path: '/management/templatemail/'})
+            this.$router.push({path: '/templatemail/'})
           })
       }
     },

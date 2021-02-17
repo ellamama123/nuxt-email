@@ -13,29 +13,9 @@
           pagination
         >
           <template #send="{item}">
-            <td class="py-2">
+            <td >
               <CInputCheckbox @change="check(item)" />
             </td>
-          </template>
-          <template #show_details="{item, index}">
-            <td class="py-2">
-              <CButton
-                color="primary"
-                variant="outline"
-                square
-                size="sm"
-                @click="toggleDetails(item, index)"
-              >
-                {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
-              </CButton>
-            </td>
-          </template>
-          <template #details="{item}">
-            <CCollapse :show="Boolean(item._toggled)" >
-              <CCardBody>
-              {{changeText(dataMailThank.content,item.name)}}
-              </CCardBody>
-            </CCollapse>
           </template>
           <template #status="{item}">
             <td>
@@ -45,6 +25,16 @@
           <template #created_at="{item}">
             <td>
               {{convertDate(item.created_at)}}
+            </td>
+          </template>
+          <template #show="{item}">
+            <td>
+              <CButton color="primary" variant="outline" size="sm"  @click="warningModal = true">
+                Show
+              </CButton>
+              <CModal title="Detail Content Mail" color="success" :show.sync="warningModal">
+                {{changeText(dataMailThank.content,item.name)}}
+              </CModal>
             </td>
           </template>
         </CDataTable>
@@ -61,9 +51,12 @@
     </CCard>
   </div>
 </template>
+
 <script>
+
 import axios from "axios"
 import moment from "moment"
+
 const fields = [
   {key : 'name',label :'Tên'},
   {key : 'phone',label :'Số điện thoại'},
@@ -73,23 +66,23 @@ const fields = [
   {
     key : 'send',
   },
-   { 
-    key: 'show_details', 
-    label: '', 
-    _style: 'width:1%', 
-    sorter: false, 
-    filter: false
+  {
+    key: 'show',
+    label: '',
   }
 ];
 
 export default {
+
   name: 'AdvancedTables',
+
    data() {
     return {
       dataCandidate : [],
       fields:fields,
       dataMailThank : '',
       dataSend : [],
+      warningModal: false,
     }
   },
 
@@ -110,7 +103,6 @@ export default {
       const url1 = 'http://127.0.0.1:8000/api/getMailThank'
       axios.get(url1).then((response) => {
         this.dataMailThank = response.data
-        console.log(this.dataMailThank)
       })
     },
 
@@ -140,13 +132,6 @@ export default {
       return content
     },
 
-    toggleDetails (item,index) {
-     
-      this.$set(this.dataCandidate[index], '_toggled', !item._toggled)
-      this.collapseDuration = 300
-      this.$nextTick(() => { this.collapseDuration = 0})
-    },
-
     getStatus(status){
       if(status == 0) return 'Chưa gửi'
       else return 'Đã gửi'
@@ -155,6 +140,10 @@ export default {
     convertDate(created){
       created = moment(String(created)).format('DD/MM/YYYY')
       return created
+    },
+
+    showModal(item){
+      console.log(item.id)
     }
   }
 }

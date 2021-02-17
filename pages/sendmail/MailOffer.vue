@@ -161,7 +161,7 @@ export default {
           this.errors.push('Phải nhập đầy đủ dữ liệu')
         }
         value['template_id'] = this.dataMailOffer['category']
-        value['content'] = this.changeText(this.dataMailOffer['content'],value['name'], value['date'], this.getBadge(value['position'], value['salary']))
+        value['content'] = this.changeText(this.dataMailOffer['content'],value['name'], value['date'], this.getBadge(value['position']), value['salary'])
         value['date_work'] = value.date,
         value['salary'] = value.salary
 
