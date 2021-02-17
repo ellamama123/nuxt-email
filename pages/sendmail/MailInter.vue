@@ -1,62 +1,74 @@
 <template lang="">
   <div>
-    <CCardBody>
-      <CDataTable
-        :items="dataCandidate"
-        :fields="fields"
-        :tableFilter="{ label: 'Tìm kiếm', placeholder: 'Nhập tên' , key : 'name' }"
-        :items-per-page="5"
-        pagination
-      >
-        <template #position="{item}">
-          <td>
-            <CBadge>{{getBadge(item.position)}}</CBadge>
-          </td>
-        </template>  
-        <template #send="{item}">
-        <td class="py-2">
-          <CInputCheckbox @change="check(item)" />
-        </td>
-      </template>
-      <template #dateTime="{item}">
-        <td>
-          <CInput type="datetime-local" name="dateTime" v-model="item.dateTime" />
-        </td>
-      </template>
-      <template #show_details="{item, index}">
-        <td class="py-2">
-          <CButton
-            color="primary"
-            variant="outline"
-            square
-            size="sm"
-            @click="toggleDetails(item, index)"
-          >
-            {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
-          </CButton>
-        </td>
-      </template>
-      <template #details="{item}">
-        <CCollapse :show="Boolean(item._toggled)" >
-          <CCardBody>
-            {{changeText(dataMailIntern.content, item.name, item.dateTime,getBadge(item.position))}}
-          </CCardBody>
-        </CCollapse>
-      </template>
-      <template #status="{item}">
-          <td>
-            {{getStatus(item.status)}}
-          </td>
-        </template>
-      </CDataTable>
-    </CCardBody>
-    <CButton
-      color="success" 
-      class="m-2"
-      @click="sendMail()"
-    >
-      GỬi
-    </CButton>
+    <CCard>
+      <CCardHeader>
+        <p class="center">Send Mail Inter</p>
+      </CCardHeader>
+      <CCardBody>
+        <CDataTable
+          :items="dataCandidate"
+          :fields="fields"
+          :tableFilter="{ label: 'Tìm kiếm', placeholder: 'Nhập tên' , key : 'name' }"
+          :items-per-page="5"
+          pagination
+        >
+          <template #position="{item}">
+            <td>
+              <CBadge>{{getBadge(item.position)}}</CBadge>
+            </td>
+          </template>  
+          <template #send="{item}">
+            <td class="py-2">
+              <CInputCheckbox @change="check(item)" />
+            </td>
+          </template>
+          <template #dateTime="{item}">
+            <td>
+              <CInput type="datetime-local" name="dateTime" v-model="item.dateTime" />
+            </td>
+          </template>
+          <template #show_details="{item, index}">
+            <td class="py-2">
+              <CButton
+                color="primary"
+                variant="outline"
+                square
+                size="sm"
+                @click="toggleDetails(item, index)"
+              >
+                {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
+              </CButton>
+            </td>
+          </template>
+          <template #details="{item}">
+            <CCollapse :show="Boolean(item._toggled)" >
+              <CCardBody>
+                {{changeText(dataMailIntern.content, item.name, item.dateTime,getBadge(item.position))}}
+              </CCardBody>
+            </CCollapse>
+          </template>
+          <template #status="{item}">
+            <td>
+              {{getStatus(item.status)}}
+            </td>
+          </template>
+          <template #created_at="{item}">
+            <td>
+              {{convertDate(item.created_at)}}
+            </td>
+          </template>
+        </CDataTable>
+      </CCardBody>
+      <CCardFooter>
+        <CButton
+          color="success" 
+          class="m-2"
+          @click="sendMail()"
+        >
+          GỬi
+        </CButton>
+      </CCardFooter>
+    </CCard>
   </div>
 </template>
 
@@ -164,6 +176,11 @@ export default {
       if(status == 0) return 'Chưa gửi'
       else return 'Đã gửi'
     },
+
+    convertDate(created){
+      created = moment(String(created)).format('DD/MM/YYYY')
+      return created
+    }
   }
 }
 </script>

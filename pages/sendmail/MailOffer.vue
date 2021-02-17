@@ -1,67 +1,79 @@
 <template lang="">
   <div>
-    <CCardBody>
-      <CDataTable
-        :items="dataCandidate"
-        :fields="fields"
-        :tableFilter="{ label: 'Tìm kiếm', placeholder: 'Nhập tên' , key : 'name' }"
-        :items-per-page="5"
-        pagination
-      >
-        <template #send="{item}">
-        <td class="py-2">
-          <CInputCheckbox @change="check(item)" />
-        </td>
-      </template>
-      <template #date="{item}">
-        <td>
-          <CInput type="date" name="date" v-model="item.date" />
-        </td>
-      </template>
-      <template #salary="{item}">
-        <td>
-          <CInput  v-model="item.salary" />
-        </td>
-      </template>
-      <template #show_details="{item, index}">
-        <td class="py-2">
-          <CButton
-            color="primary"
-            variant="outline"
-            square
-            size="sm"
-            @click="toggleDetails(item, index)"
-          >
-            {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
-          </CButton>
-        </td>
-      </template>
-      <template #details="{item}">
-        <CCollapse :show="Boolean(item._toggled)" >
-          <CCardBody>
-            {{changeText(dataMailOffer.content, item.name, item.date,getBadge(item.position), item.salary)}}
-          </CCardBody>
-        </CCollapse>
-      </template>
-        <template #position="{item}">
-          <td>
-            <CBadge>{{getBadge(item.position)}}</CBadge>
-          </td>
-        </template>
-        <template #status="{item}">
-          <td>
-            {{getStatus(item.status)}}
-          </td>
-        </template>
-      </CDataTable>
-    </CCardBody>
-    <CButton
-      color="success" 
-      class="m-2"
-      @click="sendMail()"
-    >
-      GỬi
-    </CButton>
+    <CCard>
+      <CCardHeader> 
+        <p class="center">Send Mail Offer</p>
+      </CCardHeader>
+      <CCardBody>
+        <CDataTable
+          :items="dataCandidate"
+          :fields="fields"
+          :tableFilter="{ label: 'Tìm kiếm', placeholder: 'Nhập tên' , key : 'name' }"
+          :items-per-page="5"
+          pagination
+        >
+          <template #send="{item}">
+            <td class="py-2">
+              <CInputCheckbox @change="check(item)" />
+            </td>
+          </template>
+          <template #date="{item}">
+            <td>
+              <CInput type="date" name="date" v-model="item.date" />
+            </td>
+          </template>
+          <template #salary="{item}">
+            <td>
+              <CInput  v-model="item.salary" />
+            </td>
+          </template>
+          <template #show_details="{item, index}">
+            <td class="py-2">
+              <CButton
+                color="primary"
+                variant="outline"
+                square
+                size="sm"
+                @click="toggleDetails(item, index)"
+              >
+                {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
+              </CButton>
+            </td>
+          </template>
+          <template #details="{item}">
+            <CCollapse :show="Boolean(item._toggled)" >
+              <CCardBody>
+                {{changeText(dataMailOffer.content, item.name, item.date,getBadge(item.position), item.salary)}}
+              </CCardBody>
+            </CCollapse>
+          </template>
+          <template #position="{item}">
+            <td>
+              <CBadge>{{getBadge(item.position)}}</CBadge>
+            </td>
+          </template>
+          <template #status="{item}">
+            <td>
+              {{getStatus(item.status)}}
+            </td>
+          </template>
+          <template #created_at="{item}">
+            <td>
+              {{convertDate(item.created_at)}}
+            </td>
+          </template>
+        </CDataTable>
+      </CCardBody>
+      <CCardFooter>
+        <CButton
+          color="success" 
+          class="m-2"
+          @click="sendMail()"
+        >
+          GỬi
+        </CButton>
+      </CCardFooter>
+    </CCard>
     <div v-if="errors && errors.length ">
       <div
         v-for="error in errors"
@@ -173,8 +185,7 @@ export default {
     },
     
     changeText: function(content,name,date,position,salary){
-      date = moment(String(date)).format('DD/MM/YYYY')
-      content = content.replace('[Name]', name).replace('[date]',date).replace('[Position]', position).replace('[salary]', salary)
+      content = content.replace('[Name]', name).replace('[date]',this.convertDate(date)).replace('[Position]', position).replace('[salary]', salary)
       return content
     },
 
@@ -187,6 +198,11 @@ export default {
     getStatus(status){
       if(status == 0) return 'Chưa gửi'
       else return 'Đã gửi'
+    },
+
+    convertDate(created){
+      created = moment(String(created)).format('DD/MM/YYYY')
+      return created
     }
     
   }

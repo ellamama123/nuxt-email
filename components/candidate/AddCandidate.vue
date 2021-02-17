@@ -88,23 +88,24 @@ export default {
           this.errors.push('Dữ liệu ' + key + ' rỗng')
         }
       });
+      
       if (!this.errors.length) {
-      if(this.$route.name === 'management-candidate-add')
-      {
-         axios.post('http://127.0.0.1:8000/api/candidate/', this.form).then(function(response){}.bind(this)).then(
-           () => {
-             this.$router.push({path:'/management/candidate/'})
-           }
-         )
-      }
-      else
-      {
-        axios.put('http://127.0.0.1:8000/api/candidate/' + this.$route.params.id,this.form).then(function(response){}.bind(this)).then(
-          () => {
-            this.$router.push({path: '/management/candidate/'})
-          }
-        )
-      }
+        if(this.$route.name === 'management-candidate-add')
+        {
+          axios.post('http://127.0.0.1:8000/api/candidate/', this.form).then(function(response){}.bind(this)).then(
+            () => {
+              this.$router.push({path:'/management/candidate/'})
+            }
+          )
+        }
+        else
+        {
+          axios.put('http://127.0.0.1:8000/api/candidate/' + this.$route.params.id,this.form).then(function(response){}.bind(this)).then(
+            () => {
+              this.$router.push({path: '/management/candidate/'})
+            }
+          )
+        }
       }
     },
 

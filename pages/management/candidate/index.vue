@@ -78,6 +78,7 @@ export default {
   },
 
   methods: {
+    
     listData: function () {
       const url = 'http://127.0.0.1:8000/api/candidate'
       axios.get(url).then((response) => {

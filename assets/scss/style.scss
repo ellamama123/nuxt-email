@@ -21,3 +21,14 @@ a:hover {
     color: #fff;
     text-decoration: none;
 }
+
+.right {
+    text-align: right;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+}

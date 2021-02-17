@@ -1,56 +1,69 @@
 <template lang="">
   <div>
-    <CCardBody>
-      <CDataTable
-        :items="dataCandidate"
-        :fields="fields"
-        :tableFilter="{ label: 'Tìm kiếm', placeholder: 'Nhập tên' , key : 'name' }"
-        :items-per-page="5"
-        pagination
-      >
-        <template #send="{item}">
-        <td class="py-2">
-          <CInputCheckbox @change="check(item)" />
-        </td>
-      </template>
-      <template #show_details="{item, index}">
-        <td class="py-2">
-          <CButton
-            color="primary"
-            variant="outline"
-            square
-            size="sm"
-            @click="toggleDetails(item, index)"
-          >
-            {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
-          </CButton>
-        </td>
-      </template>
-      <template #details="{item}">
-        <CCollapse :show="Boolean(item._toggled)" >
-          <CCardBody>
-           {{changeText(dataMailThank.content,item.name)}}
-          </CCardBody>
-        </CCollapse>
-      </template>
-        <template #status="{item}">
-          <td>
-            {{getStatus(item.status)}}
-          </td>
-        </template>
-      </CDataTable>
-    </CCardBody>
-    <CButton
-      color="success" 
-      class="m-2"
-      @click="sendMail()"
-    >
-      GỬi
-    </CButton>
+    <CCard>
+      <CCardHeader>
+        <p class="center">Send Mail Thank</p>
+      </CCardHeader>
+      <CCardBody>
+        <CDataTable
+          :items="dataCandidate"
+          :fields="fields"
+          :tableFilter="{ label: 'Tìm kiếm', placeholder: 'Nhập tên' , key : 'name' }"
+          :items-per-page="5"
+          pagination
+        >
+          <template #send="{item}">
+            <td class="py-2">
+              <CInputCheckbox @change="check(item)" />
+            </td>
+          </template>
+          <template #show_details="{item, index}">
+            <td class="py-2">
+              <CButton
+                color="primary"
+                variant="outline"
+                square
+                size="sm"
+                @click="toggleDetails(item, index)"
+              >
+                {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
+              </CButton>
+            </td>
+          </template>
+          <template #details="{item}">
+            <CCollapse :show="Boolean(item._toggled)" >
+              <CCardBody>
+              {{changeText(dataMailThank.content,item.name)}}
+              </CCardBody>
+            </CCollapse>
+          </template>
+          <template #status="{item}">
+            <td>
+              {{getStatus(item.status)}}
+            </td>
+          </template>
+          <template #created_at="{item}">
+            <td>
+              {{convertDate(item.created_at)}}
+            </td>
+          </template>
+        </CDataTable>
+      </CCardBody>
+      <CCardFooter>
+        <CButton
+          color="success" 
+          class="m-2"
+          @click="sendMail()"
+        >
+           GỬi
+        </CButton>
+      </CCardFooter>
+    </CCard>
   </div>
 </template>
 <script>
 import axios from "axios"
+import moment from "moment"
 const fields = [
   {key : 'name',label :'Tên'},
   {key : 'phone',label :'Số điện thoại'},
@@ -137,6 +150,11 @@ export default {
     getStatus(status){
       if(status == 0) return 'Chưa gửi'
       else return 'Đã gửi'
+    },
+
+    convertDate(created){
+      created = moment(String(created)).format('DD/MM/YYYY')
+      return created
     }
   }
 }
