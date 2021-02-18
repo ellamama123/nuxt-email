@@ -1,5 +1,9 @@
 <template lang="">
   <div>
+  <CCard>
+    <CCardHeader>
+      <p class="center">Mail Hisotry List</p> 
+    </CCardHeader>
     <CCardBody>
       <CDataTable
         :items="dataHistory"
@@ -7,21 +11,29 @@
       >
         <template #candidate_id="{item}"> 
           <td> 
-            <CBadge>{{getCandidate(item.candidate_id)}}</CBadge>
+           {{item.candidate_id}}
           </td>
         </template>
         <template #category="{item}">
           <td>
-            <CBadge> {{getBadge(item.category)}}</CBadge>
+            {{item.template_id}}
           </td>
         </template>
         <template #position="{item}">
           <td>
-             {{getPosition(item.position)}}
+             {{item.position}}
+          </td>
+        </template>
+        <template #show="{item}">
+          <td>
+            <CButton color="primary" variant="outline" size="sm">
+              Show
+            </CButton>
           </td>
         </template>
       </CDataTable>
     </CCardBody>
+  </CCard>
   </div>
 </template>
 <script>
@@ -35,11 +47,8 @@ const fields = [
     label: 'Vị trí ứng tuyển'
   },
   { 
-    key: 'show_details', 
+    key: 'show', 
     label: '', 
-    _style: 'width:1%', 
-    sorter: false, 
-    filter: false
   }
 ]
 
@@ -50,27 +59,10 @@ export default {
     return {
       fields:fields,
       selected: [],
-      name : null,
     }
   },
 
   methods: {
-
-    getCandidate(item)
-    {
-       const url1 = 'http://127.0.0.1:8000/api/candidate/' + item
-       var name1 = ''
-        axios.get(url1).then((response) => {
-          name1 = response.data.name
-          console.log(name1)
-           
-      }).then(
-        ()=>{
-          return name1
-        }
-      )
-    },
-
     
   }
 }

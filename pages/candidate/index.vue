@@ -16,13 +16,13 @@
             </CRow>
           </CCardHeader>
           <CCardBody>
-            <search-table-candidate
+            <search-list-candidate
               @set-condition="getData"
-            ></search-table-candidate>
-            <table-candidate
-              :dataCandidate="dataCandidate"
+            ></search-list-candidate>
+            <list-candidate
+               :dataCandidate="dataCandidate"
               @refresh="fetchData()"
-            ></table-candidate>
+            ></list-candidate>
           </CCardBody>
         </CCard>
       </CCol>
@@ -30,20 +30,24 @@
   </div>
 </template>
 <script>
-import TableCandidate from "@/components/candidate/ListCandidate";
-import SearchTableCandidate from "@/components/candidate/SearchListCandidate";
+import ListCandidate from "@/components/candidate/ListCandidate";
+import SearchListCandidate from "@/components/candidate/SearchListCandidate";
 import axios from "axios";
+
 export default {
-  components: { TableCandidate, SearchTableCandidate },
+  
+  components: { ListCandidate, SearchListCandidate },
   data() {
     return {
       dataCandidate: [],
       cond: {},
     };
   },
+
   mounted() {
     this.fetchData();
   },
+
   methods: {
     fetchData: function() {
       axios
@@ -52,6 +56,7 @@ export default {
           this.dataCandidate = response.data;
         });
     },
+
     getData: function(value) {
       this.cond = value;
       this.fetchData();

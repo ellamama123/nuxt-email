@@ -15,8 +15,7 @@
         <td class="py-2">
           <CButton color="success">
             <nuxt-link :to="`/candidate/${item.id}`">
-              <CIcon name="cil-pencil" />
-              Edit
+              <CIcon :content="$options.pencil" />
             </nuxt-link>
           </CButton>
         </td>
@@ -24,7 +23,7 @@
       <template #delete="{item}">
         <td class="py-2">
           <CButton color="danger" @click="showModal(item.id)">
-            Xóa
+            <CIcon :content="$options.trash" />
           </CButton>
         </td>
       </template>
@@ -63,7 +62,7 @@
 </template>
 <script>
 import axios from "axios";
-import { cilPencil, cilSettings } from "@coreui/icons";
+import { cilPencil, cilTrash, cilSearch } from "@coreui/icons";
 import { LIST_POSITION } from "@/const/constdata";
 import { LIST_STATUS } from "@/const/constdata";
 import DeleteCandidate from "./DeleteCandidate.vue";
@@ -87,7 +86,8 @@ const fields = [
 
 export default {
   components: { DeleteCandidate },
-  icons: { cilPencil, cilSettings },
+  pencil: cilPencil,
+  trash: cilTrash,
   props: ["dataCandidate"],
   name: "AdvancedTables",
   data() {

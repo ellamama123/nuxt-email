@@ -1,54 +1,57 @@
 <template lang="">
   <div>
-    <CCard>
-      <CCardHeader>
-      <CRow>
-        <CCol lg="10 center">
-          List Email
-        </CCol>
-        <CCol lg="2 right" >
-          <CButton
-            color="success"
-            class="m-2"
-          >
-            <nuxt-link to="/templatemail/add">Add</nuxt-link>
+    <CDataTable
+      :items="dataTemplate"
+      :fields="fields"
+    >
+      <template #category="{item}">
+        <td>
+          {{getCategory(item.category)}}
+        </td>
+      </template>
+      <template #created_at="{item}">
+        <td>
+          {{convertDate(item.created_at)}}
+        </td>
+      </template>
+      <template #edit="{item}">  
+        <td class="py-2">
+          <CButton color="success">
+            <nuxt-link :to="`${item.id}`">
+              <template><CIcon :content="$options.pencil" /></template>
+            </nuxt-link>
           </CButton>
-        </CCol>
-      </CRow>
-        
-      </CCardHeader>
-      <CCardBody>
-        <CDataTable
-          :items="dataTemplate"
-          :fields="fields"
+        </td>
+      </template>
+      <template #delete="{item}"> 
+        <td class="py-2">
+          <CButton color="danger" @click="showModal(item.id)">
+            <template><CIcon :content="$options.trash" /></template>
+          </CButton>
+        </td>
+      </template>
+    </CDataTable>
+    <CModal title="Delete" color="warning" :show.sync="warningModal">
+      Do you want to delete?
+      <div slot="footer" class="w-100">
+        <CButton
+          style="border-radius: .2rem; color: white;"
+          color="danger"
+          class="ml-1 mr-1 float-right"
+          @click="warningModal = false"
         >
-          <template #category="{item}">
-            <td>
-              {{getCategory(item.category)}}
-            </td>
-          </template>
-          <template #created_at="{item}">
-            <td>
-              {{convertDate(item.created_at)}}
-            </td>
-          </template>
-          <template #edit="{item}">  
-            <td class="py-2">
-              <CButton color="success">
-                <nuxt-link :to="`${item.id}`">Edit</nuxt-link>
-              </CButton>
-            </td>
-          </template>
-          <template #delete="{item}"> 
-            <td class="py-2">
-              <CButton color="danger" @click="deleteTemplate(item)">
-                Delete
-              </CButton>
-            </td>
-          </template>
-        </CDataTable>
-      </CCardBody>
-    </CCard>
+          No
+        </CButton>
+        <CButton
+          style="border-radius: .2rem; color: white;"
+          color="danger"
+          class="ml-1 mr-1 float-right"
+          @click="deleteData(id)"
+        >
+          Yes
+        </CButton>
+      </div>
+    </CModal>
   </div>
 </template>
 
@@ -56,7 +59,7 @@
 import axios from "axios"
 import moment from 'moment'
 import {LIST_CATEGORY} from '@/const/constdata'
-
+import { cilPencil, cilTrash } from '@coreui/icons'
 const fields = [
   {key : 'name',label :'Name'},
   {key: 'category', label: 'Category Mail'},
@@ -72,6 +75,9 @@ const fields = [
 ]
 
 export default {
+
+   pencil: cilPencil,
+   trash: cilTrash,
   props: ['dataTemplate'],
 
   name: 'AdvancedTables',
@@ -80,6 +86,8 @@ export default {
       fields:fields,
       selected: [],
       LIST_CATEGORY,
+      id: 0,
+      warningModal:false,
     }
   },
 
@@ -102,15 +110,16 @@ export default {
       this.$nextTick(() => { this.collapseDuration = 0 })
     },
 
-    deleteTemplate(item){
-      if(confirm("Bạn có muốn xóa không?")){
-        axios.delete('http://127.0.0.1:8000/api/template/' + item.id).then((response) => {
-          this.dataTemplate.splice(item.id,1)
-          this.$emit('refresh')
-        }).then(() => {
-            this.$router.push({path: '/templatemail/'})
-          })
-      }
+    showModal(item){
+      this.id = item
+      this.warningModal = true
+    },
+
+    deleteData: function(id) {
+      axios.delete("http://127.0.0.1:8000/api/template/" + id).then((res) => {
+        this.warningModal = false;
+        this.$emit("refresh", res);
+      });
     },
 
     convertDate(created){

@@ -14,9 +14,7 @@ export default {
       warningModal: false,
     };
   },
-  mounted() {
-    console.log(this.delCandidate);
-  },
+  
   methods: {
 
   },
