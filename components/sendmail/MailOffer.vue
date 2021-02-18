@@ -121,7 +121,6 @@ export default {
   props: ["dataCandidate"],
   data() {
     return {
-      dataCandidate: [],
       fields: fields,
       dataSend: [],
       date: null,

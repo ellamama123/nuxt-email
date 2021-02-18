@@ -1,6 +1,12 @@
 <template lang="">
   <div>
-    <CDataTable :items="dataCandidate" :fields="fields">
+    <CDataTable
+      :items="dataCandidate"
+      :fields="fields"
+      items-per-page-select
+      :items-per-page="5"
+      pagination
+    >
       <template #position="{item}">
         <td>
           {{ getPosition(item.position) }}
@@ -85,22 +91,25 @@ const fields = [
 ];
 
 export default {
+
   components: { DeleteCandidate },
   pencil: cilPencil,
   trash: cilTrash,
+  
   props: ["dataCandidate"],
   name: "AdvancedTables",
+
   data() {
     return {
       LIST_POSITION,
       LIST_STATUS,
-      dataCandidate: [],
       fields: fields,
       pos: "",
       warningModal: false,
       id: 0,
     };
   },
+
   methods: {
     getPosition(position) {
       for (const pos of this.LIST_POSITION) {
@@ -110,6 +119,7 @@ export default {
         }
       }
     },
+
     getStatus(status) {
       for (const sta of this.LIST_STATUS) {
         if (status == sta.value) {
@@ -117,16 +127,19 @@ export default {
         }
       }
     },
+
     convertDate(created) {
       created = moment(String(created)).format("DD/MM/YYYY");
       return created;
     },
+
     deleteData: function(id) {
       axios.delete("http://127.0.0.1:8000/api/candidate/" + id).then((res) => {
         this.warningModal = false;
         this.$emit("refresh", res);
       });
     },
+
     showModal(item) {
       this.id = item;
       this.warningModal = true;

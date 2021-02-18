@@ -39,10 +39,10 @@
 
       </CRow>
       <div class="button-center">
-                <CButton type="submit" size="sm" color="success" @click="searchCandidate(name,mail,phone,date,status,position)"><CIcon :content="$options.search" /> Tìm kiếm</CButton>
-                <CButton type="reset" size="sm" color="danger"><CIcon :content="$options.refresh" /> Làm mới</CButton>
-            </div>     
-          </CCardBody>
+          <CButton type="submit" size="sm" color="success" @click="searchCandidate(name,mail,phone,date,status,position)"><CIcon :content="$options.search" /> Tìm kiếm</CButton>
+          <CButton type="reset" size="sm" color="danger" @click="refreshCandidate()"><CIcon :content="$options.refresh" /> Làm mới</CButton>
+      </div>     
+    </CCardBody>
   </div>
 </template>
 <script>
@@ -66,9 +66,9 @@ export default {
       date : '',
       status : -1,
       position : 0,
-      dataCandidate : []
     }
    },
+
    methods : {
      searchCandidate : function(name,mail,phone,date,status,position)
      {
@@ -80,8 +80,26 @@ export default {
           status,
           position ,
        }
-       this.$emit('set-condition',cond)
-       
+       this.$emit('set-condition',cond)      
+     },
+
+     refreshCandidate : function(name,mail,phone,date,status,position)
+     {
+       const cond = {
+          name,
+          mail ,
+          phone ,
+          date,
+          status,
+          position ,
+       }
+        this.$emit('set-condition',cond) 
+        this.name = ''  
+        this.mail = '',
+        this.phone = '',
+        this.date = '',
+        this.status = -1,
+        this.position = 0  
      },
    }
 }

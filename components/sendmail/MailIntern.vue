@@ -8,11 +8,6 @@
         <CDataTable
           :items="dataCandidate"
           :fields="fields"
-          :tableFilter="{
-            label: 'Tìm kiếm',
-            placeholder: 'Nhập tên',
-            key: 'name',
-          }"
           :items-per-page="5"
           pagination
         >
@@ -94,10 +89,12 @@ const fields = [
 ];
 
 export default {
+
+  props: ['dataCandidate'],
+
   name: "AdvancedTables",
   data() {
     return {
-      dataCandidate: [],
       fields: fields,
       dataSend: [],
       dateTime: null,

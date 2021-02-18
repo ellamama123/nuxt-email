@@ -80,7 +80,6 @@ export default {
   props: ["dataCandidate"],
   data() {
     return {
-      dataCandidate: [],
       fields: fields,
       dataMailThank: "",
       dataSend: [],
