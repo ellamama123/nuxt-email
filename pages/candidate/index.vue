@@ -5,23 +5,24 @@
         <CCard>
           <CCardHeader>
             <CRow>
-              <CCol sm="10">
-                <CBadge color="primary">Danh sách ứng viên</CBadge>
+              <CCol sm="11">
+                <CBadge color="primary">List Candidate</CBadge>
               </CCol>
-              <CCol sm="2">
-                <CButton
-                  color="success"
-                  class="m-2"
-                  size="sm"
-                >
-                  <nuxt-link to="/candidate/add"> + Thêm mới</nuxt-link>
+              <CCol sm="1">
+                <CButton color="success" class="m-2" size="sm">
+                  <nuxt-link to="/candidate/add"> + Add</nuxt-link>
                 </CButton>
               </CCol>
             </CRow>
           </CCardHeader>
           <CCardBody>
-            <search-list-candidate></search-list-candidate>
-            <list-candidate :dataCandidate="dataCandidate" @refresh="fetchData()"></list-candidate>
+            <search-table-candidate
+              @set-condition="getData"
+            ></search-table-candidate>
+            <table-candidate
+              :dataCandidate="dataCandidate"
+              @refresh="fetchData()"
+            ></table-candidate>
           </CCardBody>
         </CCard>
       </CCol>
@@ -29,26 +30,32 @@
   </div>
 </template>
 <script>
-import ListCandidate from '@/components/candidate/ListCandidate'
-import SearchListCandidate from '@/components/candidate/SearchListCandidate'
+import TableCandidate from "@/components/candidate/ListCandidate";
+import SearchTableCandidate from "@/components/candidate/SearchListCandidate";
 import axios from "axios";
 export default {
-  components: {ListCandidate,SearchListCandidate},
+  components: { TableCandidate, SearchTableCandidate },
   data() {
     return {
-      dataCandidate : []   
-   }
+      dataCandidate: [],
+      cond: {},
+    };
   },
   mounted() {
-    this.fetchData()
+    this.fetchData();
   },
   methods: {
     fetchData: function() {
-      const url =  'http://127.0.0.1:8000/api/candidate'
-      axios.get(url).then((response) => {
-        this.dataCandidate = response.data
-      })
+      axios
+        .get("http://127.0.0.1:8000/api/candidate", { params: this.cond })
+        .then((response) => {
+          this.dataCandidate = response.data;
+        });
+    },
+    getData: function(value) {
+      this.cond = value;
+      this.fetchData();
     },
   },
-}
+};
 </script>

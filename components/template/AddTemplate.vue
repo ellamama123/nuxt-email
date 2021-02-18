@@ -8,7 +8,7 @@
       <CRow>
         <CCol sm="12">
           <CInput
-            label="Tên"
+            label="Name"
             placeholder="Enter your name"
             v-model="form.name"
           />
@@ -17,7 +17,7 @@
       <CRow>
         <CCol sm="12">
           <CTextarea
-          label="Nội dung"
+          label="Content"
           row="10"
           v-model="form.content"
           >
@@ -27,7 +27,7 @@
       <CRow>
         <CCol sm="4">
           <CSelect
-            label="Loại mail"
+            label="Category mail"
             :options="LIST_CATEGORY"
           :value.sync="form.category"
         />
@@ -35,11 +35,11 @@
       </CRow>
     </CCardBody>
     <CCardFooter>
-      <CButton color="success" class="btn-click" @click="add()">
-        Gửi
+      <CButton color="success" class="btn-click" @click="submidForm()">
+        Submit
       </CButton>
       <CButton color="primary" @click="$router.go(-1)" >
-        Quay lại
+        Come Back
       </CButton>
     </CCardFooter>
   </CCard>
@@ -70,46 +70,45 @@ export default {
   },
 
   mounted() {
-    if(this.$route.name !== 'templatemail-add'){
-      this.list()
+    if(this.$route.params.id){
+      this.getDetail()
     }
   },
   
   methods:{
-    add(){
+    
+    submidForm(){
+      const base_url = 'http://127.0.0.1:8000/api/template/'
       this.errors = []
       Object.entries(this.form).forEach(([key, value]) => {
         if (!value ) {
           this.errors.push('Dữ liệu ' + key + ' rỗng')
         }
       });
-      console.log(this.errors)
       if (!this.errors.length) {
-      if(this.$route.name === 'templatemail-add')
-      {
-        axios.post('http://127.0.0.1:8000/api/template/', this.form).then(function(response) {}.bind(this)).then(
-          () => {
-            this.$router.push({path: '/templatemail/'})
-          }
-        )
+        if(this.$route.params.id)
+        {
+          axios.put(base_url + this.$route.params.id, this.form).then(function(response) {}).then(
+            () => {
+              this.$router.push({path: '/templatemail/'})
+            }
+          )
+        }
+        else
+        {
+          axios.post(base_url, this.form).then(function(response){}).then(
+            () => {
+              this.$router.push({path: '/templatemail/'})
+            }
+          )
+        }
       }
-      else
-      {
-        axios.put('http://127.0.0.1:8000/api/template/' + this.$route.params.id, this.form).then(function(response){
-
-        }.bind(this)).then(
-          () => {
-            this.$router.push({path: '/templatemail/'})
-          }
-        )
-      }
-      }
-      
     },
-    list(){
-            axios.get('http://127.0.0.1:8000/api/template/' + this.$route.params.id) .then((response) => {
-                this.form = response.data
-            })            
+
+    getDetail(){
+      axios.get('http://127.0.0.1:8000/api/template/' + this.$route.params.id) .then((response) => {
+          this.form = response.data
+      })
     },
   },
 }

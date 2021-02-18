@@ -11,7 +11,7 @@
             color="success"
             class="m-2"
           >
-            <nuxt-link to="/templatemail/add">Thêm mới</nuxt-link>
+            <nuxt-link to="/templatemail/add">Add</nuxt-link>
           </CButton>
         </CCol>
       </CRow>
@@ -24,7 +24,7 @@
         >
           <template #category="{item}">
             <td>
-              <CBadge>{{getBadge(item.category)}}</CBadge>
+              {{getCategory(item.category)}}
             </td>
           </template>
           <template #created_at="{item}">
@@ -35,14 +35,14 @@
           <template #edit="{item}">  
             <td class="py-2">
               <CButton color="success">
-                <nuxt-link :to="`${item.id}`">Sửa</nuxt-link>
+                <nuxt-link :to="`${item.id}`">Edit</nuxt-link>
               </CButton>
             </td>
           </template>
           <template #delete="{item}"> 
             <td class="py-2">
               <CButton color="danger" @click="deleteTemplate(item)">
-                Xóa
+                Delete
               </CButton>
             </td>
           </template>
@@ -55,18 +55,19 @@
 <script>
 import axios from "axios"
 import moment from 'moment'
+import {LIST_CATEGORY} from '@/const/constdata'
+
 const fields = [
-  {key : 'name',label :'Tên'},
-  {key: 'category', label: 'Loại mail'},
-  {key: 'content', label: 'Nội dung'},
-  {key: 'created_at', label: 'Ngày tạo'},
+  {key : 'name',label :'Name'},
+  {key: 'category', label: 'Category Mail'},
+  {key: 'created_at', label: 'Created'},
   {
     key: 'edit',
-    label: 'Sửa'
+    label: 'Edit'
   },
   {
     key: 'delete',
-    label: 'Xóa',
+    label: 'Delete',
   },
 ]
 
@@ -78,14 +79,20 @@ export default {
     return {
       fields:fields,
       selected: [],
+      LIST_CATEGORY,
     }
   },
 
   methods: {
-    getBadge(status) {
-      if(status ==1) return 'Mail Cảm Ơn'
-      else if(status == 2) return 'Mail Phỏng Vấn'
-      else return 'Mail Off'
+
+    getCategory(status){
+      for(const sta of this.LIST_CATEGORY)
+      {
+        if(status == sta.value)
+        {
+          return sta.label
+        }
+      }
     },
 
     toggleDetails(item) {

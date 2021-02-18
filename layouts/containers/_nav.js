@@ -54,41 +54,5 @@ export default [{
             route: '/candidate/',
             to: '/candidate/'
         },
-        {
-            _name: 'CSidebarNavTitle',
-            _children: ['Components']
-        },
-
-        {
-            _name: 'CSidebarNavTitle',
-            _children: ['Extras']
-        },
-        {
-            _name: 'CSidebarNavDropdown',
-            name: 'Pages',
-            route: '/pages',
-            icon: 'cil-star',
-            items: [{
-                    name: 'Login',
-                    to: '/pages/login',
-                    icon: 'cil-star'
-                },
-                {
-                    name: 'Register',
-                    to: '/pages/register',
-                    icon: 'cil-star'
-                },
-                {
-                    name: 'Error 404',
-                    to: '/pages/404',
-                    icon: 'cil-star'
-                },
-                {
-                    name: 'Error 500',
-                    to: '/pages/500',
-                    icon: 'cil-star'
-                }
-            ]
-        }
     ]
 }]

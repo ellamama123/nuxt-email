@@ -14,38 +14,20 @@
         >
           <template #position="{item}">
             <td>
-              <CBadge>{{getBadge(item.position)}}</CBadge>
+              {{getPosition(item.position)}}
             </td>
           </template>  
-          <template #send="{item}">
-            <td class="py-2">
-              <CInputCheckbox @change="check(item)" />
-            </td>
-          </template>
           <template #dateTime="{item}">
             <td>
-              <CInput type="datetime-local" name="dateTime" v-model="item.dateTime" />
+              <CInput type="datetime-local" name="dateTime" v-model="item.dateTime" @change="check(item)"/>
             </td>
           </template>
-          <template #show_details="{item, index}">
-            <td class="py-2">
-              <CButton
-                color="primary"
-                variant="outline"
-                square
-                size="sm"
-                @click="toggleDetails(item, index)"
-              >
-                {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
+          <template #show="{item}">
+            <td>
+              <CButton color="primary" variant="outline" size="sm" @click="showModal(item)">
+                Show
               </CButton>
             </td>
-          </template>
-          <template #details="{item}">
-            <CCollapse :show="Boolean(item._toggled)" >
-              <CCardBody>
-                {{changeText(dataMailIntern.content, item.name, item.dateTime,getBadge(item.position))}}
-              </CCardBody>
-            </CCollapse>
           </template>
           <template #status="{item}">
             <td>
@@ -65,10 +47,13 @@
           class="m-2"
           @click="sendMail()"
         >
-          GỬi
+          Send
         </CButton>
       </CCardFooter>
     </CCard>
+    <CModal title="Detail Content Mail" color="success" :show.sync="warningModal">
+      {{content}}
+    </CModal>
   </div>
 </template>
 
@@ -76,29 +61,24 @@
 
 import axios from "axios"
 import moment from 'moment'
+import {LIST_POSITION} from '@/const/constdata'
+import {LIST_STATUS} from '@/const/constdata'
 
 const fields = [
-  {key : 'name',label :'Tên'},
-  {key : 'phone',label :'Số điện thoại'},
+  {key : 'name',label :'Name'},
+  {key : 'phone',label :'Phone'},
   {key : 'email',label :'Email'},
-  {key : 'position',label :'Vị trí ứng tuyển'},
-  {key : 'status',label :'Trạng thái'},
-  {key : 'created_at',label :'Ngày tiếp nhận'},
+  {key : 'position',label :'Position'},
+  {key : 'status',label :'Status'},
+  {key : 'created_at',label :'Day Reception'},
   {
     key: 'dateTime',
-    label: 'Lịch phỏng vấn'
-  },  
-  {
-    key : 'send',
+    label: 'interview schedule'
   },
   { 
-    key: 'show_details', 
+    key: 'show', 
     label: '', 
-    _style: 'width:1%', 
-    sorter: false, 
-    filter: false
   }
-  
 ];
 
 
@@ -111,6 +91,10 @@ export default {
       dataSend : [],
       dateTime: null,
       dataMailIntern: '',
+      LIST_POSITION,
+      LIST_STATUS,
+      warningModal: false,
+      content: '',
     }
   },
   mounted () {
@@ -119,7 +103,7 @@ export default {
   },
   methods: {
     listData: function () {
-      const url = 'http://127.0.0.1:8000/api/candidate?status=0'
+      const url = 'http://127.0.0.1:8000/api/candidate'
       axios.get(url).then((response) => {
         this.dataCandidate = response.data
       })
@@ -137,16 +121,17 @@ export default {
       for(const [key,value] of Object.entries(this.dataSend))
       {
         value['template_id'] = this.dataMailIntern['category']
-        value['content'] = this.changeText(this.dataMailIntern['content'], value['name'],value['dateTime'], this.getBadge(value['position']))
-        value['position'] = this.getBadge(value['position'])
-        value['datetime_interview'] = value.dateTime,
+        value['content'] = this.changeText(this.dataMailIntern['content'], value['name'],value['dateTime'], this.getPosition(value['position']))
+        value['datetime_interview'] = value.dateTime
 
-        axios.post('http://127.0.0.1:8000/api/send-mailIntern', value).then((response) => {
-          axios.put('http://127.0.0.1:8000/api/candidate/' + value.id + '?status=1')
-          axios.post('http://127.0.0.1:8000/api/history?candidate_id=' + value.id,value)
-          this.$router.go(this.$router.currentRoute)
-           alert('Gửi mail thành công')
-        })
+        if(!value.dateTime){
+          console.log('loi')
+        }
+        else{
+          axios.post('http://127.0.0.1:8000/api/send-mailIntern', value).then((response) => {
+            axios.post('http://127.0.0.1:8000/api/history?candidate_id=' + value.id,value).then((response) => {})
+          })
+        }
       }
     },
 
@@ -154,32 +139,45 @@ export default {
       this.dataSend.push(item)
     },
 
-    getBadge(status) {
-      if(status == 1) return 'C#'
-      else if(status == 2) return 'PHP'
-      else return 'Tester'
-    },
-
-    toggleDetails (item,index) {
-      this.$set(this.dataCandidate[index], '_toggled', !item._toggled)
-      this.collapseDuration = 300
-      this.$nextTick(() => { this.collapseDuration = 0})
+    getPosition(position){
+      for(const pos of this.LIST_POSITION)
+      {
+        if(position == pos.value)
+        {
+          return pos.label
+        }
+      }
     },
     
     changeText: function(content,name,dateTime,position){
-      dateTime = moment(String(dateTime)).format('DD/MM/YYYY hh:mm')
-      content = content.replace('[Name]', name).replace('[dateTime]',dateTime).replace('[Position]', position)
-      return content
+      if(!dateTime){
+        return content
+      }
+      else{
+        dateTime = moment(String(dateTime)).format('DD/MM/YYYY hh:mm')
+        content = content.replace('[Name]', name).replace('[dateTime]',dateTime).replace('[Position]', position)
+        return content
+      }
     },
 
     getStatus(status){
-      if(status == 0) return 'Chưa gửi'
-      else return 'Đã gửi'
+      for(const sta of this.LIST_STATUS)
+      {
+        if(status == sta.value)
+        {
+          return sta.label
+        }
+      }
     },
 
     convertDate(created){
       created = moment(String(created)).format('DD/MM/YYYY')
       return created
+    },
+
+    showModal(item){
+      this.content = this.changeText(this.dataMailIntern['content'], item.name, item.dateTime, item.position)
+      this.warningModal = true
     }
   }
 }

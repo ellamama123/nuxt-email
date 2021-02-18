@@ -1,59 +1,69 @@
 <template lang="">
   <div>
-    <CRow>
-      <CCol sm="12">
-        <CInput
-          label="Tên ứng viên"
-          placeholder="Enter your name"
-          v-model="form.name"
-        />
-      </CCol>
-    </CRow>
-    <CRow>
-      <CCol sm="12">
-        <CInput
-         label="Điện thoại"
-         placeholder="Nhập số điện thoại"
-         v-model="form.phone"
-        >
-        </CInput>
-      </CCol>
-    </CRow>
-    <CRow>
-      <CCol sm="12">
-        <CInput
-         label="Email"
-         placeholder="Nhập email"
-         type="email"
-         v-model="form.email"
-        >
-        </CInput>
-      </CCol>
-    </CRow>
-     <CRow>
-      <CCol sm="4">
-        <CSelect
-          label="Vị trí"
-          :options="LIST_POSITION"
-          :value.sync="form.position"
-        />
-      </CCol>
-    </CRow>
+    <CCard>
+      <CCardHeader>
+        Candidate Management
+      </CCardHeader>
+      <CCardBody>
+        <CRow>
+          <CCol sm="12">
+            <CInput
+              label="Name"
+              placeholder="Enter your name"
+              v-model="form.name"
+            />
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol sm="12">
+            <CInput
+            label="Phone"
+            placeholder="Phone"
+            v-model="form.phone"
+            >
+            </CInput>
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol sm="12">
+            <CInput
+            label="Email"
+            placeholder="Email"
+            type="email"
+            v-model="form.email"
+            >
+            </CInput>
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol sm="4">
+            <CSelect
+              label="Position"
+              :options="LIST_POSITION"
+              :value.sync="form.position"
+            />
+          </CCol>
+        </CRow>
+      </CCardBody>
+      <CCardFooter>
+          <div v-if="errors && errors.length ">
+          <div
+            v-for="error in errors"
+            :key="error"
+          >
+            <p class="alert alert-warning">{{ error }}</p>
+          </div>
+        </div>
+        <CButton color="success" class="btn-click" @click="submitForm">
+          Send
+        </CButton>
+        <CButton color="primary" @click="$router.go(-1)" >
+          Go back
+        </CButton>
+      </CCardFooter>
+    </CCard>
     
-    <div v-if="errors && errors.length ">
-      <div
-        v-for="error in errors"
-        :key="error"
-      >
-        <p class="alert alert-warning">{{ error }}</p>
-      </div>
-    </div>
-    <CButton color="success" class="btn-click" @click="add">
-      Gửi
-    </CButton>
-    <CButton color="primary" @click="$router.go(-1)" >
-      Quay lại
-    </CButton>
+    
   </div>
 </template>
 <script>
@@ -69,47 +79,41 @@ export default {
                 'name' : '',
                 'phone' : '',
                 'email' : '',
-                'position' : 0,
+                'position' : 1,
             },
       errors : []
     }
   },
-
   mounted() {
-    if(this.$route.name !== 'candidate-add')
-      this.list()
+    if(this.$route.params.id)
+      this.getDetail()
   },
-  
   methods:{
-    add(){
+    submitForm(){
       this.errors = []
       Object.entries(this.form).forEach(([key, value]) => {
-        if (!value && value != 0) {
+        if (!value) {
           this.errors.push('Dữ liệu ' + key + ' rỗng')
         }
       });
-      
       if (!this.errors.length) {
-        if(this.$route.name === 'candidate-add')
-        {
-          axios.post('http://127.0.0.1:8000/api/candidate/', this.form).then(function(response){}.bind(this)).then(
-            () => {
-              this.$router.push({path:'/candidate/'})
-            }
-          )
-        }
-        else
-        {
-          axios.put('http://127.0.0.1:8000/api/candidate/' + this.$route.params.id,this.form).then(function(response){}.bind(this)).then(
-            () => {
-              this.$router.push({path: '/candidate/'})
-            }
-          )
-        }
+      if(!this.$route.params.id)
+      {
+         axios.post('http://127.0.0.1:8000/api/candidate/', this.form).then(function(response){}.bind(this)).then(() => {
+             this.$router.push({path:'/candidate/'})
+           }
+         )
+      }
+      else
+      {
+        axios.put('http://127.0.0.1:8000/api/candidate/' + this.$route.params.id,this.form).then(function(response){}.bind(this)).then(() => {
+            this.$router.push({path: '/candidate/'})
+          }
+        )
+      }
       }
     },
-
-    list(){
+    getDetail(){
             axios.get('http://127.0.0.1:8000/api/candidate/' + this.$route.params.id) .then((response) => {
                 this.form = response.data
             })            

@@ -6,7 +6,8 @@
 <script>
 
 import axios from "axios"
-import ListTemplate from '@/components/template/ListTemplate'
+import {ListTemplate} from '@/components/template/ListTemplate'
+
 export default {
   data(){
     return{

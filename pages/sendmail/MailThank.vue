@@ -29,12 +29,10 @@
           </template>
           <template #show="{item}">
             <td>
-              <CButton color="primary" variant="outline" size="sm"  @click="warningModal = true">
+              <CButton color="primary" variant="outline" size="sm"  @click="showModal(item)">
                 Show
               </CButton>
-              <CModal title="Detail Content Mail" color="success" :show.sync="warningModal">
-                {{changeText(dataMailThank.content,item.name)}}
-              </CModal>
+              
             </td>
           </template>
         </CDataTable>
@@ -45,10 +43,13 @@
           class="m-2"
           @click="sendMail()"
         >
-           GỬi
+           Send
         </CButton>
       </CCardFooter>
     </CCard>
+    <CModal title="Detail Content Mail" color="success" :show.sync="warningModal" >
+        {{content}}
+    </CModal>
   </div>
 </template>
 
@@ -56,13 +57,14 @@
 
 import axios from "axios"
 import moment from "moment"
+import {LIST_STATUS} from '@/const/constdata'
 
 const fields = [
-  {key : 'name',label :'Tên'},
-  {key : 'phone',label :'Số điện thoại'},
+  {key : 'name',label :'Name'},
+  {key : 'phone',label :'Phone'},
   {key : 'email',label :'Email'},
-  {key : 'status',label :'Trạng thái'},
-  {key : 'created_at',label :'Ngày tiếp nhận'},
+  {key : 'status',label :'Status'},
+  {key : 'created_at',label :'Day Reception'},
   {
     key : 'send',
   },
@@ -83,6 +85,8 @@ export default {
       dataMailThank : '',
       dataSend : [],
       warningModal: false,
+      LIST_STATUS,
+      content: '',
     }
   },
 
@@ -93,7 +97,7 @@ export default {
 
   methods: {
     listData: function () {
-      const url = 'http://127.0.0.1:8000/api/candidate?status=0'
+      const url = 'http://127.0.0.1:8000/api/candidate'
       axios.get(url).then((response) => {
         this.dataCandidate = response.data
       })
@@ -110,15 +114,10 @@ export default {
     {
       for(const [key,value] of Object.entries(this.dataSend))
       {
-        value['content'] =  changeText(this.dataMailThank['content'],value['content'])
+        value['content'] =  this.changeText(this.dataMailThank['content'],value['name'])
         value['template_id'] = this.dataMailThank['category']
         axios.post('http://127.0.0.1:8000/api/send-mail',value).then((response) => {
-          axios.put('http://127.0.0.1:8000/api/candidate/'+value.id+'?status=1').then((response) => {
-            axios.post('http://127.0.0.1:8000/api/history?candidate_id='+value.id,value).then((response) => {
-               this.$router.go(this.$router.currentRoute)
-                alert('Gửi mail thành công')
-            })
-          })
+           axios.post('http://127.0.0.1:8000/api/history?candidate_id='+value.id,value).then((response) => {})
         })
       }
     },
@@ -133,8 +132,13 @@ export default {
     },
 
     getStatus(status){
-      if(status == 0) return 'Chưa gửi'
-      else return 'Đã gửi'
+      for(const sta of this.LIST_STATUS)
+      {
+        if(status == sta.value)
+        {
+          return sta.label
+        }
+      }
     },
 
     convertDate(created){
@@ -143,8 +147,9 @@ export default {
     },
 
     showModal(item){
-      console.log(item.id)
-    }
+      this.content = this.changeText(this.dataMailThank['content'], item.name)
+      this.warningModal = true
+    },
   }
 }
 </script>

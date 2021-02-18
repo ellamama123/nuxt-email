@@ -14,12 +14,12 @@
         >
           <template #send="{item}">
             <td class="py-2">
-              <CInputCheckbox @change="check(item)" />
+              <CInputCheckbox  />
             </td>
           </template>
           <template #date="{item}">
             <td>
-              <CInput type="date" name="date" v-model="item.date" />
+              <CInput type="date" name="date" v-model="item.date" @change="check(item)"/>
             </td>
           </template>
           <template #salary="{item}">
@@ -27,29 +27,10 @@
               <CInput  v-model="item.salary" />
             </td>
           </template>
-          <template #show_details="{item, index}">
-            <td class="py-2">
-              <CButton
-                color="primary"
-                variant="outline"
-                square
-                size="sm"
-                @click="toggleDetails(item, index)"
-              >
-                {{Boolean(item._toggled) ? 'Hide' : 'Show'}}
-              </CButton>
-            </td>
-          </template>
-          <template #details="{item}">
-            <CCollapse :show="Boolean(item._toggled)" >
-              <CCardBody>
-                {{changeText(dataMailOffer.content, item.name, item.date,getBadge(item.position), item.salary)}}
-              </CCardBody>
-            </CCollapse>
-          </template>
+
           <template #position="{item}">
             <td>
-              <CBadge>{{getBadge(item.position)}}</CBadge>
+              {{getPosition(item.position)}}
             </td>
           </template>
           <template #status="{item}">
@@ -62,6 +43,13 @@
               {{convertDate(item.created_at)}}
             </td>
           </template>
+          <template #show="{item}">
+            <td>
+              <CButton color="primary" variant="outline" size="sm" @click="showModal(item)">
+                Show
+              </CButton>
+            </td>
+          </template>
         </CDataTable>
       </CCardBody>
       <CCardFooter>
@@ -70,7 +58,7 @@
           class="m-2"
           @click="sendMail()"
         >
-          GỬi
+          Send
         </CButton>
       </CCardFooter>
     </CCard>
@@ -82,6 +70,9 @@
         <p class="alert alert-warning">{{ error }}</p>
       </div>
     </div>
+    <CModal title="Detail Content Mail" color="success" :show.sync="warningModal" >
+        {{content}}
+    </CModal>
   </div>
 </template>
 
@@ -89,31 +80,30 @@
 
 import axios from "axios"
 import moment from 'moment'
+import {LIST_POSITION} from '@/const/constdata'
+import {LIST_STATUS} from '@/const/constdata'
 
 const fields = [
-  {key : 'name',label :'Tên'},
-  {key : 'phone',label :'Số điện thoại'},
+  {key : 'name',label :'Name'},
+  {key : 'phone',label :'Phone'},
   {key : 'email',label :'Email'},
-  {key : 'position',label :'Vị trí ứng tuyển'},
-  {key : 'status',label :'Trạng thái'},
-  {key : 'created_at',label :'Ngày tiếp nhận'},
+  {key : 'position',label :'Position'},
+  {key : 'status',label :'Status'},
+  {key : 'created_at',label :'Day Reception'},
   {
     key: 'date',
-    label: 'Lịch phỏng vấn'
+    label: 'interview schedule'
   },
   {
     key: 'salary',
-    label: 'Lương',
+    label: 'Salary',
   },
   {
     key : 'send',
   },
   { 
-    key: 'show_details', 
+    key: 'show', 
     label: '', 
-    _style: 'width:1%', 
-    sorter: false, 
-    filter: false
   }
 ];
 
@@ -129,6 +119,10 @@ export default {
       dataMailOffer: '',
       salary: '',
       errors: [],
+      LIST_POSITION,
+      LIST_STATUS,
+      content: '',
+      warningModal: false,
     }
   },
 
@@ -139,7 +133,7 @@ export default {
 
   methods: {
     listData: function () {
-      const url = 'http://127.0.0.1:8000/api/candidate?status=0'
+      const url = 'http://127.0.0.1:8000/api/candidate'
       axios.get(url).then((response) => {
         this.dataCandidate = response.data
       })
@@ -160,17 +154,16 @@ export default {
         if(!value.date || !value.salary){
           this.errors.push('Phải nhập đầy đủ dữ liệu')
         }
-        value['template_id'] = this.dataMailOffer['category']
-        value['content'] = this.changeText(this.dataMailOffer['content'],value['name'], value['date'], this.getBadge(value['position']), value['salary'])
-        value['date_work'] = value.date,
-        value['salary'] = value.salary
+        else{
+          value['template_id'] = this.dataMailOffer['category']
+          value['content'] = this.changeText(this.dataMailOffer['content'],value['name'], value['date'], this.getPosition(value['position']), value['salary'])
+          value['date_work'] = value.date,
+          value['salary'] = value.salary
 
-      axios.post('http://127.0.0.1:8000/api/send-mailOffer', value).then((response) => {
-        axios.put('http://127.0.0.1:8000/api/candidate/' + value.id + '?status=1')
-        axios.post('http://127.0.0.1:8000/api/history?candidate_id=' + value.id,value)
-        this.$router.go(this.$router.currentRoute)
-        alert('Gửi mail thành công')
-      })
+          axios.post('http://127.0.0.1:8000/api/send-mailOffer', value).then((response) => {
+            axios.post('http://127.0.0.1:8000/api/history?candidate_id=' + value.id,value)
+          })
+        }
       }
     },
 
@@ -178,26 +171,39 @@ export default {
       this.dataSend.push(item)
     },
 
-    toggleDetails (item,index) {
-      this.$set(this.dataCandidate[index], '_toggled', !item._toggled)
-      this.collapseDuration = 300
-      this.$nextTick(() => { this.collapseDuration = 0})
+    showModal(item){
+      this.content = this.changeText(this.dataMailOffer['content'], item.name, item.date, item.position, item.salary)
+      this.warningModal = true
     },
     
     changeText: function(content,name,date,position,salary){
-      content = content.replace('[Name]', name).replace('[date]',this.convertDate(date)).replace('[Position]', position).replace('[salary]', salary)
-      return content
+      if(!date && !salary){
+        return content
+      }
+      else{
+        content = content.replace('[Name]', name).replace('[date]',this.convertDate(date)).replace('[Position]', position).replace('[salary]', salary)
+        return content
+      }
     },
 
-    getBadge(status) {
-      if(status == 1) return 'C#'
-      else if(status == 2) return 'PHP'
-      else return 'Tester'
+    getPosition(position){
+      for(const pos of this.LIST_POSITION)
+      {
+        if(position == pos.value)
+        {
+          return pos.label
+        }
+      }
     },
 
     getStatus(status){
-      if(status == 0) return 'Chưa gửi'
-      else return 'Đã gửi'
+      for(const sta of this.LIST_STATUS)
+      {
+        if(status == sta.value)
+        {
+          return sta.label
+        }
+      }
     },
 
     convertDate(created){
