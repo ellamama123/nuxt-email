@@ -1,24 +1,20 @@
 <template lang="">
   <div>
     <CCard>
-      <CCardHeader>
-        <p class="center">Send Mail Offer</p>
-      </CCardHeader>
       <CCardBody>
         <CDataTable
           :items="dataCandidate"
           :fields="fields"
-          :tableFilter="{
-            label: 'Tìm kiếm',
-            placeholder: 'Nhập tên',
-            key: 'name',
-          }"
           :items-per-page="5"
           pagination
         >
           <template #send="{item}">
-            <td class="py-2">
-              <CInputCheckbox />
+            <td>
+              <CSelect
+                :options="dataMailOffer"
+                :value.sync="item.category_mail"
+                @change="selectMail(item)"
+              />
             </td>
           </template>
           <template #date="{item}">
@@ -60,16 +56,18 @@
                 size="sm"
                 @click="showModal(item)"
               >
-                Show
+                Preview
               </CButton>
             </td>
           </template>
         </CDataTable>
       </CCardBody>
       <CCardFooter>
-        <CButton color="success" class="m-2" @click="sendMail()">
-          Send
-        </CButton>
+        <div class="button-center">
+          <CButton color="success" class="m-2" @click="sendMail()">
+            Send
+          </CButton>
+        </div>
       </CCardFooter>
     </CCard>
     <div v-if="errors && errors.length">
@@ -82,7 +80,9 @@
       color="success"
       :show.sync="warningModal"
     >
-      {{ content }}
+      <div class="content-mail">
+        {{ content }}
+      </div>
     </CModal>
   </div>
 </template>
@@ -140,10 +140,19 @@ export default {
 
   methods: {
     getMailOffer: function() {
-      const url = "http://127.0.0.1:8000/api/getMailOffer";
-      axios.get(url).then((response) => {
+      const url1 = "http://127.0.0.1:8000/api/getMailOffer";
+      axios.get(url1).then((response) => {
         this.dataMailOffer = response.data;
+        this.dataMailOffer.map(function(value, key) {
+          value["value"] = value["id"];
+          value["label"] = value["name"];
+        });
+        this.dataMailOffer.unshift({ value: 0, label: "----Choose mail ----" });
+        console.log(this.dataMailOffer);
       });
+    },
+    getContentMailOffer(id) {
+      return this.dataMailOffer.find((element) => element.value === id).content;
     },
 
     sendMail: function() {
@@ -152,9 +161,9 @@ export default {
         if (!value.date || !value.salary) {
           this.errors.push("Phải nhập đầy đủ dữ liệu");
         } else {
-          value["template_id"] = this.dataMailOffer["category"];
+          value["template_id"] = value.category_mail;
           value["content"] = this.changeText(
-            this.dataMailOffer["content"],
+            this.getContentMailOffer(value.category_mail),
             value["name"],
             value["date"],
             this.getPosition(value["position"]),
@@ -163,13 +172,13 @@ export default {
           (value["date_work"] = value.date), (value["salary"] = value.salary);
 
           axios
-            .post("http://127.0.0.1:8000/api/send-mailOffer", value)
-            .then((response) => {
-              axios.post(
-                "http://127.0.0.1:8000/api/history?candidate_id=" + value.id,
-                value
-              );
-            });
+          .post("http://127.0.0.1:8000/api/send-mailOffer", value)
+          .then((response) => {
+            axios.post(
+              "http://127.0.0.1:8000/api/history?candidate_id=" + value.id,
+              value
+            );
+          });
         }
       }
     },
@@ -179,14 +188,18 @@ export default {
     },
 
     showModal(item) {
-      this.content = this.changeText(
-        this.dataMailOffer["content"],
-        item.name,
-        item.date,
-        item.position,
-        item.salary
-      );
-      this.warningModal = true;
+      this.dataSend.forEach((element) => {
+        if (item.id == element.id) {
+          this.content = this.changeText(
+            this.getContentMailOffer(element.category_mail),
+            item.name,
+            item.date,
+            item.position,
+            item.salary
+          );
+          this.warningModal = true;
+        }
+      });
     },
 
     changeText: function(content, name, date, position, salary) {
@@ -221,6 +234,17 @@ export default {
     convertDate(created) {
       created = moment(String(created)).format("DD/MM/YYYY");
       return created;
+    },
+    selectMail(item) {
+      var index = this.dataSend.findIndex((element) => element.id == item.id);
+      if (index == -1) {
+        this.dataSend.push(item);
+      } else {
+        item.category_mail == 0
+          ? this.dataSend.splice(index, 1)
+          : (this.dataSend[index] = item);
+      }
+      console.log(this.dataSend);
     },
   },
 };

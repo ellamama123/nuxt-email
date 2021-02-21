@@ -17,17 +17,13 @@
           {{ convertDate(item.created_at) }}
         </td>
       </template>
-      <template #edit="{item}">
+      <template #delete="{item}">
         <td class="py-2">
-          <CButton color="success">
+        <CButton color="success">
             <nuxt-link :to="`/candidate/${item.id}`">
               <CIcon :content="$options.pencil" />
             </nuxt-link>
           </CButton>
-        </td>
-      </template>
-      <template #delete="{item}">
-        <td class="py-2">
           <CButton color="danger" @click="showModal(item.id)">
             <CIcon :content="$options.trash" />
           </CButton>
@@ -40,11 +36,11 @@
       </template>
     </CDataTable>
     <CModal
-      title="Detail Content Mail"
-      color="success"
+      title="Delete"
+      color="warning"
       :show.sync="warningModal"
     >
-      Bạn có chắc chắn muốn xóa không ?
+      Do you want to delete ?
       <div slot="footer" class="w-100">
         <CButton
           style="border-radius: .2rem; color: white;"
@@ -52,7 +48,7 @@
           class="ml-1 mr-1 float-right"
           @click="warningModal = false"
         >
-          Hủy
+          No
         </CButton>
         <CButton
           style="border-radius: .2rem; color: white;"
@@ -60,7 +56,7 @@
           class="ml-1 mr-1 float-right"
           @click="deleteData(id)"
         >
-          Xóa
+          Yes
         </CButton>
       </div>
     </CModal>
@@ -81,21 +77,16 @@ const fields = [
   { key: "status", label: "Status" },
   { key: "created_at", label: "Date recived" },
   {
-    key: "edit",
-    label: "Edit",
-  },
-  {
     key: "delete",
-    lable: "Delete",
+    lable: '',
   },
 ];
 
 export default {
-
   components: { DeleteCandidate },
   pencil: cilPencil,
   trash: cilTrash,
-  
+
   props: ["dataCandidate"],
   name: "AdvancedTables",
 
@@ -112,20 +103,11 @@ export default {
 
   methods: {
     getPosition(position) {
-      for (const pos of this.LIST_POSITION) {
-        if (position == 0) return "";
-        if (position == pos.value) {
-          return pos.label;
-        }
-      }
+      return LIST_POSITION.find((element) => element.value === position).label;
     },
 
     getStatus(status) {
-      for (const sta of this.LIST_STATUS) {
-        if (status == sta.value) {
-          return sta.label;
-        }
-      }
+      return LIST_STATUS.find((element) => element.value === status).label;
     },
 
     convertDate(created) {

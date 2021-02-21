@@ -1,9 +1,6 @@
 <template lang="">
   <div>
     <CCard>
-      <CCardHeader>
-        <p class="center">Send Mail Thank</p>
-      </CCardHeader>
       <CCardBody>
         <CDataTable
           :items="dataCandidate"
@@ -13,7 +10,11 @@
         >
           <template #send="{item}">
             <td>
-              <CInputCheckbox @change="check(item)" />
+              <CSelect
+                :options="dataMailThank"
+                :value.sync="item.category_mail"
+                @change="selectMail(item)"
+              />
             </td>
           </template>
           <template #status="{item}">
@@ -34,16 +35,18 @@
                 size="sm"
                 @click="showModal(item)"
               >
-                Show
+                Preview
               </CButton>
             </td>
           </template>
         </CDataTable>
       </CCardBody>
       <CCardFooter>
-        <CButton color="success" class="m-2" @click="sendMail()">
-          Send
-        </CButton>
+        <div class="button-center">
+          <CButton color="success" class="m-2" @click="sendMail()">
+            Send
+          </CButton>
+        </div>
       </CCardFooter>
     </CCard>
     <CModal
@@ -51,7 +54,9 @@
       color="success"
       :show.sync="warningModal"
     >
-      {{ content }}
+      <div class="content-mail">
+        {{ content }}
+      </div>
     </CModal>
   </div>
 </template>
@@ -81,10 +86,12 @@ export default {
   data() {
     return {
       fields: fields,
-      dataMailThank: "",
+      dataMailThank: [],
+      selectMailThank: [],
       dataSend: [],
       warningModal: false,
       LIST_STATUS,
+      category_mail: 0,
       content: "",
     };
   },
@@ -98,33 +105,31 @@ export default {
       const url1 = "http://127.0.0.1:8000/api/getMailThank";
       axios.get(url1).then((response) => {
         this.dataMailThank = response.data;
+        this.dataMailThank.map(function(value, key) {
+          value["value"] = value["id"];
+          value["label"] = value["name"];
+        });
+        this.dataMailThank.unshift({ value: 0, label: "----Choose mail ----" });
+        console.log(this.dataMailThank);
       });
     },
-
+    getContentMailThank(id) {
+      return this.dataMailThank.find((element) => element.value === id).content;
+    },
     sendMail: function() {
       for (const [key, value] of Object.entries(this.dataSend)) {
-        value["content"] = this.changeText(
-          this.dataMailThank["content"],
-          value["name"]
-        );
-        value["template_id"] = this.dataMailThank["category"];
+        value["template_id"] = value.category_mail;
+        value["content"] = this.getContentMailThank(value.category_mail);
         axios
-          .post("http://127.0.0.1:8000/api/send-mail", value)
-          .then((response) => {
-            axios
-              .post(
-                "http://127.0.0.1:8000/api/history?candidate_id=" + value.id,
-                value
-              )
-              .then((response) => {});
-          });
+        .post("http://127.0.0.1:8000/api/send-mail", value)
+        .then((response) => {
+          axios.post(
+            "http://127.0.0.1:8000/api/history?candidate_id=" + value.id,
+            value
+          );
+        });
       }
     },
-
-    check: function(item) {
-      this.dataSend.push(item);
-    },
-
     changeText: function(content, name) {
       content = content.replace("[Name]", name);
       return content;
@@ -144,8 +149,25 @@ export default {
     },
 
     showModal(item) {
-      this.content = this.changeText(this.dataMailThank["content"], item.name);
-      this.warningModal = true;
+      this.dataSend.forEach((element) => {
+        if (item.id == element.id) {
+          this.content = this.changeText(
+            this.getContentMailThank(element.category_mail),
+            item.name
+          );
+          this.warningModal = true;
+        }
+      });
+    },
+    selectMail(item) {
+      var index = this.dataSend.findIndex((element) => element.id == item.id);
+      if (index == -1) {
+        this.dataSend.push(item);
+      } else {
+        item.category_mail == 0
+          ? this.dataSend.splice(index, 1)
+          : (this.dataSend[index] = item);
+      }
     },
   },
 };

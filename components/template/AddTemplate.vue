@@ -35,11 +35,14 @@
       </CRow>
     </CCardBody>
     <CCardFooter>
-      <CButton color="success" class="btn-click" @click="submidForm()">
+      <CButton v-if="!this.$route.params.id" color="success" class="btn-click" @click="submidForm()">
         Submit
       </CButton>
+      <CButton v-else color="success" class="btn-click" @click="updateForm()">
+        Update
+      </CButton> 
       <CButton color="primary" @click="$router.go(-1)" >
-        Come Back
+        Go Back
       </CButton>
     </CCardFooter>
   </CCard>
@@ -79,37 +82,41 @@ export default {
     
     submidForm(){
       const base_url = 'http://127.0.0.1:8000/api/template/'
+      if(this.validateForm().length == 0){
+        axios.post(base_url, this.form).then(function(response){}).then(
+          () => {
+            this.$router.push({path: '/templatemail/'})
+          }
+        )
+      }
+    },
+
+    updateForm(){
+      const base_url = 'http://127.0.0.1:8000/api/template/'
+      if(this.validateForm().length == 0){
+        axios.put(base_url + this.$route.params.id, this.form).then(function(response) {}).then(
+          () => {
+            this.$router.push({path: '/templatemail/'})
+          }
+        )
+      }
+    },
+
+    getDetail(){
+      axios.get('http://127.0.0.1:8000/api/template/' + this.$route.params.id).then((response) => {
+          this.form = response.data
+      })
+    },
+
+    validateForm(){
       this.errors = []
       Object.entries(this.form).forEach(([key, value]) => {
         if (!value ) {
           this.errors.push('Dữ liệu ' + key + ' rỗng')
         }
       });
-      if (!this.errors.length) {
-        if(this.$route.params.id)
-        {
-          axios.put(base_url + this.$route.params.id, this.form).then(function(response) {}).then(
-            () => {
-              this.$router.push({path: '/templatemail/'})
-            }
-          )
-        }
-        else
-        {
-          axios.post(base_url, this.form).then(function(response){}).then(
-            () => {
-              this.$router.push({path: '/templatemail/'})
-            }
-          )
-        }
-      }
-    },
-
-    getDetail(){
-      axios.get('http://127.0.0.1:8000/api/template/' + this.$route.params.id) .then((response) => {
-          this.form = response.data
-      })
-    },
+      return this.errors
+    }
   },
 }
 </script>

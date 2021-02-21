@@ -1,11 +1,18 @@
 <template lang="">
   <div>
-    <list-history :dataHistory="dataHistory"></list-history>
+    <CCard>
+      <CCardHeader>
+        <p class="center">Mail History List</p> 
+      </CCardHeader>
+      <search-history @set-condition="doSearch"></search-history>
+      <list-history :dataHistory="dataHistory"></list-history>
+    </CCard>
   </div>
 </template>
 <script>
 
 import axios from "axios"
+import searchHistory from '@/components/history/SearchHistory'
 import listHistory from '@/components/history/ListHistory'
 export default {
 
@@ -13,10 +20,11 @@ export default {
     return {
       dataHistory : [],
       dataCandidate: [],
+      cond: {}
     }
   },
 
-  components: {listHistory},
+  components: {listHistory, searchHistory},
 
   mounted() {
     this.fetchData()
@@ -30,9 +38,8 @@ export default {
       axios.get(url1).then((response) => {
         this.dataCandidate = response.data
       }).then(()=>{
-        axios.get(url).then((response) => {
+        axios.get(url, {params:this.cond}).then((response) => {
           this.dataHistory = response.data
-
           this.dataHistory.map((item) => {
             this.dataCandidate.map(itemCandidate => {
               if(item.candidate_id  === itemCandidate.id){
@@ -42,6 +49,11 @@ export default {
           })
         })
       })
+    },
+
+    doSearch(value) {
+      this.cond = value;
+      this.fetchData();
     },
   }
 }

@@ -19,7 +19,7 @@
 
 <script>
 import nav from './_nav'
-
+import { freeSet } from "@coreui/icons";
 export default {
   name: 'TheSidebar',
   data () {

@@ -54,16 +54,17 @@
             <p class="alert alert-warning">{{ error }}</p>
           </div>
         </div>
-        <CButton color="success" class="btn-click" @click="submitForm">
-          Send
+        <CButton v-if="!this.$route.params.id" color="success" class="btn-click" @click="submitForm()">
+          Submit
+        </CButton>
+        <CButton v-else color="success" class="btn-click" @click="updateForm()">
+          Update
         </CButton>
         <CButton color="primary" @click="$router.go(-1)" >
-          Go back
+          Go Back
         </CButton>
       </CCardFooter>
     </CCard>
-    
-    
   </div>
 </template>
 <script>
@@ -76,11 +77,11 @@ export default {
       LIST_POSITION,
       LIST_STATUS,
       form: {
-                'name' : '',
-                'phone' : '',
-                'email' : '',
-                'position' : 1,
-            },
+        'name' : '',
+        'phone' : '',
+        'email' : '',
+        'position' : 1,
+      },
       errors : []
     }
   },
@@ -90,34 +91,38 @@ export default {
   },
   methods:{
     submitForm(){
-      this.errors = []
-      Object.entries(this.form).forEach(([key, value]) => {
-        if (!value) {
-          this.errors.push('Dữ liệu ' + key + ' rỗng')
-        }
-      });
-      if (!this.errors.length) {
-      if(!this.$route.params.id)
-      {
-         axios.post('http://127.0.0.1:8000/api/candidate/', this.form).then(function(response){}.bind(this)).then(() => {
+      if(this.validateForm().length === 0){
+        axios.post('http://127.0.0.1:8000/api/candidate/', this.form).then(function(response){}).then(() => {
              this.$router.push({path:'/candidate/'})
            }
          )
       }
-      else
-      {
-        axios.put('http://127.0.0.1:8000/api/candidate/' + this.$route.params.id,this.form).then(function(response){}.bind(this)).then(() => {
+    },
+
+    updateForm(){
+      if(this.validateForm().length === 0){
+        axios.put('http://127.0.0.1:8000/api/candidate/' + this.$route.params.id,this.form).then(function(response){}).then(() => {
             this.$router.push({path: '/candidate/'})
           }
         )
       }
-      }
     },
+
     getDetail(){
-            axios.get('http://127.0.0.1:8000/api/candidate/' + this.$route.params.id) .then((response) => {
-                this.form = response.data
-            })            
-        },
+      axios.get('http://127.0.0.1:8000/api/candidate/' + this.$route.params.id) .then((response) => {
+          this.form = response.data
+      })
+    },
+
+    validateForm(){
+      this.errors = []
+      Object.entries(this.form).forEach(([key, value]) => {
+        if (value === '') {
+          this.errors.push('Dữ liệu ' + key + ' rỗng')
+        }
+      });
+      return this.errors
+    }
   }
 }
 </script>

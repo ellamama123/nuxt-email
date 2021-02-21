@@ -5,10 +5,10 @@
         <CCard>
           <CCardHeader>
             <CRow>
-              <CCol sm="11">
-                <CBadge color="primary">List Candidate</CBadge>
+              <CCol lg="10 center">
+                List Candidate
               </CCol>
-              <CCol sm="1">
+              <CCol lg="2 right">
                 <CButton color="success" class="m-2" size="sm">
                   <nuxt-link to="/candidate/add"> + Add</nuxt-link>
                 </CButton>
@@ -17,10 +17,10 @@
           </CCardHeader>
           <CCardBody>
             <search-list-candidate
-              @set-condition="getData"
+              @set-condition="doSearch"
             ></search-list-candidate>
             <list-candidate
-               :dataCandidate="dataCandidate"
+              :dataCandidate="dataCandidate"
               @refresh="fetchData()"
             ></list-candidate>
           </CCardBody>
@@ -33,14 +33,12 @@
 import ListCandidate from "@/components/candidate/ListCandidate";
 import SearchListCandidate from "@/components/candidate/SearchListCandidate";
 import axios from "axios";
-
 export default {
-  
   components: { ListCandidate, SearchListCandidate },
   data() {
     return {
       dataCandidate: [],
-      cond: {},
+      condition: {},
     };
   },
 
@@ -49,16 +47,16 @@ export default {
   },
 
   methods: {
-    fetchData: function() {
+    fetchData() {
       axios
-        .get("http://127.0.0.1:8000/api/candidate", { params: this.cond })
+        .get("http://127.0.0.1:8000/api/candidate", { params: this.condition })
         .then((response) => {
           this.dataCandidate = response.data;
         });
     },
 
-    getData: function(value) {
-      this.cond = value;
+    doSearch(value) {
+      this.condition = value;
       this.fetchData();
     },
   },

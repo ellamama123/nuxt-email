@@ -4,17 +4,17 @@
       <CRow>
           <CCol sm="4">
             <CInput placeholder="Name" v-model="name">
-              <template #prepend-content><CIcon :content="$options.people" /></template>
+              <template #prepend-content><CIcon :content="$options.freeSet.cilUser" /></template>
             </CInput>
           </CCol>
           <CCol sm="4">
             <CInput placeholder="Phone" v-model="phone">
-              <template #prepend-content><CIcon :content="$options.phone" /></template>
+              <template #prepend-content><CIcon :content="$options.freeSet.cilPhone" /></template>
             </CInput>
           </CCol>
           <CCol sm="4">
             <CInput placeholder="Mail" v-model="mail">
-              <template #prepend-content><CIcon :content="$options.mail" /></template>
+              <template #prepend-content><CIcon :content="$options.cibGmail" /></template>
             </CInput>
           </CCol>
           <CCol sm="4">
@@ -39,23 +39,19 @@
 
       </CRow>
       <div class="button-center">
-          <CButton type="submit" size="sm" color="success" @click="searchCandidate(name,mail,phone,date,status,position)"><CIcon :content="$options.search" /> Tìm kiếm</CButton>
-          <CButton type="reset" size="sm" color="danger" @click="refreshCandidate()"><CIcon :content="$options.refresh" /> Làm mới</CButton>
+          <CButton type="submit" size="sm" color="success" @click="searchCandidate(name,mail,phone,date,status,position)"><CIcon :content="$options.freeSet.cilMagnifyingGlass" />Search</CButton>
+          <CButton type="reset" size="sm" color="danger" @click="refreshCandidate()"><CIcon :content="$options.freeSet.cilLoopCircular" />Clear</CButton>
       </div>     
     </CCardBody>
   </div>
 </template>
 <script>
-import axios from "axios"
 import {LIST_POSITION} from '@/const/constdata'
 import {LIST_STATUS} from '@/const/constdata'
-import {cilFindInPage, cilArrowCircleLeft,cilPeople,cilScreenSmartphone,cibGmail} from "@coreui/icons";
+import { freeSet } from "@coreui/icons";
+import {cibGmail} from "@coreui/icons";
 export default {
-    search: cilFindInPage,
-    refresh : cilArrowCircleLeft,
-    people : cilPeople,
-    phone : cilScreenSmartphone,
-    mail : cibGmail,
+   freeSet,cibGmail,
    data() {
     return {
       LIST_POSITION,
@@ -70,9 +66,9 @@ export default {
    },
 
    methods : {
-     searchCandidate : function(name,mail,phone,date,status,position)
+     searchCandidate(name,mail,phone,date,status,position)
      {
-       const cond = {
+       const condition = {
           name,
           mail ,
           phone ,
@@ -80,12 +76,12 @@ export default {
           status,
           position ,
        }
-       this.$emit('set-condition',cond)      
+       this.$emit('set-condition',condition)      
      },
 
-     refreshCandidate : function(name,mail,phone,date,status,position)
+     refreshCandidate(name,mail,phone,date,status,position)
      {
-       const cond = {
+       const condition = {
           name,
           mail ,
           phone ,
@@ -93,7 +89,7 @@ export default {
           status,
           position ,
        }
-        this.$emit('set-condition',cond) 
+        this.$emit('set-condition',condition) 
         this.name = ''  
         this.mail = '',
         this.phone = '',

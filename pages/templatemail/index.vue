@@ -48,6 +48,7 @@ export default {
       const url = 'http://127.0.0.1:8000/api/template'
       axios.get(url, {params: this.cond}).then((response) => {
         this.dataTemplate = response.data
+        console.log(this.dataTemplate)
       })
     },
 

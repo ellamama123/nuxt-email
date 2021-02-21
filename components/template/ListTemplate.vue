@@ -14,19 +14,27 @@
           {{convertDate(item.created_at)}}
         </td>
       </template>
-      <template #edit="{item}">  
+      <template #delete="{item}"> 
         <td class="py-2">
           <CButton color="success">
             <nuxt-link :to="`${item.id}`">
-              <template><CIcon :content="$options.pencil" /></template>
+              <template><CIcon :content="$options.freeSet.cilPencil" /></template>
             </nuxt-link>
+          </CButton>
+          <CButton color="danger" @click="showModalDelete(item.id)">
+            <template><CIcon :content="$options.freeSet.cilTrash" /></template>
           </CButton>
         </td>
       </template>
-      <template #delete="{item}"> 
-        <td class="py-2">
-          <CButton color="danger" @click="showModal(item.id)">
-            <template><CIcon :content="$options.trash" /></template>
+      <template #show="{item}">
+        <td>
+          <CButton
+            color="primary"
+            variant="outline"
+            size=""
+            @click="showModal(item)"
+          >
+            Preview
           </CButton>
         </td>
       </template>
@@ -52,6 +60,11 @@
         </CButton>
       </div>
     </CModal>
+    <CModal title="Mail Content" color="success" :show.sync="successModal">
+       <div class="content-mail">
+        {{ content }}
+      </div>
+    </CModal>
   </div>
 </template>
 
@@ -59,25 +72,25 @@
 import axios from "axios"
 import moment from 'moment'
 import {LIST_CATEGORY} from '@/const/constdata'
-import { cilPencil, cilTrash } from '@coreui/icons'
+import { freeSet } from "@coreui/icons";
 const fields = [
   {key : 'name',label :'Name'},
   {key: 'category', label: 'Category Mail'},
   {key: 'created_at', label: 'Created'},
-  {
-    key: 'edit',
-    label: 'Edit'
-  },
+  
   {
     key: 'delete',
-    label: 'Delete',
+    label: '',
   },
+  {
+    key: 'show',
+    label: '',
+  }
 ]
 
 export default {
 
-   pencil: cilPencil,
-   trash: cilTrash,
+  freeSet,
   props: ['dataTemplate'],
 
   name: 'AdvancedTables',
@@ -88,31 +101,26 @@ export default {
       LIST_CATEGORY,
       id: 0,
       warningModal:false,
+      successModal: false,
+      content: '',
     }
   },
 
   methods: {
 
-    getCategory(status){
-      for(const sta of this.LIST_CATEGORY)
-      {
-        if(status == sta.value)
-        {
-          return sta.label
-        }
-      }
+    getCategory(id){
+      const category = LIST_CATEGORY.find(element => element.value == id)
+      return category ? category.label : ''
     },
 
-    toggleDetails(item) {
-      console.log(item)
-      this.$set(this.dataTemplate[item.id], '_toggled', !item._toggled)
-      this.collapseDuration = 300
-      this.$nextTick(() => { this.collapseDuration = 0 })
+    showModalDelete(item){
+      this.id = item
+      this.warningModal = true
     },
 
     showModal(item){
-      this.id = item
-      this.warningModal = true
+      this.content = item.content
+      this.successModal = true
     },
 
     deleteData: function(id) {

@@ -1,7 +1,12 @@
 <template lang="">
   <div>
-    <search-mail @set-condition="getData"></search-mail>
-    <mail-thank :dataCandidate="dataCandidate"></mail-thank>
+    <CCard>
+      <CCardHeader>
+        <p class="center">Send Mail Thank</p>
+      </CCardHeader>
+      <search-mail @set-condition="getData"></search-mail>
+      <mail-thank :dataCandidate="dataCandidate"></mail-thank>
+    </CCard>
   </div>
 </template>
 
@@ -54,6 +59,7 @@ export default {
           this.dataCandidate = response.data;
         });
     },
+    
     getData: function(value) {
       this.cond = value;
       this.listData();

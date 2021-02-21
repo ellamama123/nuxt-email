@@ -3,7 +3,7 @@
     <CRow>
       <CCol sm="4">
         <CInput placeholder="Name" v-model="name" >
-         <template #prepend-content><CIcon :content="$options.people" /></template>
+         <template #prepend-content><CIcon :content="$options.freeSet.cilUser" /></template>
         </CInput>
       </CCol>
       <CCol sm="4">
@@ -15,11 +15,11 @@
       </CCol>
     </CRow>
     <div class="button-center">
-      <CButton type="submit" size="sm" class="mr-10" color="success" @click="SearchListTemplate(name,category,date)">
-        <template><CIcon :content="$options.search" /></template>
+      <CButton type="submit" size="" class="mr-10" color="success" @click="searchListData(name,category,date)">
+        <template><CIcon :content="$options.freeSet.cilMagnifyingGlass" /></template>
           Search
       </CButton>
-      <CButton type="reset" size="sm" color="danger" @click="refreshTemplate()"><CIcon :content="$options.refresh" />Clear</CButton>
+      <CButton type="reset" size="" color="danger" @click="refreshTemplate()"><CIcon :content="$options.freeSet.cilLoopCircular" />Clear</CButton>
     </div>
   </div>
 </template>
@@ -27,13 +27,11 @@
 <script>
 import axios from "axios"
 import {LIST_CATEGORY} from '@/const/constdata'
-import {cilFindInPage,cilPeople,cilArrowCircleLeft} from "@coreui/icons"
+import { freeSet } from "@coreui/icons";
 
 export default {
 
-    people : cilPeople,
-    search: cilFindInPage,
-    refresh : cilArrowCircleLeft,
+   freeSet,
 
   data (){
     return {
@@ -45,23 +43,23 @@ export default {
   },
 
   methods : {
-    SearchListTemplate(name,category,date){
-      const cond = {
+    searchListData(name,category,date){
+      const condition = {
         name,
         category,
         date
       }
-      this.$emit('set-condition', cond)
+      this.$emit('set-condition', condition)
     },
 
     refreshTemplate : function(name,category,date)
      {
-       const cond = {
+       const condition = {
           name,
           category,
           date
        }
-        this.$emit('set-condition',cond) 
+        this.$emit('set-condition',condition) 
         this.name = ''  
         this.category=0
         this.date=""

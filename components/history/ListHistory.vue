@@ -1,13 +1,13 @@
 <template lang="">
   <div>
   <CCard>
-    <CCardHeader>
-      <p class="center">Mail Hisotry List</p> 
-    </CCardHeader>
     <CCardBody>
       <CDataTable
         :items="dataHistory"
         :fields="fields"
+        items-per-page-select
+        :items-per-page="5"
+        pagination
       >
         <template #candidate_id="{item}"> 
           <td> 
@@ -27,7 +27,7 @@
         <template #show="{item}">
           <td>
             <CButton color="primary" variant="outline" size="sm" @click="showModal(item)">
-              Show
+              Preview
             </CButton>
           </td>
         </template>
@@ -35,7 +35,9 @@
     </CCardBody>
   </CCard>
   <CModal CModal title="Mail Content" color="success" :show.sync="warningModal">
-    {{content}}
+     <div class="content-mail">
+        {{ content }}
+      </div>
   </CModal>
   </div>
 </template>
@@ -68,8 +70,10 @@ export default {
       LIST_POSITION,
       content: '',
       warningModal: false,
+      dataTemplate: [],
     }
   },
+  // để tôi sửa lại 
 
   methods: {
     getPosition(id){
@@ -80,10 +84,8 @@ export default {
     },
 
     getCategory(id){
-      for(const CATEGORY of this.LIST_CATEGORY ){
-        if(id===0) return ""
-        if(id === CATEGORY.value) return CATEGORY.label
-      }
+      const category = LIST_CATEGORY.find(element => element.value == id)
+      return category ? category.label : ''
     },
 
     showModal(item){

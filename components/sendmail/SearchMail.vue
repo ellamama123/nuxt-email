@@ -2,46 +2,45 @@
   <div>
     <CCardBody>
       <CRow>
-          <CCol sm="4">
-            <CInput placeholder="Name" v-model="name">
-              <template #prepend-content><CIcon :content="$options.people" /></template>
-            </CInput>
-          </CCol>
-          <CCol sm="4">
-            <CInput placeholder="Phone" v-model="phone">
-              <template #prepend-content><CIcon :content="$options.phone" /></template>
-            </CInput>
-          </CCol>
-          <CCol sm="4">
-            <CInput placeholder="Mail" v-model="mail">
-              <<template #prepend-content><CIcon :content="$options.mail" /></template>
-            </CInput>
-          </CCol>
-          <CCol sm="4">
-            <CInput type="date" name="date" v-model="date" />
-          </CCol>
-          <CCol sm="4">
-            <CSelect
-              :options="LIST_STATUS"
-              :value.sync="status"
-            />
-              <template #append-content><CIcon name="cil-envelope-open"/></template>
-            </CInput>
-          </CCol>
-          <CCol sm="4">
-            <CSelect
-              :options="LIST_POSITION"
-              :value.sync="position"
-            />
-              <template #append-content><CIcon name="cil-envelope-open"/></template>
-            </CInput>
-          </CCol>
-
-      </CRow>
-      <div class="button-center">
-          <CButton type="submit" size="sm" color="success" @click="searchCandidate(name,mail,phone,date,status,position)"><CIcon :content="$options.search" /> Tìm kiếm</CButton>
-          <CButton type="reset" size="sm" color="danger" @click="refreshMail()"><CIcon :content="$options.refresh" /> Làm mới</CButton>
-      </div>     
+        <CCol sm="4">
+          <CInput placeholder="Name" v-model="name">
+            <template #prepend-content><CIcon :content="$options.freeSet.cilUser" /></template>
+          </CInput>
+        </CCol>
+        <CCol sm="4">
+          <CInput placeholder="Phone" v-model="phone">
+            <template #prepend-content><CIcon :content="$options.freeSet.cilPhone" /></template>
+          </CInput>
+        </CCol>
+        <CCol sm="4">
+          <CInput placeholder="Mail" v-model="mail">
+            <<template #prepend-content><CIcon :content="$options.cibGmail" /></template>
+          </CInput>
+        </CCol>
+        <CCol sm="4">
+          <CInput type="date" name="date" v-model="date" />
+        </CCol>
+        <CCol sm="4">
+          <CSelect
+            :options="LIST_STATUS"
+            :value.sync="status"
+          />
+            <template #append-content><CIcon name="cil-envelope-open"/></template>
+          </CInput>
+        </CCol>
+        <CCol sm="4">
+          <CSelect
+            :options="LIST_POSITION"
+            :value.sync="position"
+          />
+            <template #append-content><CIcon name="cil-envelope-open"/></template>
+          </CInput>
+        </CCol>
+        </CRow>
+        <div class="button-center">
+            <CButton type="submit" size="" color="success" @click="searchCandidate(name,mail,phone,date,status,position)"><CIcon :content="$options.freeSet.cilMagnifyingGlass" /> Search</CButton>
+            <CButton type="reset" size="" color="danger" @click="refreshMail()"><CIcon :content="$options.freeSet.cilLoopCircular" /> Refresh </CButton>
+        </div>     
     </CCardBody>
   </div>
 </template>
@@ -49,14 +48,11 @@
 import axios from "axios"
 import {LIST_POSITION} from '@/const/constdata'
 import {LIST_STATUS} from '@/const/constdata'
-import {cilFindInPage, cilArrowCircleLeft,cilPeople,cilScreenSmartphone,cibGmail} from "@coreui/icons";
+import { freeSet } from "@coreui/icons";
+import {cibGmail} from "@coreui/icons";
 export default {
 
-    search: cilFindInPage,
-    refresh : cilArrowCircleLeft,
-    people : cilPeople,
-    phone : cilScreenSmartphone,
-    mail : cibGmail,
+    freeSet,cibGmail,
    data() {
     return {
       LIST_POSITION,
