@@ -60,6 +60,7 @@
       <div class="content-mail">
         <p>Send mail success</p>
       </div>
+      <div slot="footer" class="w-100"></div>
     </CModal>
     <div v-if="showLoading">
       <CElementCover
@@ -113,7 +114,7 @@ export default {
   created() {
     this.getMailThank();
   },
-  
+
   methods: {
     getMailThank: function() {
       const url1 = "http://127.0.0.1:8000/api/getMailThank";

@@ -86,6 +86,7 @@
       <div class="content-mail">
         <p>Send mail success</p>
       </div>
+      <div slot="footer" class="w-100"></div>
     </CModal>
     <div v-if="showLoading">
       <CElementCover

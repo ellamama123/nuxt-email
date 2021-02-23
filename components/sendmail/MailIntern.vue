@@ -134,11 +134,6 @@ export default {
   mounted() {
     this.getMailIntern();
   },
-  watch: {
-    organisation(newValue) {
-      this.dataCandidate = newValue.id;
-    },
-  },
   methods: {
     getMailIntern: function() {
       const url = "http://127.0.0.1:8000/api/getMailIntern";
@@ -159,6 +154,9 @@ export default {
       this.errors = [];
       for (const [key, value] of Object.entries(this.dataSend)) {
         value["template_id"] = 2;
+        value["candidate_email"] = value.email;
+        value["candidate_id"] = value.id;
+        value["status"] = value.status;
         value["content"] = this.changeText(
           this.getContentMailIntern(value.category_mail),
           value["name"],
@@ -172,19 +170,15 @@ export default {
           this.errors.push("Phải nhập đầy đủ dữ liệu");
         } else {
           this.showLoading = true;
+          console.log(value);
           axios
             .post("http://127.0.0.1:8000/api/send-mailIntern", value)
-            .then((response) => {
-              axios
-                .post(
-                  "http://127.0.0.1:8000/api/history?candidate_id=" + value.id,
-                  value
-                )
-                .then((response) => {});
-            })
             .then(() => {
               this.warningModal1 = true;
               this.showLoading = false;
+            })
+            .then(() => {
+              window.location.reload(true);
             });
         }
       }
