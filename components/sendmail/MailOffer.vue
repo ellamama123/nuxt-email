@@ -1,75 +1,73 @@
 <template lang="">
   <div>
-    <CCard>
-      <CCardBody>
-        <CDataTable
-          :items="dataCandidate"
-          :fields="fields"
-          :items-per-page="5"
-          pagination
-        >
-          <template #send="{item}">
-            <td>
-              <CSelect
-                :options="dataMailOffer"
-                :value.sync="item.category_mail"
-                @change="selectMail(item)"
-              />
-            </td>
-          </template>
-          <template #date="{item}">
-            <td>
-              <CInput
-                type="date"
-                name="date"
-                v-model="item.date"
-                @change="check(item)"
-              />
-            </td>
-          </template>
-          <template #salary="{item}">
-            <td>
-              <CInput v-model="item.salary" />
-            </td>
-          </template>
+    <CCardBody>
+      <CDataTable
+        :items="dataCandidate"
+        :fields="fields"
+        :items-per-page="5"
+        pagination
+      >
+        <template #send="{item}">
+          <td>
+            <CSelect
+              :options="dataMailOffer"
+              :value.sync="item.category_mail"
+              @change="selectMail(item)"
+            />
+          </td>
+        </template>
+        <template #date="{item}">
+          <td>
+            <CInput
+              type="date"
+              name="date"
+              v-model="item.date"
+              @change="check(item)"
+            />
+          </td>
+        </template>
+        <template #salary="{item}">
+          <td>
+            <CInput v-model="item.salary" />
+          </td>
+        </template>
 
-          <template #position="{item}">
-            <td>
-              {{ getPosition(item.position) }}
-            </td>
-          </template>
-          <template #status="{item}">
-            <td>
-              {{ getStatus(item.status) }}
-            </td>
-          </template>
-          <template #created_at="{item}">
-            <td>
-              {{ convertDate(item.created_at) }}
-            </td>
-          </template>
-          <template #show="{item}">
-            <td>
-              <CButton
-                color="primary"
-                variant="outline"
-                size="sm"
-                @click="showModal(item)"
-              >
-                Preview
-              </CButton>
-            </td>
-          </template>
-        </CDataTable>
-      </CCardBody>
-      <CCardFooter>
-        <div class="button-center">
-          <CButton color="success" class="m-2" @click="sendMail()">
-            Send
-          </CButton>
-        </div>
-      </CCardFooter>
-    </CCard>
+        <template #position="{item}">
+          <td>
+            {{ getPosition(item.position) }}
+          </td>
+        </template>
+        <template #status="{item}">
+          <td>
+            {{ getStatus(item.status) }}
+          </td>
+        </template>
+        <template #created_at="{item}">
+          <td>
+            {{ convertDate(item.created_at) }}
+          </td>
+        </template>
+        <template #show="{item}">
+          <td>
+            <CButton
+              color="primary"
+              variant="outline"
+              size="sm"
+              @click="showModal(item)"
+            >
+              Preview
+            </CButton>
+          </td>
+        </template>
+      </CDataTable>
+    </CCardBody>
+    <CCardFooter>
+      <div class="button-center">
+        <CButton color="success" class="m-2" @click="sendMail()">
+          Send
+        </CButton>
+      </div>
+    </CCardFooter>
     <div v-if="errors && errors.length">
       <div v-for="error in errors" :key="error">
         <p class="alert alert-warning">{{ error }}</p>
@@ -84,6 +82,20 @@
         {{ content }}
       </div>
     </CModal>
+    <CModal title="Success" color="success" :show.sync="warningModal1">
+      <div class="content-mail">
+        <p>Send mail success</p>
+      </div>
+    </CModal>
+    <div v-if="showLoading">
+      <CElementCover
+        :boundaries="[{ sides: ['top', 'left'], query: '.media-body' }]"
+        :opacity="0.8"
+      >
+        <h1 class="d-inline">Loading...</h1>
+        <CSpinner size="5xl" color="success" />
+      </CElementCover>
+    </div>
   </div>
 </template>
 <script>
@@ -131,6 +143,8 @@ export default {
       LIST_STATUS,
       content: "",
       warningModal: false,
+      showLoading: false,
+      warningModal1: false,
     };
   },
 
@@ -148,7 +162,6 @@ export default {
           value["label"] = value["name"];
         });
         this.dataMailOffer.unshift({ value: 0, label: "----Choose mail ----" });
-        console.log(this.dataMailOffer);
       });
     },
     getContentMailOffer(id) {
@@ -161,7 +174,11 @@ export default {
         if (!value.date || !value.salary) {
           this.errors.push("Phải nhập đầy đủ dữ liệu");
         } else {
-          value["template_id"] = value.category_mail;
+          this.showLoading = true;
+          value["template_id"] = 3;
+          value["candidate_email"] = value.email;
+          value["candidate_id"] = value.id;
+          value["status"] = value.status;
           value["content"] = this.changeText(
             this.getContentMailOffer(value.category_mail),
             value["name"],
@@ -169,16 +186,17 @@ export default {
             this.getPosition(value["position"]),
             value["salary"]
           );
-          (value["date_work"] = value.date), (value["salary"] = value.salary);
-
+          value["date_work"] = value.date;
+          value["salary"] = value.salary;
           axios
-          .post("http://127.0.0.1:8000/api/send-mailOffer", value)
-          .then((response) => {
-            axios.post(
-              "http://127.0.0.1:8000/api/history?candidate_id=" + value.id,
-              value
-            );
-          });
+            .post("http://127.0.0.1:8000/api/send-mailOffer", value)
+            .then(() => {
+              this.warningModal1 = true;
+              this.showLoading = false;
+            })
+            .then(() => {
+              window.location.reload(true);
+            });
         }
       }
     },
@@ -194,7 +212,7 @@ export default {
             this.getContentMailOffer(element.category_mail),
             item.name,
             item.date,
-            item.position,
+            this.getPosition(item.position),
             item.salary
           );
           this.warningModal = true;
@@ -215,18 +233,18 @@ export default {
       }
     },
 
-    getPosition(position) {
-      for (const pos of this.LIST_POSITION) {
-        if (position == pos.value) {
-          return pos.label;
+    getPosition(id) {
+      for (const position of this.LIST_POSITION) {
+        if (id == position.value) {
+          return position.label;
         }
       }
     },
 
-    getStatus(status) {
-      for (const sta of this.LIST_STATUS) {
-        if (status == sta.value) {
-          return sta.label;
+    getStatus(id) {
+      for (const status of this.LIST_STATUS) {
+        if (id == status.value) {
+          return status.label;
         }
       }
     },
@@ -244,7 +262,6 @@ export default {
           ? this.dataSend.splice(index, 1)
           : (this.dataSend[index] = item);
       }
-      console.log(this.dataSend);
     },
   },
 };

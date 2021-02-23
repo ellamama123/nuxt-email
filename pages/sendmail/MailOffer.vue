@@ -2,52 +2,42 @@
   <div>
     <CCard>
       <CCardHeader>
-        <p class="center">Send Mail Thank</p>
+        <p class="center">Send Mail Offer</p>
       </CCardHeader>
       <search-mail @set-condition="getData"></search-mail>
-      <mail-thank :dataCandidate="dataCandidate"></mail-thank>
+      <mail-offer :dataCandidate="dataCandidate"></mail-offer>
     </CCard>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import moment from "moment";
-import { LIST_STATUS } from "@/const/constdata";
-import MailThank from "@/components/sendmail/MailThank";
+import MailOffer from "@/components/sendmail/MailOffer";
 import SearchMail from "@/components/sendmail/SearchMail";
-const fields = [
-  { key: "name", label: "Name" },
-  { key: "phone", label: "Phone" },
-  { key: "email", label: "Email" },
-  { key: "status", label: "Status" },
-  { key: "created_at", label: "Day Reception" },
-  {
-    key: "send",
-  },
-  {
-    key: "show",
-    label: "",
-  },
-];
+import { LIST_POSITION } from "@/const/constdata";
+import { LIST_STATUS } from "@/const/constdata";
 
 export default {
+  middleware: "auth",
   name: "AdvancedTables",
-  components: { MailThank, SearchMail },
+  components: { MailOffer, SearchMail },
   data() {
     return {
       dataCandidate: [],
-      fields: fields,
-      dataMailThank: "",
       dataSend: [],
-      warningModal: false,
+      date: null,
+      dataMailOffer: "",
+      salary: "",
+      errors: [],
+      LIST_POSITION,
       LIST_STATUS,
       content: "",
+      warningModal: false,
       cond: {},
     };
   },
 
-  created() {
+  mounted() {
     this.listData();
   },
 
@@ -59,7 +49,6 @@ export default {
           this.dataCandidate = response.data;
         });
     },
-    
     getData: function(value) {
       this.cond = value;
       this.listData();

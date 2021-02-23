@@ -1,10 +1,12 @@
+import { cilPencil, cilTrash, cilSearch } from "@coreui/icons";
 export default [{
+    cilPencil: cilPencil,
     _name: 'CSidebarNav',
     _children: [{
             _name: 'CSidebarNavItem',
             name: 'Dashboard',
             to: '/dashboard',
-            icon: 'cil-speedometer',
+            icon: { cilPencil },
             badge: {
                 color: 'primary'
             },

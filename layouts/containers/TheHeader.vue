@@ -10,20 +10,12 @@
       in-header
       class="ml-3 d-md-down-none"
     />
-    <CHeaderBrand
-      class="mx-auto d-lg-none"
-      src="img/brand/coreui-vue-logo.svg"
-      width="190"
-      height="46"
-      alt="CoreUI Logo"
-    />
     <CHeaderNav class="d-md-down-none mr-auto">
       <CHeaderNavItem class="px-3">
         <CHeaderNavLink to="/dashboard">
           Dashboard
         </CHeaderNavLink>
       </CHeaderNavItem>
-      
     </CHeaderNav>
     <CHeaderNav class="mr-4">
       <CHeaderNavItem class="d-md-down-none mx-2">
@@ -44,18 +36,18 @@
       <TheHeaderDropdownAccnt />
     </CHeaderNav>
     <CSubheader class="px-3">
-      <CBreadcrumbRouter class="border-0 mb-0"/>
+      <CBreadcrumbRouter class="border-0 mb-0" />
     </CSubheader>
   </CHeader>
 </template>
 
 <script>
-import TheHeaderDropdownAccnt from './TheHeaderDropdownAccnt'
+import TheHeaderDropdownAccnt from "./TheHeaderDropdownAccnt";
 
 export default {
-  name: 'TheHeader',
+  name: "TheHeader",
   components: {
-    TheHeaderDropdownAccnt
-  }
-}
+    TheHeaderDropdownAccnt,
+  },
+};
 </script>

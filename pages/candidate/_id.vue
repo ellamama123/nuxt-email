@@ -1,13 +1,14 @@
-<template> 
+<template>
   <div>
     <add-candidate></add-candidate>
   </div>
 </template>
 
 <script>
-import AddCandidate from '@/components/candidate/AddCandidate'
+import AddCandidate from "@/components/candidate/AddCandidate";
 
 export default {
-  components: {AddCandidate}
-}
+  middleware: "auth",
+  components: { AddCandidate },
+};
 </script>

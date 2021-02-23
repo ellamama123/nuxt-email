@@ -43,9 +43,13 @@
             {{ convertDate(item.created_at) }}
           </td>
         </template>
-        <template #Send="{item}"> 
+        <template #Send="{item}">
           <td>
-            <CSelect :options="dataMailIntern" :value.sync="item.category_mail" @change="selectMail(item)" />
+            <CSelect
+              :options="dataMailIntern"
+              :value.sync="item.category_mail"
+              @change="selectMail(item)"
+            />
           </td>
         </template>
       </CDataTable>
@@ -64,6 +68,21 @@
         {{ content }}
       </div>
     </CModal>
+    <CModal title="Success" color="success" :show.sync="warningModal1">
+      <div class="content-mail">
+        <p>Send mail success</p>
+      </div>
+    </CModal>
+    <div></div>
+    <div v-if="showLoading">
+      <CElementCover
+        :boundaries="[{ sides: ['top', 'left'], query: '.media-body' }]"
+        :opacity="0.8"
+      >
+        <h1 class="d-inline">Loading...</h1>
+        <CSpinner size="5xl" color="success" />
+      </CElementCover>
+    </div>
   </div>
 </template>
 <script>
@@ -84,19 +103,17 @@ const fields = [
     label: "interview schedule",
   },
   {
-    key: 'Send',
-    label: ''
+    key: "Send",
+    label: "",
   },
   {
     key: "show",
     label: "",
   },
-  
 ];
 
 export default {
-
-  props: ['dataCandidate'],
+  props: ["dataCandidate"],
 
   name: "AdvancedTables",
   data() {
@@ -108,53 +125,67 @@ export default {
       LIST_POSITION,
       LIST_STATUS,
       warningModal: false,
+      warningModal1: false,
       content: "",
+      showLoading: false,
     };
   },
-  
+
   mounted() {
     this.getMailIntern();
   },
+  watch: {
+    organisation(newValue) {
+      this.dataCandidate = newValue.id;
+    },
+  },
   methods: {
-
     getMailIntern: function() {
       const url = "http://127.0.0.1:8000/api/getMailIntern";
       axios.get(url).then((response) => {
         this.dataMailIntern = response.data;
-        this.dataMailIntern.map(function(value,key) {
-          value['value'] = value['category']
-          value['label'] = value['name']
+        this.dataMailIntern.map(function(value, key) {
+          value["value"] = value["id"];
+          value["label"] = value["name"];
         });
-        this.dataMailIntern.unshift({value:0, label:"----Choose mail ----" })
+        this.dataMailIntern.unshift({
+          value: 0,
+          label: "----Choose mail ----",
+        });
       });
     },
 
     sendMail: function() {
       this.errors = [];
       for (const [key, value] of Object.entries(this.dataSend)) {
-        value["template_id"] =2;
+        value["template_id"] = 2;
         value["content"] = this.changeText(
           this.getContentMailIntern(value.category_mail),
           value["name"],
           value["dateTime"],
           this.getPosition(value["position"])
         );
-        value["content"] = value["content"].replace(/\n/ig, "\n")
+        value["content"] = value["content"].replace(/\n/gi, "\n");
         value["datetime_interview"] = value.dateTime;
 
         if (!value.dateTime) {
-          this.errors.push('Phải nhập đầy đủ dữ liệu')
+          this.errors.push("Phải nhập đầy đủ dữ liệu");
         } else {
+          this.showLoading = true;
           axios
-          .post("http://127.0.0.1:8000/api/send-mailIntern", value)
-          .then((response) => {
-            axios
-              .post(
-                "http://127.0.0.1:8000/api/history?candidate_id=" + value.id,
-                value
-              )
-              .then((response) => {});
-          });
+            .post("http://127.0.0.1:8000/api/send-mailIntern", value)
+            .then((response) => {
+              axios
+                .post(
+                  "http://127.0.0.1:8000/api/history?candidate_id=" + value.id,
+                  value
+                )
+                .then((response) => {});
+            })
+            .then(() => {
+              this.warningModal1 = true;
+              this.showLoading = false;
+            });
         }
       }
     },
@@ -180,7 +211,7 @@ export default {
           .replace("[Name]", name)
           .replace("[dateTime]", dateTime)
           .replace("[Position]", position);
-          console.log(content)
+        console.log(content);
         return content;
       }
     },
@@ -200,22 +231,33 @@ export default {
 
     showModal(item) {
       this.dataSend.forEach((element) => {
-        if(item.id == element.id){
-          this.content = this.changeText(this.getContentMailIntern(element.category_mail), item.name, item.dateTime, item.position);
-          this.warningModal = true
+        if (item.id == element.id) {
+          this.content = this.changeText(
+            this.getContentMailIntern(element.category_mail),
+            item.name,
+            item.dateTime,
+            item.position
+          );
+          this.warningModal = true;
         }
-      })
+      });
     },
 
-    getContentMailIntern(id){
-      const contentMail = this.dataMailIntern.find((element) => element.value === id)
-      return contentMail ? contentMail.content : ''
+    getContentMailIntern(id) {
+      const contentMail = this.dataMailIntern.find(
+        (element) => element.value === id
+      );
+      return contentMail ? contentMail.content : "";
     },
 
-    selectMail(item){
+    selectMail(item) {
       var index = this.dataSend.findIndex((element) => element.id == item.id);
-      index == -1 ? this.dataSend.push(item) : (item.category_mail == 0 ? this.dataSend.splice(index, 1) : (this.dataSend[index] = item))
-    }
+      index == -1
+        ? this.dataSend.push(item)
+        : item.category_mail == 0
+        ? this.dataSend.splice(index, 1)
+        : (this.dataSend[index] = item);
+    },
   },
 };
 </script>

@@ -32,6 +32,7 @@ const fields = [
 ];
 
 export default {
+  middleware: "auth",
   name: "AdvancedTables",
   components: { MailThank, SearchMail },
   data() {
@@ -59,7 +60,7 @@ export default {
           this.dataCandidate = response.data;
         });
     },
-    
+
     getData: function(value) {
       this.cond = value;
       this.listData();

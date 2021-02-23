@@ -39,8 +39,8 @@
 
       </CRow>
       <div class="button-center">
-          <CButton type="submit" size="sm" color="success" @click="searchCandidate(name,mail,phone,date,status,position)"><CIcon :content="$options.freeSet.cilMagnifyingGlass" />Search</CButton>
-          <CButton type="reset" size="sm" color="danger" @click="refreshCandidate()"><CIcon :content="$options.freeSet.cilLoopCircular" />Clear</CButton>
+          <CButton type="submit" size="" color="success" @click="searchCandidate(name,mail,phone,date,status,position)"><CIcon :content="$options.freeSet.cilMagnifyingGlass" />Search</CButton>
+          <CButton type="reset" size="" color="danger" @click="refreshCandidate()"><CIcon :content="$options.freeSet.cilLoopCircular" />Clear</CButton>
       </div>     
     </CCardBody>
   </div>
