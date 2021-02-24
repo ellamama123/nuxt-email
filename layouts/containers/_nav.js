@@ -19,8 +19,8 @@ export default [{
         {
             _name: 'CSidebarNavItem',
             name: 'Send Thank Mail',
-            route: '/sendmail/mailthank',
-            to: '/sendmail/mailthank',
+            route: '/sendmail/MailThank',
+            to: '/sendmail/MailThank',
             meta: {
                 breadcrumb: [
                     { name: 'Area 1' }
@@ -47,13 +47,13 @@ export default [{
             _name: 'CSidebarNavItem',
             name: 'Manage Mail Template',
             route: '/templatemail/',
-            to: '/templatemail/'
+            to: '/TemplateMail/'
         },
         {
             _name: 'CSidebarNavItem',
             name: 'Manage Mail History',
             route: '/history/',
-            to: '/history/'
+            to: '/History/'
         },
         {
             _name: 'CSidebarNavItem',
