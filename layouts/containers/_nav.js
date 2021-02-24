@@ -21,23 +21,18 @@ export default [{
             name: 'Send Thank Mail',
             route: '/sendmail/MailThank',
             to: '/sendmail/MailThank',
-            meta: {
-                breadcrumb: [
-                    { name: 'Area 1' }
-                ]
-            }
         },
         {
             _name: 'CSidebarNavItem',
             name: 'Send Mail Intern',
             route: '/sendmail/MailInter',
-            to: '/sendmail/MailInter'
+            to: '/SendMail/MailInter'
         },
         {
             _name: 'CSidebarNavItem',
             name: 'Send Mail Offer',
             route: '/sendmail/MailOffer',
-            to: '/sendmail/MailOffer'
+            to: '/SendMail/MailOffer'
         },
         {
             _name: 'CSidebarNavTitle',
@@ -59,7 +54,7 @@ export default [{
             _name: 'CSidebarNavItem',
             name: 'Manage Candidate',
             route: '/candidate/',
-            to: '/candidate/'
+            to: '/Candidate/'
         },
     ]
 }]

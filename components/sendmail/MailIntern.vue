@@ -194,21 +194,11 @@ export default {
         return content;
       }
     },
-    getPosition(position) {
-      for (const pos of this.LIST_POSITION) {
-        if (position == pos.value) {
-          return pos.label;
-        }
-      }
-    },
 
     getStatus(status) {
-      for (const sta of this.LIST_STATUS) {
-        if (status == sta.value) {
-          return sta.label;
-        }
-      }
+      return LIST_STATUS.find((element) => element.value === status).label;
     },
+
     getPosition(id) {
       const position = LIST_POSITION.find((element) => element.value == id);
       return position ? position.label : "";
