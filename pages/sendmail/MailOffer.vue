@@ -18,7 +18,7 @@ import { LIST_POSITION } from "@/const/constdata";
 import { LIST_STATUS } from "@/const/constdata";
 
 export default {
-  middleware: "auth",
+  // middleware: "auth",
   name: "AdvancedTables",
   components: { MailOffer, SearchMail },
   data() {

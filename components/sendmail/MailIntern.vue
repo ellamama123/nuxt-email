@@ -157,12 +157,8 @@ export default {
         value["candidate_email"] = value.email;
         value["candidate_id"] = value.id;
         value["status"] = value.status;
-        value["content"] = this.changeText(
-          this.getContentMailIntern(value.category_mail),
-          value["name"],
-          value["dateTime"],
-          this.getPosition(value["position"])
-        );
+        value["position_name"] = this.getPosition(value.position);
+        value["content"] = this.getContentMailIntern(value.category_mail);
         value["content"] = value["content"].replace(/\n/gi, "\n");
         value["datetime_interview"] = value.dateTime;
 
@@ -198,6 +194,13 @@ export default {
         return content;
       }
     },
+    getPosition(position) {
+      for (const pos of this.LIST_POSITION) {
+        if (position == pos.value) {
+          return pos.label;
+        }
+      }
+    },
 
     getStatus(status) {
       for (const sta of this.LIST_STATUS) {
@@ -217,14 +220,20 @@ export default {
     },
 
     showModal(item) {
-      this.dataSend.forEach((element) => {
-        if (item.id == element.id) {
-          this.content = this.changeText(
-            this.getContentMailIntern(element.category_mail),
-            item.name,
-            item.dateTime,
-            item.position
-          );
+      console.log(this.dataSend);
+      this.dataSend.find((element) => {
+        if (element.id === item.id) {
+          axios
+            .get(
+              "http://127.0.0.1:8000/api/previewMail?id=" + item.category_mail
+            )
+            .then((response) => {
+              this.content = response.data;
+              this.content = this.content
+                .replace("[Name]", element.name)
+                .replace("[dateTime]", this.convertDate(element.dateTime))
+                .replace("[Position]", this.getPosition(element.position));
+            });
           this.warningModal = true;
         }
       });

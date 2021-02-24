@@ -14,7 +14,7 @@ import axios from "axios";
 import searchHistory from "@/components/history/SearchHistory";
 import listHistory from "@/components/history/ListHistory";
 export default {
-  middleware: "auth",
+  // middleware: "auth",
   data() {
     return {
       dataHistory: [],

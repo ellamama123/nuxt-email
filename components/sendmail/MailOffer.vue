@@ -165,6 +165,7 @@ export default {
         this.dataMailOffer.unshift({ value: 0, label: "----Choose mail ----" });
       });
     },
+
     getContentMailOffer(id) {
       return this.dataMailOffer.find((element) => element.value === id).content;
     },
@@ -180,13 +181,8 @@ export default {
           value["candidate_email"] = value.email;
           value["candidate_id"] = value.id;
           value["status"] = value.status;
-          value["content"] = this.changeText(
-            this.getContentMailOffer(value.category_mail),
-            value["name"],
-            value["date"],
-            this.getPosition(value["position"]),
-            value["salary"]
-          );
+          value["position_name"] = this.getPosition(value.position)
+          value["content"] = this.getContentMailOffer(value.category_mail)
           value["date_work"] = value.date;
           value["salary"] = value.salary;
           axios
@@ -206,19 +202,17 @@ export default {
       this.dataSend.push(item);
     },
 
-    showModal(item) {
-      this.dataSend.forEach((element) => {
-        if (item.id == element.id) {
-          this.content = this.changeText(
-            this.getContentMailOffer(element.category_mail),
-            item.name,
-            item.date,
-            this.getPosition(item.position),
-            item.salary
-          );
+     showModal(item) {
+      console.log(this.dataSend)
+      this.dataSend.find((element) => {
+        if(element.id === item.id){
+          axios.get('http://127.0.0.1:8000/api/previewMail?id=' +  item.category_mail).then((response) => {
+            this.content = response.data
+            this.content = this.content.replace("[Name]", element.name).replace("[date]", this.convertDate(element.date)).replace("[Position]", this.getPosition(element.position)).replace("[salary]", element.salary);
+          });
           this.warningModal = true;
         }
-      });
+      })
     },
 
     changeText: function(content, name, date, position, salary) {
@@ -248,6 +242,7 @@ export default {
       created = moment(String(created)).format("DD/MM/YYYY");
       return created;
     },
+
     selectMail(item) {
       var index = this.dataSend.findIndex((element) => element.id == item.id);
       if (index == -1) {

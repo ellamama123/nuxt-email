@@ -46,29 +46,31 @@ export default {
     /*
      ** Nuxt.js modules
      */
-    modules: ['@nuxtjs/auth', '@nuxtjs/axios'],
-    axios: {
-        // API đến server Laravel (nói sau)
-        baseURL: 'http://127.0.0.1:8000/api/'
-    },
-    auth: {
-        redirect: {
-          callback:'/dashboard' //sau khi login sẽ chuyển hướng về đây
-        },
-        strategies: {
-          local: {
-            endpoints: {
-              // các đường dẫn đến API
-              // propertyName: kết quả từ API trả về, nhớ xem kết quả để đặt key cho đúng
-              login: { url: '/login', method: 'post', propertyName: 'meta.token' },
-              user: { url: '/user', method: 'post', propertyName: 'data' },
-              logout: false,
-            }
-          },
-        }
-    },
-    //dùng cái này để sử dụng middleware xác thực người dùng cho mọi route, tương tự middleware trong Laravel
-    router: {
-        middleware: ['auth']
-    },
+
+    // modules: ['@nuxtjs/auth', '@nuxtjs/axios'],
+    // axios: {
+    //     // API đến server Laravel (nói sau)
+    //     baseURL: 'http://127.0.0.1:8000/api/'
+    // },
+    // auth: {
+    //     redirect: {
+    //         callback: '/dashboard' //sau khi login sẽ chuyển hướng về đây
+    //     },
+    //     strategies: {
+    //         local: {
+    //             endpoints: {
+    //                 // các đường dẫn đến API
+    //                 // propertyName: kết quả từ API trả về, nhớ xem kết quả để đặt key cho đúng
+    //                 login: { url: '/login', method: 'post', propertyName: 'meta.token' },
+    //                 user: { url: '/user', method: 'post', propertyName: 'data' },
+    //                 logout: false,
+    //             }
+    //         },
+    //     }
+    // },
+    // //dùng cái này để sử dụng middleware xác thực người dùng cho mọi route, tương tự middleware trong Laravel
+    // router: {
+    //     middleware: ['auth']
+    // },
+
 }
