@@ -192,7 +192,7 @@ export default {
               this.showLoading = false;
             })
             .then(() => {
-              window.location.reload(true);
+              this.$emit('reload')
             });
         }
       }

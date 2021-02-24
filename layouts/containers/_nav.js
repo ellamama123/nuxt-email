@@ -20,7 +20,12 @@ export default [{
             _name: 'CSidebarNavItem',
             name: 'Send Thank Mail',
             route: '/sendmail/mailthank',
-            to: '/sendmail/mailthank'
+            to: '/sendmail/mailthank',
+            meta: {
+                breadcrumb: [
+                    { name: 'Area 1' }
+                ]
+            }
         },
         {
             _name: 'CSidebarNavItem',
