@@ -106,10 +106,8 @@ export default {
 
   methods: {
     getPosition(id) {
-      for (const POSITION of this.LIST_POSITION) {
-        if (id === 0) return "";
-        if (id === POSITION.value) return POSITION.label;
-      }
+      const position = LIST_POSITION.find((element) => element.value == id);
+      return position ? position.label : "";
     },
 
     getCategory(id) {

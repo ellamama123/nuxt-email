@@ -1,5 +1,5 @@
 <template>
-  <CHeader fixed with-subheader light>
+  <CHeader fixed with-subheader light v-if="$auth.loggedIn">
     <CToggler
       v-c-emit-root-event:toggle-sidebar-mobile
       in-header

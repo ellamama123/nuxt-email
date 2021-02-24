@@ -185,14 +185,6 @@ export default {
       this.dataSend.push(item);
     },
 
-    getPosition(position) {
-      for (const pos of this.LIST_POSITION) {
-        if (position == pos.value) {
-          return pos.label;
-        }
-      }
-    },
-
     changeText: function(content, name, dateTime, position) {
       if (!dateTime) {
         return content;
@@ -213,6 +205,10 @@ export default {
           return sta.label;
         }
       }
+    },
+    getPosition(id) {
+      const position = LIST_POSITION.find((element) => element.value == id);
+      return position ? position.label : "";
     },
 
     convertDate(created) {

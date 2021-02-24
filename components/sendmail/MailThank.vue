@@ -161,11 +161,8 @@ export default {
     },
 
     getStatus(id) {
-      for (const status of this.LIST_STATUS) {
-        if (id == status.value) {
-          return status.label;
-        }
-      }
+      const status = LIST_STATUS.find((element) => element.value == id);
+      return status ? status.label : "";
     },
 
     convertDate(created) {

@@ -4,10 +4,11 @@
     class="c-header-nav-items"
     placement="bottom-end"
     add-menu-classes="pt-0"
+    v-if="$auth.loggedIn"
   >
     <template #toggler>
       <CHeaderNavLink>
-        <div class="c-avatar" v-if="$auth.loggedIn">
+        <div class="c-avatar">
           <img
             :src="require(`@/assets/img/avatars/6.jpg`)"
             class="c-avatar-img "

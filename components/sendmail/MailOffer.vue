@@ -235,19 +235,13 @@ export default {
     },
 
     getPosition(id) {
-      for (const position of this.LIST_POSITION) {
-        if (id == position.value) {
-          return position.label;
-        }
-      }
+      const position = LIST_POSITION.find((element) => element.value == id);
+      return position ? position.label : "";
     },
 
     getStatus(id) {
-      for (const status of this.LIST_STATUS) {
-        if (id == status.value) {
-          return status.label;
-        }
-      }
+      const status = LIST_STATUS.find((element) => element.value == id);
+      return status ? status.label : "";
     },
 
     convertDate(created) {
