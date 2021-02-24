@@ -138,10 +138,7 @@ export default {
         value["candidate_email"] = value.email;
         value["candidate_id"] = value.id;
         value["status"] = value.status;
-        value["content"] = this.changeText(
-          this.getContentMailThank(value.category_mail),
-          value.name
-        );
+        value["content"] = this.getContentMailThank(value.category_mail)
         this.showLoading = true;
         axios
           .post("http://127.0.0.1:8000/api/send-mail", value)
@@ -153,11 +150,6 @@ export default {
             window.location.reload(true);
           });
       }
-    },
-
-    changeText: function(content, name) {
-      content = content.replace("[Name]", name);
-      return content;
     },
 
     getStatus(id) {
@@ -174,15 +166,15 @@ export default {
     },
 
     showModal(item) {
-      this.dataSend.forEach((element) => {
-        if (item.id == element.id) {
-          this.content = this.changeText(
-            this.getContentMailThank(element.category_mail),
-            item.name
-          );
+      this.dataSend.find((element) => {
+        if(element.id === item.id){
+          axios.get('http://127.0.0.1:8000/api/previewMail?id=' +  item.category_mail).then((response) => {
+            this.content = response.data
+            this.content = this.content.replace("[Name]", element.name)
+          });
           this.warningModal = true;
         }
-      });
+      })
     },
 
     selectMail(item) {
