@@ -147,7 +147,7 @@ export default {
             this.warningModal1 = true;
           })
           .then(() => {
-            window.location.reload(true);
+            this.$emit('reload')
           });
       }
     },

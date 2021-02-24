@@ -5,7 +5,7 @@
         <p class="center">Send Mail Thank</p>
       </CCardHeader>
       <search-mail @set-condition="getData"></search-mail>
-      <mail-thank :dataCandidate="dataCandidate"></mail-thank>
+      <mail-thank :dataCandidate="dataCandidate" @reload="listData"></mail-thank>
     </CCard>
   </div>
 </template>
@@ -32,7 +32,7 @@ const fields = [
 ];
 
 export default {
-  // middleware: "auth",
+  middleware: "auth",
   name: "AdvancedTables",
   components: { MailThank, SearchMail },
   data() {

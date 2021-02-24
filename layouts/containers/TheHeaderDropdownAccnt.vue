@@ -35,11 +35,11 @@ export default {
     };
   },
   methods: {
-    // logout() {
-    //   this.$auth.logout().then(() => {
-    //     this.$router.push("/login");
-    //   });
-    // },
+    logout() {
+      this.$auth.logout().then(() => {
+        this.$router.push("/login");
+      });
+    },
   },
 };
 </script>

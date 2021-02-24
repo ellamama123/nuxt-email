@@ -20,24 +20,19 @@ export default [{
             _name: 'CSidebarNavItem',
             name: 'Send Thank Mail',
             route: '/sendmail/mailthank',
-            to: '/sendmail/mailthank',
-            meta: {
-                breadcrumb: [
-                    { name: 'Area 1' }
-                ]
-            }
+            to: '/SendMail/MailThank',
         },
         {
             _name: 'CSidebarNavItem',
             name: 'Send Mail Intern',
             route: '/sendmail/MailInter',
-            to: '/sendmail/MailInter'
+            to: '/SendMail/MailInter'
         },
         {
             _name: 'CSidebarNavItem',
             name: 'Send Mail Offer',
             route: '/sendmail/MailOffer',
-            to: '/sendmail/MailOffer'
+            to: '/SendMail/MailOffer'
         },
         {
             _name: 'CSidebarNavTitle',
@@ -47,19 +42,19 @@ export default [{
             _name: 'CSidebarNavItem',
             name: 'Manage Mail Template',
             route: '/templatemail/',
-            to: '/templatemail/'
+            to: '/TemplateMail/'
         },
         {
             _name: 'CSidebarNavItem',
             name: 'Manage Mail History',
             route: '/history/',
-            to: '/history/'
+            to: '/History/'
         },
         {
             _name: 'CSidebarNavItem',
             name: 'Manage Candidate',
             route: '/candidate/',
-            to: '/candidate/'
+            to: '/Candidate/'
         },
     ]
 }]

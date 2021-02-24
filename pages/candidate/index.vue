@@ -34,7 +34,7 @@ import ListCandidate from "@/components/candidate/ListCandidate";
 import SearchListCandidate from "@/components/candidate/SearchListCandidate";
 import axios from "axios";
 export default {
-  // middleware: "auth",
+  middleware: "auth",
   components: { ListCandidate, SearchListCandidate },
   data() {
     return {
