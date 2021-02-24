@@ -10,7 +10,7 @@ import WidgetsDropdown from "./widgets/WidgetsDropdown";
 import WidgetsBrand from "./widgets/WidgetsBrand";
 
 export default {
-  middleware: "auth",
+  // middleware: "auth",
   name: "Dashboard",
   components: {
     MainChartExample,

@@ -35,7 +35,7 @@ const fields = [
 ];
 
 export default {
-  middleware: "auth",
+  // middleware: "auth",
   name: "AdvancedTables",
   components: { MailIntern, SearchMail },
   data() {

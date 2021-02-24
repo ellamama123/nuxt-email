@@ -7,7 +7,7 @@
 <script>
 import AddTemplate from "@/components/template/AddTemplate";
 export default {
-  middleware: "auth",
+  // middleware: "auth",
   components: { AddTemplate },
 };
 </script>

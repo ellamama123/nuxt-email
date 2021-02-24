@@ -29,7 +29,7 @@ import ListTemplate from "@/components/template/ListTemplate";
 import SearchListTemplate from "@/components/template/SearchListTemplate";
 
 export default {
-  middleware: "auth",
+  // middleware: "auth",
   data() {
     return {
       dataTemplate: [],

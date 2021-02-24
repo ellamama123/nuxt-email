@@ -1,5 +1,5 @@
 <template>
-  <CSidebar fixed :minimize="minimize" :show.sync="show" v-if="$auth.loggedIn">
+  <CSidebar fixed :minimize="minimize" :show.sync="show">
     <CSidebarBrand to="/">
       <img
         width="70%"
