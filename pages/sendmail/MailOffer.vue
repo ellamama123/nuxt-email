@@ -5,7 +5,7 @@
         <p class="center">Send Mail Offer</p>
       </CCardHeader>
       <search-mail @set-condition="getData"></search-mail>
-      <mail-offer :dataCandidate="dataCandidate"></mail-offer>
+      <mail-offer :dataCandidate="dataCandidate" @reload="listData"></mail-offer>
     </CCard>
   </div>
 </template>

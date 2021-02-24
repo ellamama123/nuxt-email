@@ -1,5 +1,5 @@
 <template>
-  <CHeader fixed with-subheader light v-if="$auth.loggedIn">
+  <CHeader fixed with-subheader light >
     <CToggler
       v-c-emit-root-event:toggle-sidebar-mobile
       in-header
@@ -35,9 +35,11 @@
       </CHeaderNavItem>
       <TheHeaderDropdownAccnt />
     </CHeaderNav>
-    <CSubheader class="px-3">
-      <CBreadcrumbRouter class="border-0 mb-0" />
-    </CSubheader>
+    <CSubheader >
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item">{{changeBreadCrumb($route.path)}}</li>
+      </ol>
+  </CSubheader >
   </CHeader>
 </template>
 
@@ -49,5 +51,13 @@ export default {
   components: {
     TheHeaderDropdownAccnt,
   },
+
+  methods: {
+    changeBreadCrumb(name){
+      name = name.substring("1").replace("/", " / ")
+      name =  name.charAt(0).toUpperCase() + name.slice(1)
+      return name
+    }
+  }
 };
 </script>
