@@ -61,7 +61,7 @@ export default {
               // các đường dẫn đến API
               // propertyName: kết quả từ API trả về, nhớ xem kết quả để đặt key cho đúng
               login: { url: '/login', method: 'post', propertyName: 'meta.token' },
-              user: { url: '/', method: 'post', propertyName: 'data' },
+              user: { url: '/user', method: 'post', propertyName: 'data' },
               logout: false,
             }
           },
