@@ -29,7 +29,7 @@
               size="sm"
               @click="showModal(item)"
             >
-              Show
+              Preview
             </CButton>
           </td>
         </template>
@@ -176,9 +176,6 @@ export default {
             .then(() => {
               this.warningModal1 = true;
               this.showLoading = false;
-            })
-            .then(() => {
-              window.location.reload(true);
             });
         }
       }

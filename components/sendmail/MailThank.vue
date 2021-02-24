@@ -143,10 +143,15 @@ export default {
           value.name
         );
         this.showLoading = true;
-        axios.post("http://127.0.0.1:8000/api/send-mail", value).then(() => {
-          this.showLoading = false;
-          this.warningModal1 = true;
-        });
+        axios
+          .post("http://127.0.0.1:8000/api/send-mail", value)
+          .then(() => {
+            this.showLoading = false;
+            this.warningModal1 = true;
+          })
+          .then(() => {
+            window.location.reload(true);
+          });
       }
     },
 
