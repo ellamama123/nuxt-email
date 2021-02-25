@@ -166,12 +166,14 @@ export default {
           this.errors.push("Phải nhập đầy đủ dữ liệu");
         } else {
           this.showLoading = true;
-          console.log(value);
           axios
             .post("http://127.0.0.1:8000/api/send-mailIntern", value)
             .then(() => {
               this.warningModal1 = true;
               this.showLoading = false;
+            })
+            .then(() => {
+              this.$emit("reload");
             });
         }
       }
@@ -179,20 +181,6 @@ export default {
 
     check: function(item) {
       this.dataSend.push(item);
-    },
-
-    changeText: function(content, name, dateTime, position) {
-      if (!dateTime) {
-        return content;
-      } else {
-        dateTime = moment(String(dateTime)).format("DD/MM/YYYY hh:mm");
-        content = content
-          .replace("[Name]", name)
-          .replace("[dateTime]", dateTime)
-          .replace("[Position]", position);
-        console.log(content);
-        return content;
-      }
     },
 
     getStatus(status) {

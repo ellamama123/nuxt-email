@@ -181,8 +181,8 @@ export default {
           value["candidate_email"] = value.email;
           value["candidate_id"] = value.id;
           value["status"] = value.status;
-          value["position_name"] = this.getPosition(value.position)
-          value["content"] = this.getContentMailOffer(value.category_mail)
+          value["position_name"] = this.getPosition(value.position);
+          value["content"] = this.getContentMailOffer(value.category_mail);
           value["date_work"] = value.date;
           value["salary"] = value.salary;
           axios
@@ -192,7 +192,7 @@ export default {
               this.showLoading = false;
             })
             .then(() => {
-              this.$emit('reload')
+              this.$emit("reload");
             });
         }
       }
@@ -202,17 +202,25 @@ export default {
       this.dataSend.push(item);
     },
 
-     showModal(item) {
-      console.log(this.dataSend)
+    showModal(item) {
+      console.log(this.dataSend);
       this.dataSend.find((element) => {
-        if(element.id === item.id){
-          axios.get('http://127.0.0.1:8000/api/previewMail?id=' +  item.category_mail).then((response) => {
-            this.content = response.data
-            this.content = this.content.replace("[Name]", element.name).replace("[date]", this.convertDate(element.date)).replace("[Position]", this.getPosition(element.position)).replace("[salary]", element.salary);
-          });
+        if (element.id === item.id) {
+          axios
+            .get(
+              "http://127.0.0.1:8000/api/previewMail?id=" + item.category_mail
+            )
+            .then((response) => {
+              this.content = response.data;
+              this.content = this.content
+                .replace("[Name]", element.name)
+                .replace("[date]", this.convertDate(element.date))
+                .replace("[Position]", this.getPosition(element.position))
+                .replace("[salary]", element.salary);
+            });
           this.warningModal = true;
         }
-      })
+      });
     },
 
     changeText: function(content, name, date, position, salary) {

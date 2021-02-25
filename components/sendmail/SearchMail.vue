@@ -92,7 +92,7 @@ export default {
           position ,
        }
         this.$emit('set-condition',condition) 
-        this.name = ''  
+        this.name ='' , 
         this.mail = '',
         this.phone = '',
         this.date = '',

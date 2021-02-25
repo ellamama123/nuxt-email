@@ -5,7 +5,10 @@
         <p class="center">Send Mail Inter</p>
       </CCardHeader>
       <search-mail @set-condition="getData"></search-mail>
-      <mail-intern :dataCandidate="dataCandidate"></mail-intern>
+      <mail-intern
+        :dataCandidate="dataCandidate"
+        @reload="listData"
+      ></mail-intern>
     </CCard>
   </div>
 </template>
