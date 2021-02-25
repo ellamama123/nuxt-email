@@ -39,6 +39,20 @@
                   Login facebook
                 </CButton>
               </div>
+              <div class="text-login">
+                <p>Or login with</p>
+              </div>
+              <div class="social-login">
+                <CButton class="hollow button primary" @click="loginGoogle">
+                  <img
+                    width="15px"
+                    style="margin-bottom:3px; margin-right:5px"
+                    alt="Google login"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+                  />
+                  Sign in with Google
+                </CButton>
+              </div>
             </form>
           </CCardBody>
         </CCard>
@@ -81,15 +95,26 @@ export default {
           .login({
             data: this.userForm,
           })
-          .then(() => this.$router.push("/")); // muốn dùng được đoạn này thì cài thêm vue-router nhé
+          .then(() => this.$router.push("/"));
       } catch (err) {
         this.error = "Username or Password not valid";
         this.showLoading = false;
       }
     },
 
-    loginFacebook() {
+    async loginFacebook() {
       this.$auth.loginWith("facebook");
+    },
+
+    async loginGoogle() {
+      try {
+        let response = this.$auth.loginWith("google", {
+          params: { prompt: "select_account" },
+        });
+        console.log(response);
+      } catch (err) {
+        this.error = err;
+      }
     },
   },
 };

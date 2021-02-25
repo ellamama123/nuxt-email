@@ -73,6 +73,10 @@ export default {
                 clientId: '2548093105485263',
                 scope: ['public_profile', 'email']
             },
+
+            google: {
+                client_id: '1038999090260-j6vqc9ocqqelsaop901obbcdfd7n4h6q.apps.googleusercontent.com'
+            },
         }
     },
     //dùng cái này để sử dụng middleware xác thực người dùng cho mọi route, tương tự middleware trong Laravel
