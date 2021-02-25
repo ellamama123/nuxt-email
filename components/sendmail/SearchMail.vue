@@ -70,7 +70,7 @@ export default {
    methods : {
      searchCandidate : function(name,mail,phone,date,status,position)
      {
-       const cond = {
+       const condition = {
           name,
           mail ,
           phone ,
@@ -78,12 +78,12 @@ export default {
           status,
           position ,
        }
-       this.$emit('set-condition',cond)
+       this.$emit('set-condition',condition)
      },
 
      refreshMail : function(name,mail,phone,date,status,position)
      {
-       const cond = {
+       const condition = {
           name,
           mail ,
           phone ,
@@ -91,7 +91,7 @@ export default {
           status,
           position ,
        }
-        this.$emit('set-condition',cond) 
+        this.$emit('set-condition',condition) 
         this.name = ''  
         this.mail = '',
         this.phone = '',

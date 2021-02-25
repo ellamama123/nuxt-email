@@ -133,27 +133,6 @@
     "_name": "_35d51362"
   },
   {
-    "name": "notifications-Alerts",
-    "path": "/notifications/Alerts",
-    "component": "D:\\\\wamp64\\\\www\\\\Exercising\\\\nuxt-email\\\\pages\\\\notifications\\\\Alerts.vue",
-    "chunkName": "pages/notifications/Alerts",
-    "_name": "_78721b5a"
-  },
-  {
-    "name": "notifications-Badges",
-    "path": "/notifications/Badges",
-    "component": "D:\\\\wamp64\\\\www\\\\Exercising\\\\nuxt-email\\\\pages\\\\notifications\\\\Badges.vue",
-    "chunkName": "pages/notifications/Badges",
-    "_name": "_466c5d73"
-  },
-  {
-    "name": "notifications-Modals",
-    "path": "/notifications/Modals",
-    "component": "D:\\\\wamp64\\\\www\\\\Exercising\\\\nuxt-email\\\\pages\\\\notifications\\\\Modals.vue",
-    "chunkName": "pages/notifications/Modals",
-    "_name": "_a04256ae"
-  },
-  {
     "name": "pages-Page404",
     "path": "/pages/Page404",
     "component": "D:\\\\wamp64\\\\www\\\\Exercising\\\\nuxt-email\\\\pages\\\\pages\\\\Page404.vue",
@@ -194,27 +173,6 @@
     "component": "D:\\\\wamp64\\\\www\\\\Exercising\\\\nuxt-email\\\\pages\\\\templatemail\\\\add.vue",
     "chunkName": "pages/templatemail/add",
     "_name": "_2ce72bcb"
-  },
-  {
-    "name": "users-User",
-    "path": "/users/User",
-    "component": "D:\\\\wamp64\\\\www\\\\Exercising\\\\nuxt-email\\\\pages\\\\users\\\\User.vue",
-    "chunkName": "pages/users/User",
-    "_name": "_46c2bd6e"
-  },
-  {
-    "name": "users-Users",
-    "path": "/users/Users",
-    "component": "D:\\\\wamp64\\\\www\\\\Exercising\\\\nuxt-email\\\\pages\\\\users\\\\Users.vue",
-    "chunkName": "pages/users/Users",
-    "_name": "_d57edd16"
-  },
-  {
-    "name": "users-UsersData",
-    "path": "/users/UsersData",
-    "component": "D:\\\\wamp64\\\\www\\\\Exercising\\\\nuxt-email\\\\pages\\\\users\\\\UsersData.js",
-    "chunkName": "pages/users/UsersData",
-    "_name": "_0cc321f0"
   },
   {
     "name": "widgets-Widgets",
