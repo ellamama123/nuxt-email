@@ -5,6 +5,7 @@ import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
 const _10473f19 = () => interopDefault(import('..\\pages\\candidate\\index.vue' /* webpackChunkName: "pages/candidate/index" */))
+const _563c0fe8 = () => interopDefault(import('..\\pages\\charts\\index.js' /* webpackChunkName: "pages/charts/index" */))
 const _538b55ba = () => interopDefault(import('..\\pages\\Dashboard.vue' /* webpackChunkName: "pages/Dashboard" */))
 const _59307030 = () => interopDefault(import('..\\pages\\history\\index.vue' /* webpackChunkName: "pages/history/index" */))
 const _042b0f32 = () => interopDefault(import('..\\pages\\item.js' /* webpackChunkName: "pages/item" */))
@@ -12,6 +13,16 @@ const _38e15f0f = () => interopDefault(import('..\\pages\\Login.vue' /* webpackC
 const _0df3a926 = () => interopDefault(import('..\\pages\\Register.vue' /* webpackChunkName: "pages/Register" */))
 const _ad990b72 = () => interopDefault(import('..\\pages\\templatemail\\index.vue' /* webpackChunkName: "pages/templatemail/index" */))
 const _77e06f28 = () => interopDefault(import('..\\pages\\candidate\\add.vue' /* webpackChunkName: "pages/candidate/add" */))
+const _1f2a48d1 = () => interopDefault(import('..\\pages\\charts\\CChartBarExample.vue' /* webpackChunkName: "pages/charts/CChartBarExample" */))
+const _1d2d08ca = () => interopDefault(import('..\\pages\\charts\\CChartBarSimple.vue' /* webpackChunkName: "pages/charts/CChartBarSimple" */))
+const _1b2b96fe = () => interopDefault(import('..\\pages\\charts\\CChartDoughnutExample.vue' /* webpackChunkName: "pages/charts/CChartDoughnutExample" */))
+const _d72c4a68 = () => interopDefault(import('..\\pages\\charts\\CChartLineExample.vue' /* webpackChunkName: "pages/charts/CChartLineExample" */))
+const _37423e40 = () => interopDefault(import('..\\pages\\charts\\CChartLineSimple.vue' /* webpackChunkName: "pages/charts/CChartLineSimple" */))
+const _ed43c490 = () => interopDefault(import('..\\pages\\charts\\CChartPieExample.vue' /* webpackChunkName: "pages/charts/CChartPieExample" */))
+const _d4a8f10e = () => interopDefault(import('..\\pages\\charts\\CChartPolarAreaExample.vue' /* webpackChunkName: "pages/charts/CChartPolarAreaExample" */))
+const _41877b7e = () => interopDefault(import('..\\pages\\charts\\CChartRadarExample.vue' /* webpackChunkName: "pages/charts/CChartRadarExample" */))
+const _46a3fa18 = () => interopDefault(import('..\\pages\\charts\\Charts.vue' /* webpackChunkName: "pages/charts/Charts" */))
+const _7af09c38 = () => interopDefault(import('..\\pages\\charts\\MainChartExample.vue' /* webpackChunkName: "pages/charts/MainChartExample" */))
 const _76f4538f = () => interopDefault(import('..\\pages\\pages\\Page404.vue' /* webpackChunkName: "pages/pages/Page404" */))
 const _a8bb9e68 = () => interopDefault(import('..\\pages\\pages\\Page500.vue' /* webpackChunkName: "pages/pages/Page500" */))
 const _41916028 = () => interopDefault(import('..\\pages\\sendmail\\MailInter.vue' /* webpackChunkName: "pages/sendmail/MailInter" */))
@@ -46,6 +57,10 @@ export const routerOptions = {
     component: _10473f19,
     name: "candidate"
   }, {
+    path: "/charts",
+    component: _563c0fe8,
+    name: "charts"
+  }, {
     path: "/Dashboard",
     component: _538b55ba,
     name: "Dashboard"
@@ -73,6 +88,46 @@ export const routerOptions = {
     path: "/candidate/add",
     component: _77e06f28,
     name: "candidate-add"
+  }, {
+    path: "/charts/CChartBarExample",
+    component: _1f2a48d1,
+    name: "charts-CChartBarExample"
+  }, {
+    path: "/charts/CChartBarSimple",
+    component: _1d2d08ca,
+    name: "charts-CChartBarSimple"
+  }, {
+    path: "/charts/CChartDoughnutExample",
+    component: _1b2b96fe,
+    name: "charts-CChartDoughnutExample"
+  }, {
+    path: "/charts/CChartLineExample",
+    component: _d72c4a68,
+    name: "charts-CChartLineExample"
+  }, {
+    path: "/charts/CChartLineSimple",
+    component: _37423e40,
+    name: "charts-CChartLineSimple"
+  }, {
+    path: "/charts/CChartPieExample",
+    component: _ed43c490,
+    name: "charts-CChartPieExample"
+  }, {
+    path: "/charts/CChartPolarAreaExample",
+    component: _d4a8f10e,
+    name: "charts-CChartPolarAreaExample"
+  }, {
+    path: "/charts/CChartRadarExample",
+    component: _41877b7e,
+    name: "charts-CChartRadarExample"
+  }, {
+    path: "/charts/Charts",
+    component: _46a3fa18,
+    name: "charts-Charts"
+  }, {
+    path: "/charts/MainChartExample",
+    component: _7af09c38,
+    name: "charts-MainChartExample"
   }, {
     path: "/pages/Page404",
     component: _76f4538f,

@@ -7,6 +7,13 @@
     "_name": "_10473f19"
   },
   {
+    "name": "charts",
+    "path": "/charts",
+    "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\charts\\\\index.js",
+    "chunkName": "pages/charts/index",
+    "_name": "_563c0fe8"
+  },
+  {
     "name": "Dashboard",
     "path": "/Dashboard",
     "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\Dashboard.vue",
@@ -54,6 +61,76 @@
     "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\candidate\\\\add.vue",
     "chunkName": "pages/candidate/add",
     "_name": "_77e06f28"
+  },
+  {
+    "name": "charts-CChartBarExample",
+    "path": "/charts/CChartBarExample",
+    "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\charts\\\\CChartBarExample.vue",
+    "chunkName": "pages/charts/CChartBarExample",
+    "_name": "_1f2a48d1"
+  },
+  {
+    "name": "charts-CChartBarSimple",
+    "path": "/charts/CChartBarSimple",
+    "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\charts\\\\CChartBarSimple.vue",
+    "chunkName": "pages/charts/CChartBarSimple",
+    "_name": "_1d2d08ca"
+  },
+  {
+    "name": "charts-CChartDoughnutExample",
+    "path": "/charts/CChartDoughnutExample",
+    "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\charts\\\\CChartDoughnutExample.vue",
+    "chunkName": "pages/charts/CChartDoughnutExample",
+    "_name": "_1b2b96fe"
+  },
+  {
+    "name": "charts-CChartLineExample",
+    "path": "/charts/CChartLineExample",
+    "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\charts\\\\CChartLineExample.vue",
+    "chunkName": "pages/charts/CChartLineExample",
+    "_name": "_d72c4a68"
+  },
+  {
+    "name": "charts-CChartLineSimple",
+    "path": "/charts/CChartLineSimple",
+    "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\charts\\\\CChartLineSimple.vue",
+    "chunkName": "pages/charts/CChartLineSimple",
+    "_name": "_37423e40"
+  },
+  {
+    "name": "charts-CChartPieExample",
+    "path": "/charts/CChartPieExample",
+    "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\charts\\\\CChartPieExample.vue",
+    "chunkName": "pages/charts/CChartPieExample",
+    "_name": "_ed43c490"
+  },
+  {
+    "name": "charts-CChartPolarAreaExample",
+    "path": "/charts/CChartPolarAreaExample",
+    "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\charts\\\\CChartPolarAreaExample.vue",
+    "chunkName": "pages/charts/CChartPolarAreaExample",
+    "_name": "_d4a8f10e"
+  },
+  {
+    "name": "charts-CChartRadarExample",
+    "path": "/charts/CChartRadarExample",
+    "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\charts\\\\CChartRadarExample.vue",
+    "chunkName": "pages/charts/CChartRadarExample",
+    "_name": "_41877b7e"
+  },
+  {
+    "name": "charts-Charts",
+    "path": "/charts/Charts",
+    "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\charts\\\\Charts.vue",
+    "chunkName": "pages/charts/Charts",
+    "_name": "_46a3fa18"
+  },
+  {
+    "name": "charts-MainChartExample",
+    "path": "/charts/MainChartExample",
+    "component": "D:\\\\wamp64\\\\www\\\\nuxt-email\\\\pages\\\\charts\\\\MainChartExample.vue",
+    "chunkName": "pages/charts/MainChartExample",
+    "_name": "_7af09c38"
   },
   {
     "name": "pages-Page404",
