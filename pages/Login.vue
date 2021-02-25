@@ -39,6 +39,15 @@
         </CCard>
       </CCol>
     </CRow>
+    <div v-if="showLoading">
+      <CElementCover
+        :boundaries="[{ sides: ['top', 'left'], query: '.media-body' }]"
+        :opacity="0.8"
+      >
+        <h1 class="d-inline">Loading...</h1>
+        <CSpinner size="5xl" color="success" />
+      </CElementCover>
+    </div>
   </div>
 </template>
 
@@ -51,6 +60,7 @@ export default {
         password: "",
       },
       error: "",
+      showLoading: false,
     };
   },
   created() {
@@ -61,6 +71,7 @@ export default {
   methods: {
     async login() {
       try {
+        this.showLoading = true;
         await this.$auth
           .login({
             data: this.userForm,
@@ -68,6 +79,7 @@ export default {
           .then(() => this.$router.push("/")); // muốn dùng được đoạn này thì cài thêm vue-router nhé
       } catch (err) {
         this.error = "Username or Password not valid";
+        this.showLoading = false;
       }
     },
   },
