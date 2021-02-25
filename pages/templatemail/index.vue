@@ -7,8 +7,8 @@
             List Email
           </CCol>
           <CCol lg="2 right">
-            <CButton color="success" class="m-2">
-              <nuxt-link to="/templatemail/add">Add</nuxt-link>
+            <CButton color="success" class="m-2" size="sm">
+              <nuxt-link to="/templatemail/add">+ Add</nuxt-link>
             </CButton>
           </CCol>
         </CRow>
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       dataTemplate: [],
-      cond: {},
+      condition: {},
     };
   },
 
@@ -46,14 +46,14 @@ export default {
   methods: {
     fetchData: function() {
       const url = "http://127.0.0.1:8000/api/template";
-      axios.get(url, { params: this.cond }).then((response) => {
+      axios.get(url, { params: this.condition }).then((response) => {
         this.dataTemplate = response.data;
         console.log(this.dataTemplate);
       });
     },
 
     getData(value) {
-      this.cond = value;
+      this.condition = value;
       this.fetchData();
     },
   },
