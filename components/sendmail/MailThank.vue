@@ -134,21 +134,22 @@ export default {
 
     sendMail: function() {
       for (const [key, value] of Object.entries(this.dataSend)) {
+        console.log(value.category_mail);
         value["template_id"] = 1;
         value["candidate_email"] = value.email;
         value["candidate_id"] = value.id;
         value["status"] = value.status;
-        value["content"] = this.getContentMailThank(value.category_mail)
+        value["content"] = this.getContentMailThank(value.category_mail);
         this.showLoading = true;
-        axios
-          .post("http://127.0.0.1:8000/api/send-mail", value)
-          .then(() => {
-            this.showLoading = false;
-            this.warningModal1 = true;
-          })
-          .then(() => {
-            this.$emit('reload')
-          });
+        // axios
+        //   .post("http://127.0.0.1:8000/api/send-mail", value)
+        //   .then(() => {
+        //     this.showLoading = false;
+        //     this.warningModal1 = true;
+        //   })
+        //   .then(() => {
+        //     this.$emit("reload");
+        //   });
       }
     },
 
@@ -164,14 +165,18 @@ export default {
 
     showModal(item) {
       this.dataSend.find((element) => {
-        if(element.id === item.id){
-          axios.get('http://127.0.0.1:8000/api/previewMail?id=' +  item.category_mail).then((response) => {
-            this.content = response.data
-            this.content = this.content.replace("[Name]", element.name)
-          });
+        if (element.id === item.id) {
+          axios
+            .get(
+              "http://127.0.0.1:8000/api/previewMail?id=" + item.category_mail
+            )
+            .then((response) => {
+              this.content = response.data;
+              this.content = this.content.replace("[Name]", element.name);
+            });
           this.warningModal = true;
         }
-      })
+      });
     },
 
     selectMail(item) {

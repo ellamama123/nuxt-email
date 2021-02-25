@@ -34,6 +34,11 @@
                   Login
                 </CButton>
               </div>
+              <div class="button-login">
+                <CButton class="m-2 " color="success" @click="loginFacebook">
+                  Login facebook
+                </CButton>
+              </div>
             </form>
           </CCardBody>
         </CCard>
@@ -81,6 +86,10 @@ export default {
         this.error = "Username or Password not valid";
         this.showLoading = false;
       }
+    },
+
+    loginFacebook() {
+      this.$auth.loginWith("facebook");
     },
   },
 };

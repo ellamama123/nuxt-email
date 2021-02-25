@@ -66,6 +66,13 @@ export default {
                     logout: false,
                 }
             },
+            facebook: {
+                endpoints: {
+                    userInfo: 'https://graph.facebook.com/v10.0/me?fields=id,name,picture{url}'
+                },
+                clientId: '2548093105485263',
+                scope: ['public_profile', 'email']
+            },
         }
     },
     //dùng cái này để sử dụng middleware xác thực người dùng cho mọi route, tương tự middleware trong Laravel
