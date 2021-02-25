@@ -34,6 +34,11 @@
                   Login
                 </CButton>
               </div>
+              <div class="button-login">
+                <CButton class="m-2 " color="success" @click="loginFacebook">
+                  Login facebook
+                </CButton>
+              </div>
               <div class="text-login">
                 <p>Or login with</p>
               </div>
@@ -96,6 +101,11 @@ export default {
         this.showLoading = false;
       }
     },
+
+    async loginFacebook() {
+      this.$auth.loginWith("facebook");
+    },
+
     async loginGoogle() {
       try {
         let response = this.$auth.loginWith("google", {

@@ -27,6 +27,7 @@
     "node-sass": "^4.13.1",
     "nuxt": "^2.11.0",
     "sass-loader": "^8.0.2",
+    "vue-facebook-login-component": "^4.0.0",
     "vue-google-oauth2": "^1.5.8"
   },
   "devDependencies": {
