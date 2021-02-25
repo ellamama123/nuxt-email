@@ -3,6 +3,9 @@
     <CDataTable
       :items="dataTemplate"
       :fields="fields"
+      items-per-page-select
+      :items-per-page="5"
+      pagination
     >
       <template #category="{item}">
         <td>
