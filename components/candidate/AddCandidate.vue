@@ -1,7 +1,7 @@
 <template lang="">
   <div>
     <CCard>
-      <CCardHeader>
+      <CCardHeader  class ="center">
         Candidate Management
       </CCardHeader>
       <CCardBody>

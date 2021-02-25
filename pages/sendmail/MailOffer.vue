@@ -33,7 +33,7 @@ export default {
       LIST_STATUS,
       content: "",
       warningModal: false,
-      cond: {},
+      condition: {},
     };
   },
 
@@ -44,13 +44,13 @@ export default {
   methods: {
     listData: function() {
       axios
-        .get("http://127.0.0.1:8000/api/candidate", { params: this.cond })
+        .get("http://127.0.0.1:8000/api/candidate", { params: this.condition })
         .then((response) => {
           this.dataCandidate = response.data;
         });
     },
     getData: function(value) {
-      this.cond = value;
+      this.condition = value;
       this.listData();
     },
   },
