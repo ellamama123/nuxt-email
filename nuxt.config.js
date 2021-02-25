@@ -70,7 +70,7 @@ export default {
                 endpoints: {
                     userInfo: 'https://graph.facebook.com/v10.0/me?fields=id,name,picture{url}'
                 },
-                clientId: '2548093105485263',
+                clientId: '797167507885971',
                 scope: ['public_profile', 'email']
             },
 

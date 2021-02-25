@@ -34,11 +34,8 @@
                   Login
                 </CButton>
               </div>
-              <div class="button-login">
-                <CButton class="m-2 " color="success" @click="loginFacebook">
-                  Login facebook
-                </CButton>
-              </div>
+              <CButton @click="facebook" >Facebook</CButton>
+              </facebook-login>
               <div class="text-login">
                 <p>Or login with</p>
               </div>
@@ -71,7 +68,10 @@
 </template>
 
 <script>
+import facebookLogin from "facebook-login-vuejs";
+
 export default {
+  components: { facebookLogin },
   data() {
     return {
       userForm: {
@@ -102,8 +102,10 @@ export default {
       }
     },
 
-    async loginFacebook() {
-      this.$auth.loginWith("facebook");
+    async facebook(){
+       await this.$auth.loginWith('facebook').catch(e => {
+        this.$toast.show('Error', {icon: "fingerprint"});
+      })
     },
 
     async loginGoogle() {
