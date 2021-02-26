@@ -67,12 +67,11 @@ export default {
                 }
             },
             facebook: {
-                endpoints: {
-                    userInfo: 'https://graph.facebook.com/v10.0/me?fields=id,name,picture{url}'
-                },
-                clientId: '2548093105485263',
-                scope: ['public_profile', 'email']
-            },
+                client_id: '872294982929508',
+                userinfo_endpoint: false,
+                scope: ['public_profile', 'email'],
+                redirect_uri:'http://localhost:3000/'
+              },
 
             google: {
                 client_id: '1038999090260-j6vqc9ocqqelsaop901obbcdfd7n4h6q.apps.googleusercontent.com'

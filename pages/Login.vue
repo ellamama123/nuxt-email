@@ -103,7 +103,12 @@ export default {
     },
 
     async loginFacebook() {
-      this.$auth.loginWith("facebook");
+      try {
+        let response = this.$auth.loginWith("facebook");
+        console.log(response);
+      } catch (err) {
+        this.error = err;
+      }
     },
 
     async loginGoogle() {
