@@ -34,8 +34,6 @@
                   Login
                 </CButton>
               </div>
-              <facebook-login class="button" appId="475229540523671">
-              </facebook-login>
               <div class="text-login">
                 <p>Or login with</p>
               </div>
@@ -48,6 +46,15 @@
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
                   />
                   Sign in with Google
+                </CButton>
+                <CButton class="hollow button primary" @click="loginFacebook">
+                  <img
+                    width="15px"
+                    style="margin-bottom:3px; margin-right:5px"
+                    alt="Google login"
+                    src="https://cdn.iconscout.com/icon/free/png-256/facebook-logo-2019-1597680-1350125.png"
+                  />
+                  Sign in with Facebook
                 </CButton>
               </div>
             </form>
