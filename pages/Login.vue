@@ -34,7 +34,7 @@
                   Login
                 </CButton>
               </div>
-              <CButton @click="facebook" >Facebook</CButton>
+              <facebook-login class="button" appId="475229540523671">
               </facebook-login>
               <div class="text-login">
                 <p>Or login with</p>
@@ -102,10 +102,10 @@ export default {
       }
     },
 
-    async facebook(){
-       await this.$auth.loginWith('facebook').catch(e => {
-        this.$toast.show('Error', {icon: "fingerprint"});
-      })
+    async facebook() {
+      this.$auth.loginWith("facebook").catch((e) => {
+        this.$toast.show("Error", { icon: "fingerprint" });
+      });
     },
 
     async loginGoogle() {

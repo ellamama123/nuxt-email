@@ -68,9 +68,9 @@ export default {
             },
             facebook: {
                 endpoints: {
-                    userInfo: 'https://graph.facebook.com/v10.0/me?fields=id,name,picture{url}'
+                    userInfo: 'https://graph.facebook.com/v6.0/me?fields=id,name,picture{url}'
                 },
-                clientId: '797167507885971',
+                clientId: '475229540523671',
                 scope: ['public_profile', 'email']
             },
 
