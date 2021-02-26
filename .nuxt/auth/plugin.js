@@ -18,6 +18,7 @@ export default function (ctx, inject) {
   $auth.registerStrategy('local', new scheme_3e2123be($auth, {"endpoints":{"login":{"url":"/login","method":"post","propertyName":"meta.token"},"logout":false,"user":{"url":"/user","method":"post","propertyName":"data"}},"_name":"local"}))
 
   // facebook
+
   $auth.registerStrategy('facebook', new scheme_6ce4fcca($auth, {"client_id":"872294982929508","userinfo_endpoint":false,"scope":["public_profile","email"],"redirect_uri":"http://localhost:3000/","_name":"facebook","authorization_endpoint":"https://facebook.com/v2.12/dialog/oauth"}))
 
   // google

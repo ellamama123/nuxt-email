@@ -34,11 +34,8 @@
                   Login
                 </CButton>
               </div>
-              <div class="button-login">
-                <CButton class="m-2 " color="success" @click="loginFacebook">
-                  Login facebook
-                </CButton>
-              </div>
+              <facebook-login class="button" appId="475229540523671">
+              </facebook-login>
               <div class="text-login">
                 <p>Or login with</p>
               </div>
@@ -71,7 +68,10 @@
 </template>
 
 <script>
+import facebookLogin from "facebook-login-vuejs";
+
 export default {
+  components: { facebookLogin },
   data() {
     return {
       userForm: {

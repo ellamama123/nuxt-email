@@ -72,7 +72,6 @@ export default {
                 scope: ['public_profile', 'email'],
                 redirect_uri:'http://localhost:3000/'
               },
-
             google: {
                 client_id: '1038999090260-j6vqc9ocqqelsaop901obbcdfd7n4h6q.apps.googleusercontent.com'
             },
