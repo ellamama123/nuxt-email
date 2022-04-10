@@ -4,37 +4,37 @@ import { normalizeURL, decode } from '@nuxt/ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _91ecc2f8 = () => interopDefault(import('..\\pages\\candidate\\index.vue' /* webpackChunkName: "pages/candidate/index" */))
-const _7ffac4f7 = () => interopDefault(import('..\\pages\\charts\\index.js' /* webpackChunkName: "pages/charts/index" */))
-const _fdeeaea2 = () => interopDefault(import('..\\pages\\Dashboard.vue' /* webpackChunkName: "pages/Dashboard" */))
-const _1b810613 = () => interopDefault(import('..\\pages\\history\\index.vue' /* webpackChunkName: "pages/history/index" */))
-const _b9ea0432 = () => interopDefault(import('..\\pages\\item.js' /* webpackChunkName: "pages/item" */))
-const _c0ff16f8 = () => interopDefault(import('..\\pages\\Login.vue' /* webpackChunkName: "pages/Login" */))
-const _23c825d8 = () => interopDefault(import('..\\pages\\Register.vue' /* webpackChunkName: "pages/Register" */))
-const _c2dd4208 = () => interopDefault(import('..\\pages\\templatemail\\index.vue' /* webpackChunkName: "pages/templatemail/index" */))
-const _800ca55a = () => interopDefault(import('..\\pages\\candidate\\add.vue' /* webpackChunkName: "pages/candidate/add" */))
-const _41b80d3c = () => interopDefault(import('..\\pages\\charts\\CChartBarExample.vue' /* webpackChunkName: "pages/charts/CChartBarExample" */))
-const _f1a80460 = () => interopDefault(import('..\\pages\\charts\\CChartBarSimple.vue' /* webpackChunkName: "pages/charts/CChartBarSimple" */))
-const _95a2451a = () => interopDefault(import('..\\pages\\charts\\CChartDoughnutExample.vue' /* webpackChunkName: "pages/charts/CChartDoughnutExample" */))
-const _78d6b87e = () => interopDefault(import('..\\pages\\charts\\CChartLineExample.vue' /* webpackChunkName: "pages/charts/CChartLineExample" */))
-const _59d002ab = () => interopDefault(import('..\\pages\\charts\\CChartLineSimple.vue' /* webpackChunkName: "pages/charts/CChartLineSimple" */))
-const _a8283bba = () => interopDefault(import('..\\pages\\charts\\CChartPieExample.vue' /* webpackChunkName: "pages/charts/CChartPieExample" */))
-const _3c110fa4 = () => interopDefault(import('..\\pages\\charts\\CChartPolarAreaExample.vue' /* webpackChunkName: "pages/charts/CChartPolarAreaExample" */))
-const _10945dae = () => interopDefault(import('..\\pages\\charts\\CChartRadarExample.vue' /* webpackChunkName: "pages/charts/CChartRadarExample" */))
-const _24c7411f = () => interopDefault(import('..\\pages\\charts\\Charts.vue' /* webpackChunkName: "pages/charts/Charts" */))
-const _35d51362 = () => interopDefault(import('..\\pages\\charts\\MainChartExample.vue' /* webpackChunkName: "pages/charts/MainChartExample" */))
-const _81e4dc8c = () => interopDefault(import('..\\pages\\pages\\Page404.vue' /* webpackChunkName: "pages/pages/Page404" */))
-const _18892212 = () => interopDefault(import('..\\pages\\pages\\Page500.vue' /* webpackChunkName: "pages/pages/Page500" */))
-const _56d596be = () => interopDefault(import('..\\pages\\sendmail\\MailInter.vue' /* webpackChunkName: "pages/sendmail/MailInter" */))
-const _2a8f2a21 = () => interopDefault(import('..\\pages\\sendmail\\MailOffer.vue' /* webpackChunkName: "pages/sendmail/MailOffer" */))
-const _33bd00a2 = () => interopDefault(import('..\\pages\\sendmail\\MailThank.vue' /* webpackChunkName: "pages/sendmail/MailThank" */))
-const _2ce72bcb = () => interopDefault(import('..\\pages\\templatemail\\add.vue' /* webpackChunkName: "pages/templatemail/add" */))
-const _2c6d1e56 = () => interopDefault(import('..\\pages\\widgets\\Widgets.vue' /* webpackChunkName: "pages/widgets/Widgets" */))
-const _3edfa262 = () => interopDefault(import('..\\pages\\widgets\\WidgetsBrand.vue' /* webpackChunkName: "pages/widgets/WidgetsBrand" */))
-const _a39be8f4 = () => interopDefault(import('..\\pages\\widgets\\WidgetsDropdown.vue' /* webpackChunkName: "pages/widgets/WidgetsDropdown" */))
-const _5eb571ec = () => interopDefault(import('..\\pages\\candidate\\_id.vue' /* webpackChunkName: "pages/candidate/_id" */))
-const _68ba1f38 = () => interopDefault(import('..\\pages\\templatemail\\_id.vue' /* webpackChunkName: "pages/templatemail/_id" */))
-const _5e66b18d = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
+const _90f7ca0a = () => interopDefault(import('..\\pages\\candidate\\index.vue' /* webpackChunkName: "pages/candidate/index" */))
+const _121c14ee = () => interopDefault(import('..\\pages\\charts\\index.js' /* webpackChunkName: "pages/charts/index" */))
+const _14f197d0 = () => interopDefault(import('..\\pages\\Dashboard.vue' /* webpackChunkName: "pages/Dashboard" */))
+const _aae3976c = () => interopDefault(import('..\\pages\\history\\index.vue' /* webpackChunkName: "pages/history/index" */))
+const _4e8c8c10 = () => interopDefault(import('..\\pages\\item.js' /* webpackChunkName: "pages/item" */))
+const _70d71c6d = () => interopDefault(import('..\\pages\\Login.vue' /* webpackChunkName: "pages/Login" */))
+const _1706094f = () => interopDefault(import('..\\pages\\Register.vue' /* webpackChunkName: "pages/Register" */))
+const _4c6b7b25 = () => interopDefault(import('..\\pages\\templatemail\\index.vue' /* webpackChunkName: "pages/templatemail/index" */))
+const _4f06db8a = () => interopDefault(import('..\\pages\\candidate\\add.vue' /* webpackChunkName: "pages/candidate/add" */))
+const _39c622b3 = () => interopDefault(import('..\\pages\\charts\\CChartBarExample.vue' /* webpackChunkName: "pages/charts/CChartBarExample" */))
+const _44d9dd79 = () => interopDefault(import('..\\pages\\charts\\CChartBarSimple.vue' /* webpackChunkName: "pages/charts/CChartBarSimple" */))
+const _36b69a5c = () => interopDefault(import('..\\pages\\charts\\CChartDoughnutExample.vue' /* webpackChunkName: "pages/charts/CChartDoughnutExample" */))
+const _656d85ac = () => interopDefault(import('..\\pages\\charts\\CChartLineExample.vue' /* webpackChunkName: "pages/charts/CChartLineExample" */))
+const _51de1822 = () => interopDefault(import('..\\pages\\charts\\CChartLineSimple.vue' /* webpackChunkName: "pages/charts/CChartLineSimple" */))
+const _b80c10cc = () => interopDefault(import('..\\pages\\charts\\CChartPieExample.vue' /* webpackChunkName: "pages/charts/CChartPieExample" */))
+const _28fe204a = () => interopDefault(import('..\\pages\\charts\\CChartPolarAreaExample.vue' /* webpackChunkName: "pages/charts/CChartPolarAreaExample" */))
+const _249464e0 = () => interopDefault(import('..\\pages\\charts\\CChartRadarExample.vue' /* webpackChunkName: "pages/charts/CChartRadarExample" */))
+const _98572154 = () => interopDefault(import('..\\pages\\charts\\Charts.vue' /* webpackChunkName: "pages/charts/Charts" */))
+const _45b8e874 = () => interopDefault(import('..\\pages\\charts\\MainChartExample.vue' /* webpackChunkName: "pages/charts/MainChartExample" */))
+const _4e1abff1 = () => interopDefault(import('..\\pages\\pages\\Page404.vue' /* webpackChunkName: "pages/pages/Page404" */))
+const _fa6ec5a4 = () => interopDefault(import('..\\pages\\pages\\Page500.vue' /* webpackChunkName: "pages/pages/Page500" */))
+const _fb215e6c = () => interopDefault(import('..\\pages\\sendmail\\MailInter.vue' /* webpackChunkName: "pages/sendmail/MailInter" */))
+const _4f2d736c = () => interopDefault(import('..\\pages\\sendmail\\MailOffer.vue' /* webpackChunkName: "pages/sendmail/MailOffer" */))
+const _d808c850 = () => interopDefault(import('..\\pages\\sendmail\\MailThank.vue' /* webpackChunkName: "pages/sendmail/MailThank" */))
+const _3bbc3e34 = () => interopDefault(import('..\\pages\\templatemail\\add.vue' /* webpackChunkName: "pages/templatemail/add" */))
+const _2b782568 = () => interopDefault(import('..\\pages\\widgets\\Widgets.vue' /* webpackChunkName: "pages/widgets/Widgets" */))
+const _42b94f6a = () => interopDefault(import('..\\pages\\widgets\\WidgetsBrand.vue' /* webpackChunkName: "pages/widgets/WidgetsBrand" */))
+const _b37fbe06 = () => interopDefault(import('..\\pages\\widgets\\WidgetsDropdown.vue' /* webpackChunkName: "pages/widgets/WidgetsDropdown" */))
+const _247abfba = () => interopDefault(import('..\\pages\\candidate\\_id.vue' /* webpackChunkName: "pages/candidate/_id" */))
+const _4b0ffa66 = () => interopDefault(import('..\\pages\\templatemail\\_id.vue' /* webpackChunkName: "pages/templatemail/_id" */))
+const _2fbd5976 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 
 // TODO: remove in Nuxt 3
 const emptyFn = () => {}
@@ -54,127 +54,127 @@ export const routerOptions = {
 
   routes: [{
     path: "/candidate",
-    component: _91ecc2f8,
+    component: _90f7ca0a,
     name: "candidate"
   }, {
     path: "/charts",
-    component: _7ffac4f7,
+    component: _121c14ee,
     name: "charts"
   }, {
     path: "/Dashboard",
-    component: _fdeeaea2,
+    component: _14f197d0,
     name: "Dashboard"
   }, {
     path: "/history",
-    component: _1b810613,
+    component: _aae3976c,
     name: "history"
   }, {
     path: "/item",
-    component: _b9ea0432,
+    component: _4e8c8c10,
     name: "item"
   }, {
     path: "/Login",
-    component: _c0ff16f8,
+    component: _70d71c6d,
     name: "Login"
   }, {
     path: "/Register",
-    component: _23c825d8,
+    component: _1706094f,
     name: "Register"
   }, {
     path: "/templatemail",
-    component: _c2dd4208,
+    component: _4c6b7b25,
     name: "templatemail"
   }, {
     path: "/candidate/add",
-    component: _800ca55a,
+    component: _4f06db8a,
     name: "candidate-add"
   }, {
     path: "/charts/CChartBarExample",
-    component: _41b80d3c,
+    component: _39c622b3,
     name: "charts-CChartBarExample"
   }, {
     path: "/charts/CChartBarSimple",
-    component: _f1a80460,
+    component: _44d9dd79,
     name: "charts-CChartBarSimple"
   }, {
     path: "/charts/CChartDoughnutExample",
-    component: _95a2451a,
+    component: _36b69a5c,
     name: "charts-CChartDoughnutExample"
   }, {
     path: "/charts/CChartLineExample",
-    component: _78d6b87e,
+    component: _656d85ac,
     name: "charts-CChartLineExample"
   }, {
     path: "/charts/CChartLineSimple",
-    component: _59d002ab,
+    component: _51de1822,
     name: "charts-CChartLineSimple"
   }, {
     path: "/charts/CChartPieExample",
-    component: _a8283bba,
+    component: _b80c10cc,
     name: "charts-CChartPieExample"
   }, {
     path: "/charts/CChartPolarAreaExample",
-    component: _3c110fa4,
+    component: _28fe204a,
     name: "charts-CChartPolarAreaExample"
   }, {
     path: "/charts/CChartRadarExample",
-    component: _10945dae,
+    component: _249464e0,
     name: "charts-CChartRadarExample"
   }, {
     path: "/charts/Charts",
-    component: _24c7411f,
+    component: _98572154,
     name: "charts-Charts"
   }, {
     path: "/charts/MainChartExample",
-    component: _35d51362,
+    component: _45b8e874,
     name: "charts-MainChartExample"
   }, {
     path: "/pages/Page404",
-    component: _81e4dc8c,
+    component: _4e1abff1,
     name: "pages-Page404"
   }, {
     path: "/pages/Page500",
-    component: _18892212,
+    component: _fa6ec5a4,
     name: "pages-Page500"
   }, {
     path: "/sendmail/MailInter",
-    component: _56d596be,
+    component: _fb215e6c,
     name: "sendmail-MailInter"
   }, {
     path: "/sendmail/MailOffer",
-    component: _2a8f2a21,
+    component: _4f2d736c,
     name: "sendmail-MailOffer"
   }, {
     path: "/sendmail/MailThank",
-    component: _33bd00a2,
+    component: _d808c850,
     name: "sendmail-MailThank"
   }, {
     path: "/templatemail/add",
-    component: _2ce72bcb,
+    component: _3bbc3e34,
     name: "templatemail-add"
   }, {
     path: "/widgets/Widgets",
-    component: _2c6d1e56,
+    component: _2b782568,
     name: "widgets-Widgets"
   }, {
     path: "/widgets/WidgetsBrand",
-    component: _3edfa262,
+    component: _42b94f6a,
     name: "widgets-WidgetsBrand"
   }, {
     path: "/widgets/WidgetsDropdown",
-    component: _a39be8f4,
+    component: _b37fbe06,
     name: "widgets-WidgetsDropdown"
   }, {
     path: "/candidate/:id",
-    component: _5eb571ec,
+    component: _247abfba,
     name: "candidate-id"
   }, {
     path: "/templatemail/:id",
-    component: _68ba1f38,
+    component: _4b0ffa66,
     name: "templatemail-id"
   }, {
     path: "/",
-    component: _5e66b18d,
+    component: _2fbd5976,
     name: "index"
   }],
 
